@@ -26,6 +26,7 @@ def start_championnship():
 def display_result():
     data = request.form
     if "tunnel_url" in data:
+        cache.pop('tunnel_url', None)
         cache['tunnel_url'] = data['tunnel_url']
         return "success"
     else :
