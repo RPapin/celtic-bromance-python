@@ -14,9 +14,12 @@ def home():
 # A route to return all data.
 @app.route('/get_url', methods=['GET'])
 def start_championnship():
-    return jsonify({
-        "url" : cache['tunnel_url']
-        })
+    if "tunnel_url" in cache:
+        return jsonify({
+            "url" : cache['tunnel_url']
+            })
+    else :
+        return "no url found"
 @app.route('/post_url', methods=['POST'])
 def display_result():
     data = request.form
