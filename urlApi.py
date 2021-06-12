@@ -23,9 +23,11 @@ def start_championnship():
 @app.route('/post_url', methods=['POST'])
 def display_result():
     data = request.form
-    cache['tunnel_url'] = data['tunnel_url']
-    return "success"
-
+    if "tunnel_url" in data:
+        cache['tunnel_url'] = data['tunnel_url']
+        return "success"
+    else :
+        return "Error. Post data not correct"
 
 
 if __name__ == "__main__":

@@ -14,6 +14,12 @@ from pathlib import Path
 import tempfile
 import time
 import requests
+from pyngrok import ngrok
+from dotenv import dotenv_values
+
+config = dotenv_values(".env")
+
+ngrok.set_auth_token(config['NGROK_AUTH_TOKEN'])
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -68,7 +74,7 @@ def ngrok_url():
     j = json.loads(tunnel_url)
 
     tunnel_url = j['tunnels'][0]['public_url']  # Do the parsing of the get
-    API_ENDPOINT = "http://localhost:8000/post_url"
+    API_ENDPOINT = "https://celtic-bromance-url.herokuapp.com/post_url"
     
     # data to be sent to api
     data = {'tunnel_url':tunnel_url}
