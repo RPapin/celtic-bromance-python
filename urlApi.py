@@ -19,7 +19,9 @@ def start_championnship():
             "url" : cache['tunnel_url']
             })
     else :
-        return "no url found"
+        return jsonify({
+            "error" : "no url found"
+            })
 @app.route('/post_url', methods=['POST'])
 def display_result():
     data = request.form
