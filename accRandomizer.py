@@ -48,7 +48,12 @@ def makeEventConfig(trackData, weatherData) :
     # Choose weather
     finalEvent["ambientTemp"] = random.randint(weatherData['ambientTemp']["min"], weatherData['ambientTemp']["max"])
     finalEvent["cloudLevel"] = round(random.uniform(weatherData['cloudLevel']["min"], weatherData['cloudLevel']["max"]), 1)
-    finalEvent["rain"] = round(random.uniform(weatherData['rain']["min"], weatherData['rain']["max"]), 1)
+    #Choose rain level, 0.0 (dry) has 5x more chance to get
+    for i in range(7):
+        rain = round(random.uniform(weatherData['rain']["min"], weatherData['rain']["max"]), 1)
+        if rain == 0 :
+            break
+    finalEvent["rain"] = rain
     finalEvent["weatherRandomness"] = random.randint(weatherData['weatherRandomness']["min"], weatherData['weatherRandomness']["max"])
     eventInfo.update({
         "Ambient temperature": finalEvent["ambientTemp"],

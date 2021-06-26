@@ -72,8 +72,10 @@ def ngrok_url():
     time.sleep(1)
     tunnel_url = requests.get(localhost_url).text  # Get the tunnel information
     j = json.loads(tunnel_url)
-
+    
     tunnel_url = j['tunnels'][0]['public_url'] + "/" # Do the parsing of the get
+    tunnel_url = tunnel_url.replace('http://', 'https://')
+    print(tunnel_url)
     API_ENDPOINT = "https://celtic-bromance-url.herokuapp.com/post_url"
     
     # data to be sent to api
