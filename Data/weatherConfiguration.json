@@ -2,5 +2,6 @@
     "ambientTemp": {"min": 10, "max": 35},
     "cloudLevel" : {"min": 0, "max": 1},
     "rain" : {"min": 0.0, "max": 0.6},
-    "weatherRandomness": {"min": 3, "max": 7}
+    "weatherRandomness": {"min": 3, "max": 7},
+    "rollNumber": 7
 }
