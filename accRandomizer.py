@@ -311,10 +311,26 @@ def getParams():
     with open(dataPath + 'availableParameters.json') as json_file:
         paramList = json.load(json_file)
         json_file.close()
+    for fileName in paramList:
+        with open(fileName) as json_file:
+            currentValues = json.load(json_file)
+            json_file.close()
+        if 'sessions' in currentValues :
+            print(currentValues['sessions'][0]['sessionDurationMinutes'])
+        for param in paramList[fileName]: 
+            if param['name'] == 'practiceDuration' : 
+                param['currentValue'] = currentValues['sessions'][0]['sessionDurationMinutes']
+            elif param['name'] == 'raceDuration' : 
+                param['currentValue'] = currentValues['sessions'][1]['sessionDurationMinutes']
+            else :
+                param['currentValue'] = currentValues[param['name']]
+              
     return paramList
+
 def updateParameters(fileToUpdate, newParameters):
     print(fileToUpdate)
     print(newParameters)
 def launchServer():
     subprocess.call('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/launch_server.sh"', shell=True)
     return True
+getParams()

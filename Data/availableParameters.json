@@ -1,5 +1,5 @@
 {
-    "championnshipConfiguration" : [
+    "Data/championnshipConfiguration.json" : [
         {
             "name" : "pointConfiguration",
             "label": "Point distribution (Each point must be separed with a comma)",
@@ -10,7 +10,7 @@
             "label": "SteamId of the server Admin",
             "type" : "text"
         }],
-    "event" : [
+    "Template/event.json" : [
         {
             "name" : "practiceDuration",
             "label": "Set the practice duration",
