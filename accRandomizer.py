@@ -74,6 +74,10 @@ def makeEventConfig(trackData, weatherData) :
     with open(accServerPathCfg + 'event.json', 'w') as outfile:
         json.dump(templateEvent, outfile)
         outfile.close()
+    #Save every config files in the server folder
+    for fileName in configFiles:
+        os.remove(accServerPathCfg + fileName)
+        copyfile(templatePath + fileName, accServerPathCfg + fileName)
 
     return eventInfo
 
@@ -176,6 +180,7 @@ def nextRound(isFirstRound = False):
     with open(savesPath + 'nextRound.json', 'w') as outfile:
         json.dump(nextRoundInfo, outfile)
         outfile.close()
+
     return nextRoundInfo
 
 # def startChampionnship():
@@ -203,11 +208,13 @@ def checkResult():
     with open(dataPath + 'result.json') as json_file:
         olderResult = json.load(json_file)
         json_file.close()
+    #if a result file is found
     if len(raceFile) > 0 :
-        with open(accServerPathResult + raceFile, 'r', encoding="utf-16") as json_file: #accServerPathResult + raceFile
+        with open(accServerPathResult + raceFile, 'r', encoding="utf-16-le") as json_file: #accServerPathResult + raceFile
             correctFile = json_file.read()
             resultFile = json.loads(correctFile)
             json_file.close()
+
         with open(dataPath + 'championnshipConfiguration.json') as json_file:
             championnshipData = json.load(json_file)
             json_file.close()
@@ -250,6 +257,7 @@ def checkResult():
         with open(dataPath + 'result.json', 'w') as outfile:
             json.dump(olderResult, outfile)
             outfile.close()
+        #Cut and paste race result file in saves folder
         os.renames(accServerPathResult + raceFile, savesPath + raceFile)
         #Prepare next race
         nextRoundInfo = nextRound()
@@ -281,9 +289,14 @@ def resetChampionnship():
     with open(dataPath + 'result.json') as json_file:
         olderResult = json.load(json_file)
         json_file.close()
-
-    #TODO remove saves file
+    #remove saves file
+    onlyfiles = [f for f in listdir(savesPath) if isfile(join(savesPath, f))]
+    for fileName in onlyfiles:
+        splitList = fileName.split("_")
+        if len(splitList) >= 3 and splitList[2] == "R.json":
+            os.remove(savesPath + fileName)
     os.remove(savesPath + "nextRound.json")
+    #save final result
     saveName = 'finalSave_' + today.strftime("%d_%m_%Y") + '.json'
     with open(savesPath + saveName, 'w') as outfile:
         json.dump(olderResult, outfile)
@@ -303,8 +316,5 @@ def updateParameters(fileToUpdate, newParameters):
     print(fileToUpdate)
     print(newParameters)
 def launchServer():
-    for fileName in configFiles:
-        os.remove(accServerPathCfg + fileName)
-        copyfile(templatePath + fileName, accServerPathCfg + fileName)
     subprocess.call('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/launch_server.sh"', shell=True)
     return True
