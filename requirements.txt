@@ -4,3 +4,4 @@ flask_ngrok==0.0.25
 Flask_Cors==3.0.10
 pyngrok==5.0.5
 python-dotenv==0.18.0
+gunicorn

@@ -316,7 +316,6 @@ def getParams():
             currentValues = json.load(json_file)
             json_file.close()
         if 'sessions' in currentValues :
-            print(currentValues['sessions'][0]['sessionDurationMinutes'])
         for param in paramList[fileName]: 
             if param['name'] == 'practiceDuration' : 
                 param['currentValue'] = currentValues['sessions'][0]['sessionDurationMinutes']
@@ -334,4 +333,3 @@ def launchServer():
     """ Call a powershell script to launch the server """
     subprocess.call('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/launch_server.sh"', shell=True)
     return True
-getParams()
