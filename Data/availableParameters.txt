@@ -1,0 +1,17 @@
+    "weatherConfiguration" : [
+        {
+        "name": "ambientTemp",
+        "type": {"min": 10, "max": 35}
+        },
+        {
+            "name": "cloudLevel",
+            "type" : {"min": 0, "max": 1}
+        },
+        {
+            "name" : "rain" ,
+            "type" : {"min": 0.0, "max": 0.6}
+        },
+        {
+            "name" :"weatherRandomness",
+            "type" : {"min": 3, "max": 7}
+        }]

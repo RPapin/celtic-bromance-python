@@ -1,3 +1,5 @@
+FIX RESULT FILE READ ISSUE
+
 View older championnship result
 
 Configure parameters through website

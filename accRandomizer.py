@@ -37,43 +37,47 @@ def init():
 def makeEventConfig(trackData, weatherData) :
     """ Create event and assist file from template"""
     with open(templatePath + 'event.json') as json_file1:
-        finalEvent = json.load(json_file1)
+        templateEvent = json.load(json_file1)
         json_file1.close()
     eventInfo = {}
     # Choose track
     listTrack = random.choice(list(trackData.keys()))
     finalTrack = random.choice(trackData[listTrack])
-    finalEvent["track"] = finalTrack
+    templateEvent["track"] = finalTrack
     eventInfo["track"] = finalTrack
     # Choose weather
-    finalEvent["ambientTemp"] = random.randint(weatherData['ambientTemp']["min"], weatherData['ambientTemp']["max"])
-    finalEvent["cloudLevel"] = round(random.uniform(weatherData['cloudLevel']["min"], weatherData['cloudLevel']["max"]), 1)
+    templateEvent["ambientTemp"] = random.randint(weatherData['ambientTemp']["min"], weatherData['ambientTemp']["max"])
+    templateEvent["cloudLevel"] = round(random.uniform(weatherData['cloudLevel']["min"], weatherData['cloudLevel']["max"]), 1)
     #Choose rain level, 0.0 (dry) has 5x more chance to get
-    for i in range(7):
+    for i in range(weatherData['rollNumber']):
         rain = round(random.uniform(weatherData['rain']["min"], weatherData['rain']["max"]), 1)
         if rain == 0 :
             break
-    finalEvent["rain"] = rain
-    finalEvent["weatherRandomness"] = random.randint(weatherData['weatherRandomness']["min"], weatherData['weatherRandomness']["max"])
+    templateEvent["rain"] = rain
+    templateEvent["weatherRandomness"] = random.randint(weatherData['weatherRandomness']["min"], weatherData['weatherRandomness']["max"])
     eventInfo.update({
-        "Ambient temperature": finalEvent["ambientTemp"],
-        "Cloud level": finalEvent["cloudLevel"],
-        "Rain": finalEvent["rain"],
-        "Weather randomness": finalEvent["weatherRandomness"]
+        "Ambient temperature": templateEvent["ambientTemp"],
+        "Cloud level": templateEvent["cloudLevel"],
+        "Rain": templateEvent["rain"],
+        "Weather randomness": templateEvent["weatherRandomness"]
     })
 
     # Choose daytime
     daytime = random.randint(0,23)
     timeMultipler = random.randint(0,24)
-    finalEvent["sessions"][0]["hourOfDay"] = finalEvent["sessions"][1]["hourOfDay"] = daytime
-    finalEvent["sessions"][0]["timeMultiplier"] = finalEvent["sessions"][1]["timeMultiplier"] = timeMultipler
+    templateEvent["sessions"][0]["hourOfDay"] = templateEvent["sessions"][1]["hourOfDay"] = daytime
+    templateEvent["sessions"][0]["timeMultiplier"] = templateEvent["sessions"][1]["timeMultiplier"] = timeMultipler
     eventInfo.update({
-        "Time Multipler": finalEvent["sessions"][0]["timeMultiplier"],
-        "Hour of Day": finalEvent["sessions"][0]["hourOfDay"]
+        "Time Multipler": templateEvent["sessions"][0]["timeMultiplier"],
+        "Hour of Day": templateEvent["sessions"][0]["hourOfDay"]
     })
     with open(accServerPathCfg + 'event.json', 'w') as outfile:
-        json.dump(finalEvent, outfile)
+        json.dump(templateEvent, outfile)
         outfile.close()
+    #Save every config files in the server folder
+    for fileName in configFiles:
+        os.remove(accServerPathCfg + fileName)
+        copyfile(templatePath + fileName, accServerPathCfg + fileName)
 
     return eventInfo
 
@@ -82,7 +86,11 @@ def makeNewRace(carsData, raceNumber) :
     with open(dataPath + 'defaultEntryList.json') as json_file:
         data = json.load(json_file)
         json_file.close()
-    
+    # Get admin id
+    with open(dataPath + 'championnshipConfiguration.json') as json_file:
+        championnshipData = json.load(json_file)
+        json_file.close()
+    adminId = championnshipData['serverAdmin']
     # choose car class
     carClass = random.choice(list(carsData.keys()))
     carClass = carsData[carClass]["class"]
@@ -132,7 +140,8 @@ def makeNewRace(carsData, raceNumber) :
             "forcedCarModel": int(userCar),
             "overrideDriverInfo": 1,
             "ballastKg" : userData['ballast'],
-            "restrictor" : userData['restrictor'] 
+            "restrictor" : userData['restrictor'],
+            "defaultGridPosition": startingPlace
         }
         userInfo = {
             "firstName": userData["First name"],
@@ -143,7 +152,7 @@ def makeNewRace(carsData, raceNumber) :
             "restrictor" : userData['restrictor'] 
         }
         # I put myself as admin
-        if userData["Steam id "] == "76561198445003541" :
+        if userData["Steam id "] == adminId :
             userEntry["isServerAdmin"] = 1
         finalEntryList["entries"].append(userEntry)
         finalUserInfo.append(userInfo)
@@ -154,38 +163,41 @@ def makeNewRace(carsData, raceNumber) :
     with open(accServerPathCfg + 'entrylist.json', 'w') as outfile:
         json.dump(finalEntryList, outfile)
         outfile.close()
-
     return finalUserInfo
 
-def startChampionnship():
+def nextRound(isFirstRound = False):
     carsData, trackData, weatherData = init()
-    usersInfo = makeNewRace(carsData, 1)
-    eventConfig = makeEventConfig(trackData, weatherData)
-    firstRoundInfo = {
-        "eventInfo": eventConfig,
-        "usersInfo": usersInfo,
-        "foundNewResults" : "A new Championnship has begun !"
-    }
-        # Save next round config
-    with open(savesPath + 'nextRound.json', 'w') as outfile:
-        json.dump(firstRoundInfo, outfile)
-        outfile.close()
-    return firstRoundInfo
-
-def nextRound():
-    carsData, trackData, weatherData = init()
-    usersInfo = makeNewRace(carsData, 2)
+    roundNumber = 1 if isFirstRound else 2
+    info =  "A new Championnship has begun !" if isFirstRound else  "A new round has begun !"
+    usersInfo = makeNewRace(carsData, roundNumber)
     eventConfig = makeEventConfig(trackData, weatherData)
     nextRoundInfo = {
         "eventInfo": eventConfig,
-        "usersInfo": usersInfo
+        "usersInfo": usersInfo,
+        "foundNewResults" : info
     }
         # Save next round config
     with open(savesPath + 'nextRound.json', 'w') as outfile:
         json.dump(nextRoundInfo, outfile)
         outfile.close()
+
     return nextRoundInfo
 
+# def startChampionnship():
+#     nextRound(True)
+#     carsData, trackData, weatherData = init()
+#     usersInfo = makeNewRace(carsData, 1)
+#     eventConfig = makeEventConfig(trackData, weatherData)
+#     firstRoundInfo = {
+#         "eventInfo": eventConfig,
+#         "usersInfo": usersInfo,
+#         "foundNewResults" : "A new Championnship has begun !"
+#     }
+#         # Save next round config
+#     with open(savesPath + 'nextRound.json', 'w') as outfile:
+#         json.dump(firstRoundInfo, outfile)
+#         outfile.close()
+#     return firstRoundInfo
 def checkResult():
     onlyfiles = [f for f in listdir(accServerPathResult) if isfile(join(accServerPathResult, f))]
     raceFile = ""
@@ -196,11 +208,13 @@ def checkResult():
     with open(dataPath + 'result.json') as json_file:
         olderResult = json.load(json_file)
         json_file.close()
+    #if a result file is found
     if len(raceFile) > 0 :
-        with open(accServerPathResult + raceFile, 'r') as json_file: #accServerPathResult + raceFile, encoding="utf-16"
+        with open(accServerPathResult + raceFile, 'r', encoding="utf-16-le") as json_file: #accServerPathResult + raceFile
             correctFile = json_file.read()
             resultFile = json.loads(correctFile)
             json_file.close()
+
         with open(dataPath + 'championnshipConfiguration.json') as json_file:
             championnshipData = json.load(json_file)
             json_file.close()
@@ -243,6 +257,7 @@ def checkResult():
         with open(dataPath + 'result.json', 'w') as outfile:
             json.dump(olderResult, outfile)
             outfile.close()
+        #Cut and paste race result file in saves folder
         os.renames(accServerPathResult + raceFile, savesPath + raceFile)
         #Prepare next race
         nextRoundInfo = nextRound()
@@ -274,9 +289,14 @@ def resetChampionnship():
     with open(dataPath + 'result.json') as json_file:
         olderResult = json.load(json_file)
         json_file.close()
-
-    #TODO remove saves file
+    #remove saves file
+    onlyfiles = [f for f in listdir(savesPath) if isfile(join(savesPath, f))]
+    for fileName in onlyfiles:
+        splitList = fileName.split("_")
+        if len(splitList) >= 3 and splitList[2] == "R.json":
+            os.remove(savesPath + fileName)
     os.remove(savesPath + "nextRound.json")
+    #save final result
     saveName = 'finalSave_' + today.strftime("%d_%m_%Y") + '.json'
     with open(savesPath + saveName, 'w') as outfile:
         json.dump(olderResult, outfile)
@@ -287,10 +307,31 @@ def resetChampionnship():
         outfile.close()
     return True
 
+def getParams():
+    with open(dataPath + 'availableParameters.json') as json_file:
+        paramList = json.load(json_file)
+        json_file.close()
+    for fileName in paramList:
+        with open(fileName) as json_file:
+            currentValues = json.load(json_file)
+            json_file.close()
+        if 'sessions' in currentValues :
+            print(currentValues['sessions'][0]['sessionDurationMinutes'])
+        for param in paramList[fileName]: 
+            if param['name'] == 'practiceDuration' : 
+                param['currentValue'] = currentValues['sessions'][0]['sessionDurationMinutes']
+            elif param['name'] == 'raceDuration' : 
+                param['currentValue'] = currentValues['sessions'][1]['sessionDurationMinutes']
+            else :
+                param['currentValue'] = currentValues[param['name']]
+              
+    return paramList
+
+def updateParameters(fileToUpdate, newParameters):
+    print(fileToUpdate)
+    print(newParameters)
 def launchServer():
-    """ Copy template config files in the server folder """
-    for fileName in configFiles:
-        os.remove(accServerPathCfg + fileName)
-        copyfile(templatePath + fileName, accServerPathCfg + fileName)
+    """ Call a powershell script to launch the server """
     subprocess.call('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/launch_server.sh"', shell=True)
     return True
+getParams()
