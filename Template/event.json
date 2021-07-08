@@ -1,7 +1,7 @@
 {
     "track": "mount_panorama_2019",
-    "preRaceWaitingTimeSeconds": 40,
-    "sessionOverTimeSeconds": 100,
+    "preRaceWaitingTimeSeconds": 60,
+    "sessionOverTimeSeconds": 120,
     "ambientTemp": 22,
     "cloudLevel": 0.1,
     "rain": 0.0,
@@ -19,7 +19,7 @@
         "dayOfWeekend": 3,
         "timeMultiplier": 2,
         "sessionType": "R",
-        "sessionDurationMinutes": 1
+        "sessionDurationMinutes": 15
         }
     ],
     "configVersion": 1

@@ -35,7 +35,7 @@ def init():
 
 
 def makeEventConfig(trackData, weatherData) :
-    """ Create event file """
+    """ Create event and assist file from template"""
     with open(templatePath + 'event.json') as json_file1:
         finalEvent = json.load(json_file1)
         json_file1.close()
@@ -197,7 +197,7 @@ def checkResult():
         olderResult = json.load(json_file)
         json_file.close()
     if len(raceFile) > 0 :
-        with open(accServerPathResult + raceFile, 'r', encoding="utf-16") as json_file: #accServerPathResult + raceFile
+        with open(accServerPathResult + raceFile, 'r') as json_file: #accServerPathResult + raceFile, encoding="utf-16"
             correctFile = json_file.read()
             resultFile = json.loads(correctFile)
             json_file.close()
@@ -288,6 +288,7 @@ def resetChampionnship():
     return True
 
 def launchServer():
+    """ Copy template config files in the server folder """
     for fileName in configFiles:
         os.remove(accServerPathCfg + fileName)
         copyfile(templatePath + fileName, accServerPathCfg + fileName)
