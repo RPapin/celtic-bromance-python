@@ -17,6 +17,7 @@ templatePath = "Template/"
 savesPath = "saves/"
 # Static cfg files, just need to put in the server folder
 configFiles=["assistRules.json", "configuration.json", "settings.json"] 
+ballastInGameLimit = 30
 
 
 def init():
@@ -74,10 +75,7 @@ def makeEventConfig(trackData, weatherData) :
     with open(accServerPathCfg + 'event.json', 'w') as outfile:
         json.dump(templateEvent, outfile)
         outfile.close()
-    #Save every config files in the server folder
-    for fileName in configFiles:
-        os.remove(accServerPathCfg + fileName)
-        copyfile(templatePath + fileName, accServerPathCfg + fileName)
+
 
     return eventInfo
 
@@ -126,11 +124,11 @@ def makeNewRace(carsData, raceNumber) :
         userData['restrictor'] = 0
         if "ballast" not in userData:
             userData['ballast'] = 0
-        elif userData['ballast'] > 100 :
-            userData['restrictor'] = int((userData['ballast'] - 100) / 5)
+        elif userData['ballast'] > ballastInGameLimit :
+            userData['restrictor'] = int((userData['ballast'] - ballastInGameLimit) / 3)
             if userData['restrictor'] > 20 :
                 userData['restrictor'] = 20
-            userData['ballast'] = 100
+            userData['ballast'] = ballastInGameLimit
         userEntry = {
             "drivers" : [{
                 "firstName": userData["First name"],
@@ -154,6 +152,7 @@ def makeNewRace(carsData, raceNumber) :
         # I put myself as admin
         if userData["Steam id "] == adminId :
             userEntry["isServerAdmin"] = 1
+            print(userEntry)
         finalEntryList["entries"].append(userEntry)
         finalUserInfo.append(userInfo)
         startingPlace += 1
@@ -315,7 +314,6 @@ def getParams():
         with open(fileName) as json_file:
             currentValues = json.load(json_file)
             json_file.close()
-        if 'sessions' in currentValues :
         for param in paramList[fileName]: 
             if param['name'] == 'practiceDuration' : 
                 param['currentValue'] = currentValues['sessions'][0]['sessionDurationMinutes']
@@ -326,10 +324,33 @@ def getParams():
               
     return paramList
 
-def updateParameters(fileToUpdate, newParameters):
-    print(fileToUpdate)
-    print(newParameters)
+def updateParameters(newParameters):
+    #update and write new parameter
+    for param in newParameters:
+        with open(param['file'], 'r') as json_file:
+            olderValue = json.load(json_file)
+            if param['name'] == 'pointConfiguration': 
+                param['value'] = param['value'].split(',')
+                param['value'] = [int(i) for i in param['value']]
+                print(param['value'])
+            #update the good field
+            if param['name'] == 'practiceDuration': 
+                olderValue['sessions'][0]['sessionDurationMinutes'] = param['value']
+            elif param['name'] == 'raceDuration' :
+                olderValue['sessions'][1]['sessionDurationMinutes'] = param['value']
+            else :
+                olderValue.update({param['name'] : param['value']})
+            json_file.close()
+        with open(param['file'], 'w') as json_file:
+            json.dump(olderValue, json_file)
+            json_file.close()
+
+
 def launchServer():
     """ Call a powershell script to launch the server """
+        #Save every config files in the server folder
+    for fileName in configFiles:
+        os.remove(accServerPathCfg + fileName)
+        copyfile(templatePath + fileName, accServerPathCfg + fileName)
     subprocess.call('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/launch_server.sh"', shell=True)
     return True

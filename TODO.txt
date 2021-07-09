@@ -1,8 +1,7 @@
-FIX RESULT FILE READ ISSUE
+btn restore parameters 
+Ui upgrade
+
+
 
 View older championnship result
 
-Configure parameters through website
-
-Wrond starting order
-Check result failed with corrupt files (cf document)
