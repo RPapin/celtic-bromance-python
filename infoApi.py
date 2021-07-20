@@ -1,21 +1,17 @@
 from flask import Flask, request
+from flask_sse import sse
 import json
-from os import path, listdir
-import os.path
-from os.path import isfile, join
 import accRandomizer as accR
 from flask_cors import CORS, cross_origin
 from flask import jsonify
 from flask_ngrok import run_with_ngrok
+from apscheduler.schedulers.background import BackgroundScheduler
 from threading import Timer
-import atexit
-import subprocess
-from pathlib import Path
-import tempfile
 import time
 import requests
 from pyngrok import ngrok
 from dotenv import dotenv_values
+import datetime
 
 config = dotenv_values(".env")
 
@@ -23,12 +19,17 @@ ngrok.set_auth_token(config['NGROK_AUTH_TOKEN'])
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
+app.config["REDIS_URL"] = "redis://localhost"
+app.register_blueprint(sse, url_prefix='/events')
 run_with_ngrok(app)
-# app.config["DEBUG"] = True
 
-onlyfiles = [f for f in listdir(os.getcwd()) if isfile(join(os.getcwd(), f))]
-pathData = os.path.join(os.getcwd(), 'data.json')
+
 ngrok_address = ''
+def server_side_event(data, topicName):
+    """ Function to publish server side event """
+    with app.app_context():
+        sse.publish(data, type=topicName)
+        print("Event Scheduled at ",datetime.datetime.now())
 
 @app.route('/', methods=['GET'])
 def home():
@@ -49,6 +50,10 @@ def display_result():
 def launch_server():
     serverStatus = accR.launchServer()
     return jsonify(serverStatus)
+@app.route('/shutdown_server', methods=['GET'])
+def shutdown_server():
+    serverStatus = accR.shutDownServer()
+    return jsonify(serverStatus)
 @app.route('/reset_championnship', methods=['GET'])
 def reset_championnship():
     serverStatus = accR.resetChampionnship()
@@ -61,7 +66,25 @@ def get_param_list():
 def update_parameter():
     serverStatus = accR.updateParameters(request.json)
     return jsonify(serverStatus)
+@app.route('/update_track_parameter', methods=['POST'])
+def update_track_parameter():
+    serverStatus = accR.updateTrackParameters(request.json)
+    return jsonify(serverStatus)
+@app.route('/update_car_parameter', methods=['POST'])
+def update_car_parameter():
+    serverStatus = accR.updateCarParameters(request.json)
+    return jsonify(serverStatus)
+@app.route('/update_user_parameter', methods=['POST'])
+def update_user_parameter():
+    serverStatus = accR.updateEntryParameters(request.json)
+    return jsonify(serverStatus)
+
 @app.route('/api/v1/resources/books', methods=['GET'])
+def schedule_check():
+    # ADD CHECK RESULT EVERY 20 SEC
+    sched = BackgroundScheduler(daemon=True)
+    sched.add_job(accR.checkResult,'interval',seconds=20)
+    sched.start()
 def api_id():
     # Check if an ID was provided as part of the URL.
     # If ID is provided, assign it to a variable.
@@ -83,7 +106,6 @@ def ngrok_url():
     
     tunnel_url = j['tunnels'][0]['public_url'] + "/" # Do the parsing of the get
     tunnel_url = tunnel_url.replace('http://', 'https://')
-    print(tunnel_url)
     API_ENDPOINT = "https://celtic-bromance-url.herokuapp.com/post_url"
     
     # data to be sent to api
@@ -92,7 +114,8 @@ def ngrok_url():
     # sending post request and saving response as response object
     r = requests.post(url = API_ENDPOINT, data = data)
     pastebin_url = r.text
-    print(pastebin_url)
+    schedule_check()
+
 
 if __name__ == "__main__":
     thread = Timer(5, ngrok_url)

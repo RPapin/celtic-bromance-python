@@ -1,7 +1,8 @@
 btn restore parameters 
-Ui upgrade
+Test last position no point 
+Make another draw 
 
 
-
+finalsave wrong day (current day)
 View older championnship result
 

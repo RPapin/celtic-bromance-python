@@ -15,3 +15,15 @@
             "name" :"weatherRandomness",
             "type" : {"min": 3, "max": 7}
         }]
+
+        "50" : {"model" : "Alpine A110 GT4", "class" : "gt4"},
+    "51" : {"model" : "Aston Martin V8 Vantage GT4", "class" : "gt4"},
+    "52" : {"model" : "Audi R8 LMS GT4", "class" : "gt4"},
+    "53" : {"model" :  "BMW M4 GT4", "class" : "gt4"},
+    "55" : {"model" :  "Chevrolet Camaro GT4.R", "class" : "gt4"},
+    "56" : {"model" : "Ginetta G55 GT4", "class" : "gt4"},
+    "57" : {"model" : "KTM X-Bow GT4", "class" : "gt4"},
+    "58" : {"model" : "Maserati Granturismo MC GT4", "class" : "gt4"},
+    "59" : {"model" : "McLaren 570S GT4", "class" : "gt4"},
+    "60" : {"model" : "Mercedes AMG GT4", "class" : "gt4"},
+    "61" : {"model" : "Porsche 718 Cayman GT4 Clubsport", "class" : "gt4"},

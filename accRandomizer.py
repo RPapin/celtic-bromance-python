@@ -7,6 +7,10 @@ import os
 from shutil import copyfile
 import re
 from datetime import date
+from typing import final
+import psutil 
+import time
+import infoApi as Info
 
 today = date.today()
 accServerPath = "D:/Steam/steamapps/common/Assetto Corsa Competizione Dedicated Server/server/"
@@ -18,7 +22,7 @@ savesPath = "saves/"
 # Static cfg files, just need to put in the server folder
 configFiles=["assistRules.json", "configuration.json", "settings.json"] 
 ballastInGameLimit = 30
-
+server = None
 
 def init():
     with open(dataPath + 'cars.json') as json_file:
@@ -42,10 +46,15 @@ def makeEventConfig(trackData, weatherData) :
         json_file1.close()
     eventInfo = {}
     # Choose track
-    listTrack = random.choice(list(trackData.keys()))
-    finalTrack = random.choice(trackData[listTrack])
+    trackList = []
+    for track in trackData :
+        if trackData[track]["available"]:
+            trackList.append(track)
+    listTrack = random.choice(trackList)
+    finalTrack = random.choice(trackData[listTrack]["tracks"])
     templateEvent["track"] = finalTrack
     eventInfo["track"] = finalTrack
+    
     # Choose weather
     templateEvent["ambientTemp"] = random.randint(weatherData['ambientTemp']["min"], weatherData['ambientTemp']["max"])
     templateEvent["cloudLevel"] = round(random.uniform(weatherData['cloudLevel']["min"], weatherData['cloudLevel']["max"]), 1)
@@ -75,14 +84,18 @@ def makeEventConfig(trackData, weatherData) :
     with open(accServerPathCfg + 'event.json', 'w') as outfile:
         json.dump(templateEvent, outfile)
         outfile.close()
-
-
     return eventInfo
 
 def makeNewRace(carsData, raceNumber) : 
     """ Create random entrylist + random track and cars """
     with open(dataPath + 'defaultEntryList.json') as json_file:
-        data = json.load(json_file)
+        tempEntry = json.load(json_file)
+        entryList = []
+        # Iterate over all the items in dictionary and filter items which has even keys
+        for user in tempEntry:
+            if user['available']:
+                entryList.append(user)
+
         json_file.close()
     # Get admin id
     with open(dataPath + 'championnshipConfiguration.json') as json_file:
@@ -90,12 +103,16 @@ def makeNewRace(carsData, raceNumber) :
         json_file.close()
     adminId = championnshipData['serverAdmin']
     # choose car class
-    carClass = random.choice(list(carsData.keys()))
+    carList = []
+    for car in carsData :
+        if carsData[car]["available"]:
+            carList.append(car)
+    carClass = random.choice(carList)
     carClass = carsData[carClass]["class"]
-    carClassList  = dict(filter(lambda elem: elem[1]["class"] == carClass,carsData.items()))
+    carClassList = dict(filter(lambda elem: elem[1]["class"] == carClass and elem[1]["available"],carsData.items()))
     #First race
     if raceNumber == 1:
-        random.shuffle(data)
+        random.shuffle(entryList)
     #next race
     else :
         with open(dataPath + 'result.json') as json_file:
@@ -103,7 +120,7 @@ def makeNewRace(carsData, raceNumber) :
             json_file.close()
         currentNbDriver = len(resultData['championnshipStanding'])
         j = 1
-        for driverData in data:
+        for driverData in entryList:
             driver_position = next((index for (index, d) in enumerate(resultData['championnshipStanding']) if d["playerId"] == 'S' + driverData['Steam id ']), -1) 
             if driver_position == -1 :
                 driverData['position'] = currentNbDriver + j 
@@ -111,7 +128,7 @@ def makeNewRace(carsData, raceNumber) :
             else :
                 driverData['position'] = currentNbDriver - driver_position 
                 driverData['ballast'] = int(resultData['championnshipStanding'][driver_position]['point'])
-        data = sorted(data, key=lambda k: k['position']) 
+        entryList = sorted(entryList, key=lambda k: k['position']) 
 
     finalEntryList = {
         "entries" : [],
@@ -119,7 +136,7 @@ def makeNewRace(carsData, raceNumber) :
     }
     finalUserInfo = []
     startingPlace = 1
-    for userData in data :
+    for userData in entryList :
         userCar = random.choice(list(carClassList.keys()))
         userData['restrictor'] = 0
         if "ballast" not in userData:
@@ -152,12 +169,11 @@ def makeNewRace(carsData, raceNumber) :
         # I put myself as admin
         if userData["Steam id "] == adminId :
             userEntry["isServerAdmin"] = 1
-            print(userEntry)
         finalEntryList["entries"].append(userEntry)
         finalUserInfo.append(userInfo)
         startingPlace += 1
-        if len(carClassList) > 1:
-            carClassList.pop(userCar)
+        # if len(carClassList) > 1:
+        #     carClassList.pop(userCar)
 
     with open(accServerPathCfg + 'entrylist.json', 'w') as outfile:
         json.dump(finalEntryList, outfile)
@@ -165,6 +181,7 @@ def makeNewRace(carsData, raceNumber) :
     return finalUserInfo
 
 def nextRound(isFirstRound = False):
+    print("nextRound")
     carsData, trackData, weatherData = init()
     roundNumber = 1 if isFirstRound else 2
     info =  "A new Championnship has begun !" if isFirstRound else  "A new round has begun !"
@@ -182,22 +199,12 @@ def nextRound(isFirstRound = False):
 
     return nextRoundInfo
 
-# def startChampionnship():
-#     nextRound(True)
-#     carsData, trackData, weatherData = init()
-#     usersInfo = makeNewRace(carsData, 1)
-#     eventConfig = makeEventConfig(trackData, weatherData)
-#     firstRoundInfo = {
-#         "eventInfo": eventConfig,
-#         "usersInfo": usersInfo,
-#         "foundNewResults" : "A new Championnship has begun !"
-#     }
-#         # Save next round config
-#     with open(savesPath + 'nextRound.json', 'w') as outfile:
-#         json.dump(firstRoundInfo, outfile)
-#         outfile.close()
-#     return firstRoundInfo
 def checkResult():
+    #Check the server status
+    serverStatus = False
+    if "accServer.exe" in (p.name() for p in psutil.process_iter()) : 
+        serverStatus = True
+    #Check new race file in the server folder
     onlyfiles = [f for f in listdir(accServerPathResult) if isfile(join(accServerPathResult, f))]
     raceFile = ""
     for fileName in onlyfiles:
@@ -261,11 +268,14 @@ def checkResult():
         #Prepare next race
         nextRoundInfo = nextRound()
         raceNumber = str(raceNumber + 1)
-        return {
+        response = {
             "standings" : olderResult,
             "nextRoundInfo" : nextRoundInfo,
-            "foundNewResults" : "New results has been found. Race " + raceNumber + " informations are available"
-        }
+            "foundNewResults" : "New results has been found. Race " + raceNumber + " informations are available",
+            "serverStatus" : serverStatus
+            }
+        Info.server_side_event(response, 'dataUpdate') 
+        return response
     elif isfile(savesPath + 'nextRound.json'):
         with open(savesPath + 'nextRound.json') as json_file:
             nextRoundInfo = json.load(json_file)
@@ -275,14 +285,16 @@ def checkResult():
         return {
             "standings" : olderResult,
             "nextRoundInfo" : nextRoundInfo,
-            "foundNewResults" : False
+            "foundNewResults" : False,
+            "serverStatus" : serverStatus
         }
     #No current championnship
     else :
         return {
             "standings" : None,
             "nextRoundInfo" : None,
-            "foundNewResults" : False
+            "foundNewResults" : False,
+            "serverStatus" : serverStatus
         }
 def resetChampionnship():
     with open(dataPath + 'result.json') as json_file:
@@ -307,32 +319,41 @@ def resetChampionnship():
     return True
 
 def getParams():
+    paramList = {}
     with open(dataPath + 'availableParameters.json') as json_file:
-        paramList = json.load(json_file)
+        paramList['paramList'] = json.load(json_file)
         json_file.close()
-    for fileName in paramList:
+    for fileName in paramList['paramList']:
         with open(fileName) as json_file:
             currentValues = json.load(json_file)
             json_file.close()
-        for param in paramList[fileName]: 
+        for param in paramList['paramList'][fileName]: 
             if param['name'] == 'practiceDuration' : 
                 param['currentValue'] = currentValues['sessions'][0]['sessionDurationMinutes']
             elif param['name'] == 'raceDuration' : 
                 param['currentValue'] = currentValues['sessions'][1]['sessionDurationMinutes']
             else :
                 param['currentValue'] = currentValues[param['name']]
-              
+    with open(dataPath + 'cars.json') as json_file:
+        paramList['cars'] = json.load(json_file)
+        json_file.close()
+    with open(dataPath + 'tracks.json') as json_file:
+        paramList['tracks'] = json.load(json_file)
+        json_file.close()
+    with open(dataPath + 'defaultEntryList.json') as json_file:
+        paramList['entry'] = json.load(json_file)
+        json_file.close()
     return paramList
+
 
 def updateParameters(newParameters):
     #update and write new parameter
     for param in newParameters:
         with open(param['file'], 'r') as json_file:
             olderValue = json.load(json_file)
-            if param['name'] == 'pointConfiguration': 
+            if param['name'] == 'pointConfiguration' and type(param['value']) is str: 
                 param['value'] = param['value'].split(',')
                 param['value'] = [int(i) for i in param['value']]
-                print(param['value'])
             #update the good field
             if param['name'] == 'practiceDuration': 
                 olderValue['sessions'][0]['sessionDurationMinutes'] = param['value']
@@ -344,7 +365,43 @@ def updateParameters(newParameters):
         with open(param['file'], 'w') as json_file:
             json.dump(olderValue, json_file)
             json_file.close()
+def updateTrackParameters(newParameters):
+    #update and write new parameter
+    with open(dataPath + "tracks.json", 'r') as json_file:
+        trackList = json.load(json_file)
+        json_file.close()
+    
+    for param in newParameters:
+        trackList[param["index"]]["available"] = param["available"]
 
+    with open(dataPath + "tracks.json", 'w') as json_file:
+        json.dump(trackList, json_file)
+        json_file.close()
+def updateCarParameters(newParameters):
+    #update and write new parameter
+    with open(dataPath + "cars.json", 'r') as json_file:
+        carList = json.load(json_file)
+        json_file.close()
+    
+    for param in newParameters:
+        carList[param["index"]]["available"] = param["available"]
+
+    with open(dataPath + "cars.json", 'w') as json_file:
+        json.dump(carList, json_file)
+        json_file.close()
+def updateEntryParameters(newParameters):
+    #update and write new parameter
+    with open(dataPath + "defaultEntryList.json", 'r') as json_file:
+        entryList = json.load(json_file)
+        json_file.close()
+    i = 0
+    for param in newParameters:
+        entryList[i]["available"] = param["available"]
+        i += 1
+
+    with open(dataPath + "defaultEntryList.json", 'w') as json_file:
+        json.dump(entryList, json_file)
+        json_file.close()
 
 def launchServer():
     """ Call a powershell script to launch the server """
@@ -353,4 +410,18 @@ def launchServer():
         os.remove(accServerPathCfg + fileName)
         copyfile(templatePath + fileName, accServerPathCfg + fileName)
     subprocess.call('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/launch_server.sh"', shell=True)
-    return True
+
+    Info.server_side_event({
+        "serverStatus": True
+    }, 'updateServerStatus') 
+    return {"serverStatus" : True}
+
+def shutDownServer():
+    """ shut Down the server """
+        #Save every config files in the server folder
+    if "accServer.exe" in (p.name() for p in psutil.process_iter()) : 
+        os.system("TASKKILL /F /IM accServer.exe")
+    Info.server_side_event({
+        "serverStatus": False
+    }, "updateServerStatus") 
+    return {"serverStatus" : False}
