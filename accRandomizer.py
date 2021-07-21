@@ -11,6 +11,7 @@ from typing import final
 import psutil 
 import time
 import infoApi as Info
+from datetime import datetime
 
 today = date.today()
 accServerPath = "D:/Steam/steamapps/common/Assetto Corsa Competizione Dedicated Server/server/"
@@ -180,7 +181,7 @@ def makeNewRace(carsData, raceNumber) :
         outfile.close()
     return finalUserInfo
 
-def nextRound(isFirstRound = False):
+def nextRound(isFirstRound = False, isNewDraw=False):
     print("nextRound")
     carsData, trackData, weatherData = init()
     roundNumber = 1 if isFirstRound else 2
@@ -196,7 +197,8 @@ def nextRound(isFirstRound = False):
     with open(savesPath + 'nextRound.json', 'w') as outfile:
         json.dump(nextRoundInfo, outfile)
         outfile.close()
-
+    if isNewDraw:
+        Info.server_side_event(nextRoundInfo, 'newDraw') 
     return nextRoundInfo
 
 def checkResult():
@@ -238,7 +240,7 @@ def checkResult():
 
         for driverResult in resultFile["sessionResult"]["leaderBoardLines"]:
             #Set race point
-            if pos < len(championnshipData["pointConfiguration"]):
+            if pos <= len(championnshipData["pointConfiguration"]):
                 racePoint = championnshipData["pointConfiguration"][pos - 1]
             else :
                 racePoint = 0
@@ -402,6 +404,25 @@ def updateEntryParameters(newParameters):
     with open(dataPath + "defaultEntryList.json", 'w') as json_file:
         json.dump(entryList, json_file)
         json_file.close()
+def getOlderResult():
+    onlyfiles = [f for f in listdir(savesPath) if isfile(join(savesPath, f))]
+    allResults = []
+    raceFile = []
+    #retrieve all finalSave file
+    for fileName in onlyfiles:
+        splitList = fileName.split("_")
+        if splitList[0] == "finalSave":
+            with open(savesPath + fileName, 'r') as json_file:
+                olderResult = json.load(json_file)
+                json_file.close() 
+            olderResult['date'] = splitList[1] + '/' + splitList[2] + '/' + splitList[3].replace('.json', '')
+            
+            allResults.append(olderResult)
+            # raceFile.append(fileName)
+    #Sorte result by datetime
+    allResults = sorted(allResults, key=lambda k:  datetime.strptime(k['date'], "%d/%m/%Y"))
+    return allResults
+
 
 def launchServer():
     """ Call a powershell script to launch the server """

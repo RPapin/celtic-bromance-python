@@ -12,6 +12,11 @@ import requests
 from pyngrok import ngrok
 from dotenv import dotenv_values
 import datetime
+from redis import Redis
+from rq import Queue, Worker
+import subprocess
+
+
 
 config = dotenv_values(".env")
 
@@ -38,14 +43,17 @@ def home():
 @app.route('/start_championnship', methods=['GET'])
 @cross_origin()
 def start_championnship():
-
     firstRoundSettings = accR.nextRound(True)
     return jsonify(firstRoundSettings)
 @app.route('/display_result', methods=['GET'])
 def display_result():
     fullResult = accR.checkResult()
     return fullResult
-        
+
+@app.route('/new_draw', methods=['GET'])
+def new_draw():
+    fullResult = accR.nextRound(False, True)
+    return fullResult        
 @app.route('/launch_server', methods=['GET'])
 def launch_server():
     serverStatus = accR.launchServer()
@@ -78,6 +86,10 @@ def update_car_parameter():
 def update_user_parameter():
     serverStatus = accR.updateEntryParameters(request.json)
     return jsonify(serverStatus)
+@app.route('/get_older_result', methods=['GET'])
+def get_older_result():
+    olderResult = accR.getOlderResult()
+    return jsonify(olderResult)
 
 @app.route('/api/v1/resources/books', methods=['GET'])
 def schedule_check():
@@ -116,9 +128,15 @@ def ngrok_url():
     pastebin_url = r.text
     schedule_check()
 
+def startRedis():
+    #Lunch redis server
+    subprocess.call("Redis-x64-3.0.504\\redis-server.exe", shell=True)
 
 if __name__ == "__main__":
     thread = Timer(5, ngrok_url)
     thread.setDaemon(True)
     thread.start()
+    threadTwo = Timer(1, startRedis)
+    threadTwo.setDaemon(True)
+    threadTwo.start()
     app.run()

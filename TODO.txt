@@ -1,8 +1,7 @@
 btn restore parameters 
-Test last position no point 
-Make another draw 
+add fixed number
 
 
 finalsave wrong day (current day)
-View older championnship result
+
 
