@@ -165,7 +165,8 @@ def makeNewRace(carsData, raceNumber) :
             "starting_place": startingPlace,
             "car" : carClassList[userCar]["model"],
             "ballast" : userData['ballast'],
-            "restrictor" : userData['restrictor'] 
+            "restrictor" : userData['restrictor'],
+            "playerID": userData["Steam id "]
         }
         # I put myself as admin
         if userData["Steam id "] == adminId :
@@ -186,6 +187,13 @@ def nextRound(isFirstRound = False, isNewDraw=False):
     carsData, trackData, weatherData = init()
     roundNumber = 1 if isFirstRound else 2
     info =  "A new Championnship has begun !" if isFirstRound else  "A new round has begun !"
+    #Be sure to have the right json
+    if isFirstRound : 
+        olderResult = {}
+        olderResult["championnshipStanding"] = olderResult["raceResult"] = olderResult["trackList"] = []
+        with open(dataPath + 'result.json', 'w') as outfile:
+            json.dump(olderResult, outfile)
+            outfile.close()
     usersInfo = makeNewRace(carsData, roundNumber)
     eventConfig = makeEventConfig(trackData, weatherData)
     nextRoundInfo = {
@@ -226,10 +234,14 @@ def checkResult():
         with open(dataPath + 'championnshipConfiguration.json') as json_file:
             championnshipData = json.load(json_file)
             json_file.close()
+        with open(savesPath + 'nextRound.json') as json_file:
+            entryRaceData = json.load(json_file)
+            json_file.close()
 
         raceNumber = len(olderResult['raceResult']) + 1 
         currentResult = []
         driverStandings = {}
+        entryTrack = entryRaceData['eventInfo']['track']
         pos = 1
         index = 0    
         #List driver and pos before current race
@@ -247,6 +259,10 @@ def checkResult():
             #race result
             driverResult["currentDriver"]["position"] = pos
             driverResult["currentDriver"]["point"] = racePoint
+            #Search his car and starting pos
+            entryDriver = next(item for item in entryRaceData['usersInfo'] if 'S' + item["playerID"] == driverResult["currentDriver"]["playerId"])
+            driverResult["currentDriver"]["carName"] = entryDriver['car']
+            driverResult["currentDriver"]["starting_place"] = entryDriver['starting_place']
             currentResult.append(driverResult["currentDriver"])
             #championnship Standing
             driverId = driverResult["currentDriver"]["playerId"]
@@ -256,10 +272,11 @@ def checkResult():
                 driverResult["currentDriver"]["point"] = racePoint
                 olderResult['championnshipStanding'].append(driverResult["currentDriver"])
             pos +=1
-
         olderResult["raceResult"].append({
             raceNumber : currentResult
         })
+        olderResult["trackList"].append(entryTrack)
+
         #Sort standings
         olderResult['championnshipStanding'] = sorted(olderResult['championnshipStanding'], key=lambda k: k['point'], reverse=True) 
         with open(dataPath + 'result.json', 'w') as outfile:
@@ -314,7 +331,7 @@ def resetChampionnship():
     with open(savesPath + saveName, 'w') as outfile:
         json.dump(olderResult, outfile)
         outfile.close()
-    olderResult["championnshipStanding"] = olderResult["raceResult"] = []
+    olderResult["championnshipStanding"] = olderResult["raceResult"] = olderResult["trackList"] = []
     with open(dataPath + 'result.json', 'w') as outfile:
         json.dump(olderResult, outfile)
         outfile.close()

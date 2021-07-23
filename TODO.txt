@@ -1,5 +1,5 @@
 btn restore parameters 
-add fixed number
+Add best remontada and best race lap
 
 
 finalsave wrong day (current day)
