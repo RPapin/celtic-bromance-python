@@ -12,8 +12,6 @@ import requests
 from pyngrok import ngrok
 from dotenv import dotenv_values
 import datetime
-from redis import Redis
-from rq import Queue, Worker
 import subprocess
 
 

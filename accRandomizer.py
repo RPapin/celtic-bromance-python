@@ -5,11 +5,9 @@ from os.path import isfile, join
 import subprocess
 import os
 from shutil import copyfile
-import re
 from datetime import date
 from typing import final
 import psutil 
-import time
 import infoApi as Info
 from datetime import datetime
 
@@ -21,7 +19,7 @@ dataPath = "Data/"
 templatePath = "Template/"
 savesPath = "saves/"
 # Static cfg files, just need to put in the server folder
-configFiles=["assistRules.json", "configuration.json", "settings.json"] 
+configFiles=["assistRules.json", "configuration.json"] 
 ballastInGameLimit = 30
 server = None
 
@@ -35,8 +33,6 @@ def init():
     with open(dataPath + 'weatherConfiguration.json') as json_file:
         weatherData = json.load(json_file)
         json_file.close()
-
-
     return carsData, trackData, weatherData
 
 
@@ -114,7 +110,7 @@ def makeNewRace(carsData, raceNumber) :
     #First race
     if raceNumber == 1:
         random.shuffle(entryList)
-    #next race
+    #next race ==> Sort entry list in reverse championnship grid
     else :
         with open(dataPath + 'result.json') as json_file:
             resultData = json.load(json_file)
@@ -137,6 +133,7 @@ def makeNewRace(carsData, raceNumber) :
     }
     finalUserInfo = []
     startingPlace = 1
+    nbDriver = len(entryList)
     for userData in entryList :
         userCar = random.choice(list(carClassList.keys()))
         userData['restrictor'] = 0
@@ -147,16 +144,25 @@ def makeNewRace(carsData, raceNumber) :
             if userData['restrictor'] > 20 :
                 userData['restrictor'] = 20
             userData['ballast'] = ballastInGameLimit
+        #Determine driver class : First tier = Amateur, Second Tier = Silver, Final = Pro
+        if startingPlace < nbDriver / 3:
+            driverCategorie = 0
+        elif startingPlace < (nbDriver / 3 * 2):
+            driverCategorie = 1
+        else:
+            driverCategorie = 2
         userEntry = {
             "drivers" : [{
                 "firstName": userData["First name"],
                 "lastName": userData["Surname"],
                 "playerID": "S" + userData["Steam id "],
+                "driverCategory": driverCategorie
             }],
             "forcedCarModel": int(userCar),
             "overrideDriverInfo": 1,
             "ballastKg" : userData['ballast'],
             "restrictor" : userData['restrictor'],
+            
             "defaultGridPosition": startingPlace
         }
         userInfo = {
@@ -171,6 +177,9 @@ def makeNewRace(carsData, raceNumber) :
         # I put myself as admin
         if userData["Steam id "] == adminId :
             userEntry["isServerAdmin"] = 1
+        #Forced race number
+        if "Race number" in userData:
+            userEntry["raceNumber"] = userData['Race number']
         finalEntryList["entries"].append(userEntry)
         finalUserInfo.append(userInfo)
         startingPlace += 1

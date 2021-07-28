@@ -1,1 +1,26 @@
-{"track": "mount_panorama_2019", "preRaceWaitingTimeSeconds": 60, "sessionOverTimeSeconds": 120, "ambientTemp": 22, "cloudLevel": 0.1, "rain": 0.0, "weatherRandomness": 1, "sessions": [{"hourOfDay": 6, "dayOfWeekend": 2, "timeMultiplier": 1, "sessionType": "P", "sessionDurationMinutes": 10}, {"hourOfDay": 18, "dayOfWeekend": 3, "timeMultiplier": 2, "sessionType": "R", "sessionDurationMinutes": 15}], "configVersion": 1}
+{
+  "track": "mount_panorama_2019",
+  "preRaceWaitingTimeSeconds": 60,
+  "sessionOverTimeSeconds": 120,
+  "ambientTemp": 22,
+  "cloudLevel": 0.1,
+  "rain": 0.0,
+  "weatherRandomness": 1,
+  "sessions": [
+    {
+      "hourOfDay": 6,
+      "dayOfWeekend": 2,
+      "timeMultiplier": 1,
+      "sessionType": "P",
+      "sessionDurationMinutes": 10
+    },
+    {
+      "hourOfDay": 18,
+      "dayOfWeekend": 3,
+      "timeMultiplier": 2,
+      "sessionType": "R",
+      "sessionDurationMinutes": 15
+    }
+  ],
+  "configVersion": 1
+}

@@ -1,5 +1,4 @@
 from flask import Flask, request
-import json
 from flask import jsonify
 from flask_cors import CORS, cross_origin
 import os

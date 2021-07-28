@@ -1,0 +1,29 @@
+{
+  "track": "mount_panorama_2019",
+  "preRaceWaitingTimeSeconds": 80,
+  "sessionOverTimeSeconds": 120,
+  "postQualySeconds": 30,
+  "postRaceSeconds": 120,
+  "ambientTemp": 22,
+  "cloudLevel": 0.3,
+  "rain": 0.3,
+  "weatherRandomness": 7,
+  "simracerWeatherConditions": 1,
+  "sessions": [
+    {
+      "hourOfDay": 13,
+      "dayOfWeekend": 2,
+      "timeMultiplier": 4,
+      "sessionType": "Q",
+      "sessionDurationMinutes": 15
+    },
+    {
+      "hourOfDay": 16,
+      "dayOfWeekend": 3,
+      "timeMultiplier": 8,
+      "sessionType": "R",
+      "sessionDurationMinutes": 45
+    }
+  ],
+  "configVersion": 1
+}
