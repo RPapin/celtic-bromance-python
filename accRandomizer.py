@@ -19,7 +19,7 @@ dataPath = "Data/"
 templatePath = "Template/"
 savesPath = "saves/"
 # Static cfg files, just need to put in the server folder
-configFiles=["assistRules.json", "configuration.json"] 
+configFiles=["assistRules.json", "configuration.json"] #, "settings.json"
 ballastInGameLimit = 30
 server = None
 
@@ -56,6 +56,7 @@ def makeEventConfig(trackData, weatherData) :
     templateEvent["ambientTemp"] = random.randint(weatherData['ambientTemp']["min"], weatherData['ambientTemp']["max"])
     templateEvent["cloudLevel"] = round(random.uniform(weatherData['cloudLevel']["min"], weatherData['cloudLevel']["max"]), 1)
     #Choose rain level, 0.0 (dry) has 5x more chance to get
+    rain = weatherData['rain']["max"]
     for i in range(weatherData['rollNumber']):
         rain = round(random.uniform(weatherData['rain']["min"], weatherData['rain']["max"]), 1)
         if rain == 0 :
