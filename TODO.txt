@@ -1,3 +1,8 @@
+Account management:
+- Joker : 
+ - Swap Car 
+ - Swap point 
+
 btn restore parameters 
 Add best remontada and best race lap
 Fix Car number

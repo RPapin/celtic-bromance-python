@@ -431,6 +431,14 @@ def updateEntryParameters(newParameters):
     with open(dataPath + "defaultEntryList.json", 'w') as json_file:
         json.dump(entryList, json_file)
         json_file.close()
+
+def swapCar(parameters):
+    print(parameters)
+    
+def swapPoint(parameters):
+    print(parameters)
+
+
 def getOlderResult():
     onlyfiles = [f for f in listdir(savesPath) if isfile(join(savesPath, f))]
     allResults = []
@@ -450,6 +458,11 @@ def getOlderResult():
     allResults = sorted(allResults, key=lambda k:  datetime.strptime(k['date'], "%d/%m/%Y"))
     return allResults
 
+def fetchDrivers():
+    with open(dataPath + 'defaultEntryList.json') as json_file:
+        entryList = json.load(json_file)
+        json_file.close()
+    return entryList
 
 def launchServer():
     """ Call a powershell script to launch the server """

@@ -80,14 +80,24 @@ def update_track_parameter():
 def update_car_parameter():
     serverStatus = accR.updateCarParameters(request.json)
     return jsonify(serverStatus)
-@app.route('/update_user_parameter', methods=['POST'])
-def update_user_parameter():
-    serverStatus = accR.updateEntryParameters(request.json)
+
+@app.route('/swapCar', methods=['POST'])
+def swapCar():
+    serverStatus = accR.swapCar(request.json)
     return jsonify(serverStatus)
+@app.route('/swapPoint', methods=['POST'])
+def swapPoint():
+    serverStatus = accR.swapPoint(request.json)
+    return jsonify(serverStatus)
+
 @app.route('/get_older_result', methods=['GET'])
 def get_older_result():
     olderResult = accR.getOlderResult()
     return jsonify(olderResult)
+@app.route('/fetch_drivers', methods=['GET'])
+def fetch_drivers():
+    driverList = accR.fetchDrivers()
+    return jsonify(driverList)
 
 @app.route('/api/v1/resources/books', methods=['GET'])
 def schedule_check():
