@@ -9,7 +9,18 @@
             "name" : "serverAdmin",
             "label": "SteamId of the server Admin",
             "type" : "text"
-        }],
+        },
+        {
+            "name" : "swapCar",
+            "label": "Number of swap car joker allowed",
+            "type" : "number"
+        },
+        {
+            "name" : "swapPoint",
+            "label": "Number of swap point joker allowed",
+            "type" : "number"
+        }
+    ],
     "Template/event.json" : [
         {
             "name" : "practiceDuration",

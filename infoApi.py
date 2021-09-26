@@ -89,6 +89,10 @@ def swapCar():
 def swapPoint():
     serverStatus = accR.swapPoint(request.json)
     return jsonify(serverStatus)
+# @app.route('/get_entrylist', methods=['GET'])
+# def get_entrylist():
+#     entryList = accR.getEntrylist()
+#     return jsonify(entryList)
 
 @app.route('/get_older_result', methods=['GET'])
 def get_older_result():
