@@ -10,6 +10,8 @@ from typing import final
 import psutil 
 import infoApi as Info
 from datetime import datetime
+from numpy.random import choice
+from math import *
 
 today = date.today()
 accServerPath = "D:/Steam/steamapps/common/Assetto Corsa Competizione Dedicated Server/server/"
@@ -36,8 +38,10 @@ def init():
     return carsData, trackData, weatherData
 
 
-def makeEventConfig(trackData, weatherData) :
+def makeEventConfig(trackData, weatherData, championnshipConfiguration) :
     """ Create event and assist file from template"""
+    weatherWeightConfig = championnshipConfiguration['weatherWeightConfiguration']
+    weatherName = championnshipConfiguration['weatherPresetName']
     with open(templatePath + 'event.json') as json_file1:
         templateEvent = json.load(json_file1)
         json_file1.close()
@@ -52,15 +56,26 @@ def makeEventConfig(trackData, weatherData) :
     templateEvent["track"] = finalTrack
     eventInfo["track"] = finalTrack
     
+    draw = [len(weatherWeightConfig) - 1]
+    # Choose pre-configuration
+    if len(weatherWeightConfig) == len(weatherData):
+        weatherWeightPct = []
+        total = sum(weatherWeightConfig)
+        if total != 0:
+            for weight in weatherWeightConfig:
+                weatherWeightPct.append(round(weight/total, 3))
+            totalWeightMissing = round(1 - sum(weatherWeightPct), 3)
+            weatherWeightPct[len(weatherWeightConfig) - 1] += totalWeightMissing
+            draw = choice(len(weatherWeightConfig), 1, p=weatherWeightPct)
+
+    weatherWeightConfig[draw[0]] -= 1
+    championnshipConfiguration['weatherWeightConfiguration'] = weatherWeightConfig
+    weatherData = weatherData[weatherName[draw[0]]]
     # Choose weather
     templateEvent["ambientTemp"] = random.randint(weatherData['ambientTemp']["min"], weatherData['ambientTemp']["max"])
     templateEvent["cloudLevel"] = round(random.uniform(weatherData['cloudLevel']["min"], weatherData['cloudLevel']["max"]), 1)
-    #Choose rain level, 0.0 (dry) has 5x more chance to get
-    rain = weatherData['rain']["max"]
-    for i in range(weatherData['rollNumber']):
-        rain = round(random.uniform(weatherData['rain']["min"], weatherData['rain']["max"]), 1)
-        if rain == 0 :
-            break
+    #Choose rain level
+    rain = round(random.uniform(weatherData['rain']["min"], weatherData['rain']["max"]), 1)
     templateEvent["rain"] = rain
     templateEvent["weatherRandomness"] = random.randint(weatherData['weatherRandomness']["min"], weatherData['weatherRandomness']["max"])
     eventInfo.update({
@@ -71,14 +86,20 @@ def makeEventConfig(trackData, weatherData) :
     })
 
     # Choose daytime
-    daytime = random.randint(0,23)
-    timeMultipler = random.randint(0,24)
+    daytime = random.randint(10,23)
+    timeMultipler = random.randint(5,24)
     templateEvent["sessions"][0]["hourOfDay"] = templateEvent["sessions"][1]["hourOfDay"] = daytime
     templateEvent["sessions"][0]["timeMultiplier"] = templateEvent["sessions"][1]["timeMultiplier"] = timeMultipler
     eventInfo.update({
         "Time Multipler": templateEvent["sessions"][0]["timeMultiplier"],
         "Hour of Day": templateEvent["sessions"][0]["hourOfDay"]
     })
+
+    #update probability
+    with open(dataPath + 'championnshipConfiguration.json', 'w') as outfile:
+        json.dump(championnshipConfiguration, outfile)
+        outfile.close()
+
     with open(accServerPathCfg + 'event.json', 'w') as outfile:
         json.dump(templateEvent, outfile)
         outfile.close()
@@ -200,11 +221,11 @@ def nextRound(isFirstRound = False, isNewDraw=False):
     roundNumber = 1 if isFirstRound else 2
     info =  "A new Championnship has begun !" if isFirstRound else  "A new round has begun !"
     #Be sure to have the right json
+    with open(dataPath + 'championnshipConfiguration.json') as json_file:
+        championnshipConfiguration = json.load(json_file)
+        json_file.close()
     if isFirstRound : 
         #reset joker number
-        with open(dataPath + 'championnshipConfiguration.json') as json_file:
-            championnshipConfiguration = json.load(json_file)
-            json_file.close()
         with open(dataPath + 'defaultEntryList.json') as json_file:
             entrylist = json.load(json_file)
             json_file.close()
@@ -223,7 +244,7 @@ def nextRound(isFirstRound = False, isNewDraw=False):
             json.dump(olderResult, outfile)
             outfile.close()
     usersInfo = makeNewRace(carsData, roundNumber)
-    eventConfig = makeEventConfig(trackData, weatherData)
+    eventConfig = makeEventConfig(trackData, weatherData, championnshipConfiguration)
     nextRoundInfo = {
         "eventInfo": eventConfig,
         "usersInfo": usersInfo,
@@ -424,7 +445,7 @@ def updateParameters(newParameters):
     for param in newParameters:
         with open(param['file'], 'r') as json_file:
             olderValue = json.load(json_file)
-            if param['name'] == 'pointConfiguration' and type(param['value']) is str: 
+            if param['name'] in ['pointConfiguration', 'weatherWeightConfiguration'] and type(param['value']) is str: 
                 param['value'] = param['value'].split(',')
                 param['value'] = [int(i) for i in param['value']]
             #update the good field
@@ -438,6 +459,7 @@ def updateParameters(newParameters):
         with open(param['file'], 'w') as json_file:
             json.dump(olderValue, json_file)
             json_file.close()
+
 def updateTrackParameters(newParameters):
     #update and write new parameter
     with open(dataPath + "tracks.json", 'r') as json_file:
