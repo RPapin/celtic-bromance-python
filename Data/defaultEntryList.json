@@ -7,8 +7,8 @@
     "available": true,
     "Race number": "6",
     "isConnected": false,
-    "swapCar": 2,
-    "swapPoint": 1,
+    "swapCar": 0,
+    "swapPoint": 0,
     "isAdmin": true
   },
   {
@@ -49,8 +49,8 @@
     "Surname": "Mac",
     "available": true,
     "isConnected": false,
-    "swapCar": 2,
-    "swapPoint": 1
+    "swapCar": 0,
+    "swapPoint": 0
   },
   {
     "Horodateur": "6/4/2021 20:06:13",

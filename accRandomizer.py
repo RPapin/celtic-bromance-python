@@ -369,6 +369,7 @@ def checkResult():
             "foundNewResults" : False,
             "serverStatus" : serverStatus
         }
+
 def resetChampionnship():
     with open(dataPath + 'result.json') as json_file:
         olderResult = json.load(json_file)
@@ -519,6 +520,11 @@ def swapCar(parameters):
     with open(dataPath + "defaultEntryList.json", 'w') as outfile:
         json.dump(userList, outfile)
         outfile.close()
+
+    #Update everyone screen
+    nextRoundInfo = checkResult()
+    Info.server_side_event(nextRoundInfo, 'carSwap') 
+    return True
     
 def swapPoint(parameters):
     with open(dataPath + "defaultEntryList.json", 'r') as json_file:
@@ -541,8 +547,6 @@ def swapPoint(parameters):
     with open(dataPath + "defaultEntryList.json", 'w') as outfile:
         json.dump(userList, outfile)
         outfile.close()
-
-
 
 def getOlderResult():
     onlyfiles = [f for f in listdir(savesPath) if isfile(join(savesPath, f))]
