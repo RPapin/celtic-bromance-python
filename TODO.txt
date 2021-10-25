@@ -1,20 +1,7 @@
-Account management:
- - Joker : 
- - Swap Car 
- - Swap point 
-Notif after swap 
 
-Add scenario for weather :
-- Flooded
-- wet
-- dump 
-- dry
-
-Fix modal (add callback in parent component)
 btn restore parameters 
 Add best remontada and best race lap
 
 Fix Car number
-
 
 finalsave wrong day (current day)

@@ -41,7 +41,7 @@ def home():
 @app.route('/start_championnship', methods=['GET'])
 @cross_origin()
 def start_championnship():
-    firstRoundSettings = accR.nextRound(True)
+    firstRoundSettings = accR.nextRound(True, True)
     return jsonify(firstRoundSettings)
 @app.route('/display_result', methods=['GET'])
 def display_result():
