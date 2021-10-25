@@ -11,6 +11,11 @@
             "type" : "text"
         },
         {
+            "name" : "weatherWeightConfiguration",
+            "label": "Weather probability weight (Flooded, wet, damp, dry)",
+            "type" : "text"
+        },
+        {
             "name" : "swapCar",
             "label": "Number of swap car joker allowed",
             "type" : "number"
