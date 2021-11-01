@@ -316,7 +316,10 @@ def checkResult():
                 swapedDriverIndex = 0 if isTheDriverSwapped else 1 
                 swapedDriverId = entryRaceData['swapPoint'][indexSwap][swapedDriverIndex]
                 posSwappedDriver = next((i for i, item in enumerate(resultFile["sessionResult"]["leaderBoardLines"]) if item["currentDriver"]["playerId"] == 'S' + swapedDriverId ), None)
-                posSwappedDriver += 1
+                if type(posSwappedDriver) == int:
+                    posSwappedDriver += 1
+                else :
+                    posSwappedDriver = 999
                 #check if not last
                 if pos != len(resultFile["sessionResult"]["leaderBoardLines"]) and posSwappedDriver != len(resultFile["sessionResult"]["leaderBoardLines"]):
                     if isTheDriverSwapped :

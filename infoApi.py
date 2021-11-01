@@ -80,7 +80,11 @@ def update_track_parameter():
 def update_car_parameter():
     serverStatus = accR.updateCarParameters(request.json)
     return jsonify(serverStatus)
-
+@app.route('/update_user_parameter', methods=['POST'])
+def update_user_parameter():
+    serverStatus = accR.updateEntryParameters(request.json)
+    return jsonify(serverStatus)
+    
 @app.route('/swapCar', methods=['POST'])
 def swapCar():
     serverStatus = accR.swapCar(request.json)
