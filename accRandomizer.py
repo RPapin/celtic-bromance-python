@@ -233,6 +233,7 @@ def nextRound(isFirstRound = False, isNewDraw=False):
         for i,driver in enumerate(entrylist):
             entrylist[i]['swapCar'] = championnshipConfiguration['swapCar']
             entrylist[i]['swapPoint'] = championnshipConfiguration['swapPoint']
+            entrylist[i]['swapPointVictim'] = 0
 
         with open(dataPath + 'defaultEntryList.json', 'w') as outfile:
             json.dump(entrylist, outfile)
@@ -434,6 +435,9 @@ def getParams():
     with open(dataPath + 'tracks.json') as json_file:
         paramList['tracks'] = json.load(json_file)
         json_file.close()
+    with open(dataPath + 'weatherConfiguration.json') as json_file:
+        paramList['weather'] = json.load(json_file)
+        json_file.close()
     with open(dataPath + 'defaultEntryList.json') as json_file:
         paramList['entry'] = json.load(json_file)
         json_file.close()
@@ -554,7 +558,9 @@ def swapPoint(parameters):
 
     # Decrease joker counter
     driverOne = next((i for i, item in enumerate(userList) if item['Steam id '] == parameters[0]), None)
+    driverVictim = next((i for i, item in enumerate(userList) if item['Steam id '] == parameters[1]), None)
     userList[driverOne]['swapPoint'] -= 1
+    userList[driverVictim]['swapPointVictim'] += 1
 
     with open(savesPath + "nextRound.json", 'w') as json_file:
         json.dump(roundInfo, json_file)
