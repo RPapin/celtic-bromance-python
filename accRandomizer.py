@@ -317,7 +317,10 @@ def checkResult():
                 swapedDriverIndex = 0 if isTheDriverSwapped else 1 
                 swapedDriverId = entryRaceData['swapPoint'][indexSwap][swapedDriverIndex]
                 posSwappedDriver = next((i for i, item in enumerate(resultFile["sessionResult"]["leaderBoardLines"]) if item["currentDriver"]["playerId"] == 'S' + swapedDriverId ), None)
-                posSwappedDriver += 1
+                if type(posSwappedDriver) == int:
+                    posSwappedDriver += 1
+                else :
+                    posSwappedDriver = 999
                 #check if not last
                 if pos != len(resultFile["sessionResult"]["leaderBoardLines"]) and posSwappedDriver != len(resultFile["sessionResult"]["leaderBoardLines"]):
                     if isTheDriverSwapped :
@@ -391,6 +394,7 @@ def checkResult():
             "foundNewResults" : False,
             "serverStatus" : serverStatus
         }
+
 def resetChampionnship():
     with open(dataPath + 'result.json') as json_file:
         olderResult = json.load(json_file)
@@ -545,6 +549,11 @@ def swapCar(parameters):
     with open(dataPath + "defaultEntryList.json", 'w') as outfile:
         json.dump(userList, outfile)
         outfile.close()
+
+    #Update everyone screen
+    nextRoundInfo = checkResult()
+    Info.server_side_event(nextRoundInfo, 'carSwap') 
+    return True
     
 def swapPoint(parameters):
     with open(dataPath + "defaultEntryList.json", 'r') as json_file:
@@ -569,8 +578,6 @@ def swapPoint(parameters):
     with open(dataPath + "defaultEntryList.json", 'w') as outfile:
         json.dump(userList, outfile)
         outfile.close()
-
-
 
 def getOlderResult():
     onlyfiles = [f for f in listdir(savesPath) if isfile(join(savesPath, f))]
