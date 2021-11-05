@@ -107,6 +107,22 @@ def fetch_drivers():
     driverList = accR.fetchDrivers()
     return jsonify(driverList)
 
+@app.route('/create_custom_event', methods=['POST'])
+def create_custom_event():
+    isCreated = accR.createCustomEvent(request.json)
+    return jsonify(isCreated)
+
+@app.route('/set_next_round_from_spin', methods=['POST'])
+def set_next_round_from_spin():
+    isCreated = accR.setNextRoundFromSpin(request.json)
+    return jsonify(isCreated)
+    
+@app.route('/fetch_custom_event', methods=['GET'])
+def fetch_custom_event():
+    customEvents = accR.fetchCustomEvent()
+    return jsonify(customEvents)
+
+
 @app.route('/api/v1/resources/books', methods=['GET'])
 def schedule_check():
     # ADD CHECK RESULT EVERY 20 SEC

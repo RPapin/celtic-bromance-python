@@ -603,6 +603,33 @@ def fetchDrivers():
         json_file.close()
     return entryList
 
+def fetchCustomEvent():
+    with open(dataPath + 'customEvent.json') as json_file:
+        customEvent = json.load(json_file)
+        json_file.close()
+    return customEvent
+def setNextRoundFromSpin(eventIndex):
+    print(eventIndex)
+def createCustomEvent(eventInfo):
+    carsAvailable = []
+    with open(dataPath + 'customEvent.json') as json_file:
+        entryList = json.load(json_file)
+        json_file.close()
+    for cars in eventInfo['cars']:
+        if cars['available']:
+            carsAvailable.append(cars)
+
+    eventInfo['cars'] = carsAvailable
+    entryList[eventInfo['steam id ']] = eventInfo
+    
+    # entryList.update(eventInfo['steam id '])
+
+    with open(dataPath + "customEvent.json", 'w') as json_file:
+        json.dump(entryList, json_file)
+        json_file.close()
+    
+
+
 def launchServer():
     """ Call a powershell script to launch the server """
         #Save every config files in the server folder
@@ -626,3 +653,5 @@ def shutDownServer():
     }, "updateServerStatus") 
     return {"serverStatus" : False}
 # nextRound()
+# test = {"cars" : [{'index': '60', 'available': False, 'model': 'Mercedes AMG GT4', 'class': 'gt4'},{'index': '61', 'available': True, 'model': 'Porsche 718 Cayman GT4 Clubsport', 'class': 'gt4'}], 'track': 'kyalami', 'weather': 'damp', 'dayTime': False, "steam id ": "76561198445003541"}
+# createCustomEvent(test)

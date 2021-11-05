@@ -1,1 +1,111 @@
-{"50": {"model": "Alpine A110 GT4", "class": "gt4", "available": true}, "51": {"model": "Aston Martin V8 Vantage GT4", "class": "gt4", "available": true}, "52": {"model": "Audi R8 LMS GT4", "class": "gt4", "available": true}, "53": {"model": "BMW M4 GT4", "class": "gt4", "available": true}, "55": {"model": "Chevrolet Camaro GT4.R", "class": "gt4", "available": true}, "56": {"model": "Ginetta G55 GT4", "class": "gt4", "available": true}, "57": {"model": "KTM X-Bow GT4", "class": "gt4", "available": true}, "58": {"model": "Maserati Granturismo MC GT4", "class": "gt4", "available": true}, "59": {"model": "McLaren 570S GT4", "class": "gt4", "available": true}, "60": {"model": "Mercedes AMG GT4", "class": "gt4", "available": true}, "61": {"model": "Porsche 718 Cayman GT4 Clubsport", "class": "gt4", "available": true}, "0": {"model": "Porsche 991 GT3 R 2018", "class": "gt3", "available": true}, "1": {"model": "Mercedes-AMG GT3 2015", "class": "gt3", "available": true}, "2": {"model": "Ferrari 488 GT3 2018", "class": "gt3", "available": true}, "3": {"model": "Audi R8 LMS 2015", "class": "gt3", "available": true}, "4": {"model": "Lamborghini Huracan GT3 2015", "class": "gt3", "available": true}, "5": {"model": "McLaren 650S GT3 2015", "class": "gt3", "available": true}, "6": {"model": "Nissan GT-R Nismo GT3 2018", "class": "gt3", "available": true}, "7": {"model": "BMW M6 GT3 2017", "class": "gt3", "available": true}, "8": {"model": "Bentley Continental GT3 2018", "class": "gt3", "available": true}, "9": {"model": "Porsche 991 II GT3 Cup 2017", "class": "cup", "available": true}, "10": {"model": "Nissan GT-R Nismo GT3 2015", "class": "gt3", "available": true}, "11": {"model": "Bentley Continental GT3 2015", "class": "gt3", "available": true}, "12": {"model": "AMR V12 Vantage GT3 2013", "class": "gt3", "available": true}, "13": {"model": "Reiter Engineering R-EX GT3 2017", "class": "gt3", "available": true}, "14": {"model": "Emil Frey Jaguar G3 2012", "class": "gt3", "available": true}, "15": {"model": "Lexus RC F GT3 2016", "class": "gt3", "available": true}, "16": {"model": "Lamborghini Huracan GT3 Evo 2019", "class": "gt3", "available": true}, "17": {"model": "Honda NSX GT3 2017", "class": "gt3", "available": true}, "18": {"model": "Lamborghini Huracan SuperTrofeo 2015", "class": "st", "available": true}, "19": {"model": "Audi R8 LMS Evo 2019", "class": "gt3", "available": true}, "20": {"model": "AMR V8 Vantage 2019", "class": "gt3", "available": true}, "21": {"model": "Honda NSX GT3 Evo 2019", "class": "gt3", "available": true}, "22": {"model": "McLaren 720S GT3 2019", "class": "gt3", "available": true}, "23": {"model": "Porsche 911 II GT3 R 2019", "class": "gt3", "available": true}, "24": {"model": "Ferrari 488 GT3 Evo 2020", "class": "gt3", "available": true}, "25": {"model": "Mercedes-AMG GT3", "class": "gt3", "available": true}}
+{
+  "50": { "model": "Alpine A110 GT4", "class": "gt4", "available": true },
+  "51": {
+    "model": "Aston Martin V8 Vantage GT4",
+    "class": "gt4",
+    "available": true
+  },
+  "52": { "model": "Audi R8 LMS GT4", "class": "gt4", "available": true },
+  "53": { "model": "BMW M4 GT4", "class": "gt4", "available": true },
+  "55": {
+    "model": "Chevrolet Camaro GT4.R",
+    "class": "gt4",
+    "available": true
+  },
+  "56": { "model": "Ginetta G55 GT4", "class": "gt4", "available": true },
+  "57": { "model": "KTM X-Bow GT4", "class": "gt4", "available": true },
+  "58": {
+    "model": "Maserati Granturismo MC GT4",
+    "class": "gt4",
+    "available": true
+  },
+  "59": { "model": "McLaren 570S GT4", "class": "gt4", "available": true },
+  "60": { "model": "Mercedes AMG GT4", "class": "gt4", "available": true },
+  "61": {
+    "model": "Porsche 718 Cayman GT4 Clubsport",
+    "class": "gt4",
+    "available": true
+  },
+  "0": { "model": "Porsche 991 GT3 R 2018", "class": "gt3", "available": true },
+  "1": { "model": "Mercedes-AMG GT3 2015", "class": "gt3", "available": true },
+  "2": { "model": "Ferrari 488 GT3 2018", "class": "gt3", "available": true },
+  "3": { "model": "Audi R8 LMS 2015", "class": "gt3", "available": true },
+  "4": {
+    "model": "Lamborghini Huracan GT3 2015",
+    "class": "gt3",
+    "available": true
+  },
+  "5": { "model": "McLaren 650S GT3 2015", "class": "gt3", "available": true },
+  "6": {
+    "model": "Nissan GT-R Nismo GT3 2018",
+    "class": "gt3",
+    "available": true
+  },
+  "7": { "model": "BMW M6 GT3 2017", "class": "gt3", "available": true },
+  "8": {
+    "model": "Bentley Continental GT3 2018",
+    "class": "gt3",
+    "available": true
+  },
+  "9": {
+    "model": "Porsche 991 II GT3 Cup 2017",
+    "class": "cup",
+    "available": true
+  },
+  "10": {
+    "model": "Nissan GT-R Nismo GT3 2015",
+    "class": "gt3",
+    "available": true
+  },
+  "11": {
+    "model": "Bentley Continental GT3 2015",
+    "class": "gt3",
+    "available": true
+  },
+  "12": {
+    "model": "AMR V12 Vantage GT3 2013",
+    "class": "gt3",
+    "available": true
+  },
+  "13": {
+    "model": "Reiter Engineering R-EX GT3 2017",
+    "class": "gt3",
+    "available": true
+  },
+  "14": {
+    "model": "Emil Frey Jaguar G3 2012",
+    "class": "gt3",
+    "available": true
+  },
+  "15": { "model": "Lexus RC F GT3 2016", "class": "gt3", "available": true },
+  "16": {
+    "model": "Lamborghini Huracan GT3 Evo 2019",
+    "class": "gt3",
+    "available": true
+  },
+  "17": { "model": "Honda NSX GT3 2017", "class": "gt3", "available": true },
+  "18": {
+    "model": "Lamborghini Huracan SuperTrofeo 2015",
+    "class": "st",
+    "available": true
+  },
+  "19": { "model": "Audi R8 LMS Evo 2019", "class": "gt3", "available": true },
+  "20": { "model": "AMR V8 Vantage 2019", "class": "gt3", "available": true },
+  "21": {
+    "model": "Honda NSX GT3 Evo 2019",
+    "class": "gt3",
+    "available": true
+  },
+  "22": { "model": "McLaren 720S GT3 2019", "class": "gt3", "available": true },
+  "23": {
+    "model": "Porsche 911 II GT3 R 2019",
+    "class": "gt3",
+    "available": true
+  },
+  "24": {
+    "model": "Ferrari 488 GT3 Evo 2020",
+    "class": "gt3",
+    "available": true
+  },
+  "25": { "model": "Mercedes-AMG GT3", "class": "gt3", "available": true }
+}
