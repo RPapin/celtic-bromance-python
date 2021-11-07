@@ -4,6 +4,42 @@
     "userName": "Remi Papin",
     "cars": [
       {
+        "index": "9",
+        "available": true,
+        "model": "Porsche 991 II GT3 Cup 2017",
+        "class": "cup"
+      },
+      {
+        "index": "18",
+        "available": true,
+        "model": "Lamborghini Huracan SuperTrofeo 2015",
+        "class": "st"
+      }
+    ],
+    "track": "barcelona",
+    "weather": "damp",
+    "dayTime": true
+  },
+  "76561198098376975": {
+    "steam id ": "76561198098376975",
+    "userName": "Alastair Baldwin",
+    "cars": [
+      {
+        "index": "6",
+        "available": true,
+        "model": "Nissan GT-R Nismo GT3 2018",
+        "class": "gt3"
+      }
+    ],
+    "track": "kyalami_2019",
+    "weather": "damp",
+    "dayTime": true
+  },
+  "76561198185331603": {
+    "steam id ": "76561198185331603",
+    "userName": "Ryan Rees",
+    "cars": [
+      {
         "index": "0",
         "available": true,
         "model": "Porsche 991 GT3 R 2018",
@@ -56,12 +92,6 @@
         "available": true,
         "model": "Bentley Continental GT3 2018",
         "class": "gt3"
-      },
-      {
-        "index": "9",
-        "available": true,
-        "model": "Porsche 991 II GT3 Cup 2017",
-        "class": "cup"
       },
       {
         "index": "10",
@@ -152,25 +182,76 @@
         "available": true,
         "model": "Mercedes-AMG GT3",
         "class": "gt3"
-      }
-    ],
-    "track": "misano",
-    "weather": "dry",
-    "dayTime": true
-  },
-  "76561198098376975": {
-    "steam id ": "76561198098376975",
-    "userName": "Alastair Baldwin",
-    "cars": [
+      },
       {
-        "index": "6",
+        "index": "50",
         "available": true,
-        "model": "Nissan GT-R Nismo GT3 2018",
-        "class": "gt3"
+        "model": "Alpine A110 GT4",
+        "class": "gt4"
+      },
+      {
+        "index": "51",
+        "available": true,
+        "model": "Aston Martin V8 Vantage GT4",
+        "class": "gt4"
+      },
+      {
+        "index": "52",
+        "available": true,
+        "model": "Audi R8 LMS GT4",
+        "class": "gt4"
+      },
+      {
+        "index": "53",
+        "available": true,
+        "model": "BMW M4 GT4",
+        "class": "gt4"
+      },
+      {
+        "index": "55",
+        "available": true,
+        "model": "Chevrolet Camaro GT4.R",
+        "class": "gt4"
+      },
+      {
+        "index": "56",
+        "available": true,
+        "model": "Ginetta G55 GT4",
+        "class": "gt4"
+      },
+      {
+        "index": "57",
+        "available": true,
+        "model": "KTM X-Bow GT4",
+        "class": "gt4"
+      },
+      {
+        "index": "58",
+        "available": true,
+        "model": "Maserati Granturismo MC GT4",
+        "class": "gt4"
+      },
+      {
+        "index": "59",
+        "available": true,
+        "model": "McLaren 570S GT4",
+        "class": "gt4"
+      },
+      {
+        "index": "60",
+        "available": true,
+        "model": "Mercedes AMG GT4",
+        "class": "gt4"
+      },
+      {
+        "index": "61",
+        "available": true,
+        "model": "Porsche 718 Cayman GT4 Clubsport",
+        "class": "gt4"
       }
     ],
-    "track": "kyalami_2019",
-    "weather": "damp",
-    "dayTime": true
+    "track": "brands_hatch",
+    "weather": "dry",
+    "dayTime": false
   }
 }

@@ -6,7 +6,7 @@ import subprocess
 import os
 from shutil import copyfile
 from datetime import date
-from typing import final
+from typing import Dict, final
 import psutil 
 import infoApi as Info
 from datetime import datetime
@@ -38,7 +38,7 @@ def init():
     return carsData, trackData, weatherData
 
 
-def makeEventConfig(trackData, weatherData, championnshipConfiguration) :
+def makeEventConfig(trackData, weatherData, championnshipConfiguration, customEvent) :
     """ Create event and assist file from template"""
     weatherWeightConfig = championnshipConfiguration['weatherWeightConfiguration']
     weatherName = championnshipConfiguration['weatherPresetName']
@@ -47,30 +47,37 @@ def makeEventConfig(trackData, weatherData, championnshipConfiguration) :
         json_file1.close()
     eventInfo = {}
     # Choose track
-    trackList = []
-    for track in trackData :
-        if trackData[track]["available"]:
-            trackList.append(track)
-    listTrack = random.choice(trackList)
-    finalTrack = random.choice(trackData[listTrack]["tracks"])
+    if customEvent == {}:
+
+        trackList = []
+        for track in trackData :
+            if trackData[track]["available"]:
+                trackList.append(track)
+        listTrack = random.choice(trackList)
+        finalTrack = random.choice(trackData[listTrack]["tracks"])
+    else :
+        finalTrack = trackData
     templateEvent["track"] = finalTrack
     eventInfo["track"] = finalTrack
     
     draw = [len(weatherWeightConfig) - 1]
     # Choose pre-configuration
-    if len(weatherWeightConfig) == len(weatherData):
-        weatherWeightPct = []
-        total = sum(weatherWeightConfig)
-        if total != 0:
-            for weight in weatherWeightConfig:
-                weatherWeightPct.append(round(weight/total, 3))
-            totalWeightMissing = round(1 - sum(weatherWeightPct), 3)
-            weatherWeightPct[len(weatherWeightConfig) - 1] += totalWeightMissing
-            draw = choice(len(weatherWeightConfig), 1, p=weatherWeightPct)
+    if customEvent == {} : 
+        if len(weatherWeightConfig) == len(weatherData):
+            weatherWeightPct = []
+            total = sum(weatherWeightConfig)
+            if total != 0:
+                for weight in weatherWeightConfig:
+                    weatherWeightPct.append(round(weight/total, 3))
+                totalWeightMissing = round(1 - sum(weatherWeightPct), 3)
+                weatherWeightPct[len(weatherWeightConfig) - 1] += totalWeightMissing
+                draw = choice(len(weatherWeightConfig), 1, p=weatherWeightPct)
 
-    weatherWeightConfig[draw[0]] -= 1
-    championnshipConfiguration['weatherWeightConfiguration'] = weatherWeightConfig
-    weatherData = weatherData[weatherName[draw[0]]]
+        weatherWeightConfig[draw[0]] -= 1
+        championnshipConfiguration['weatherWeightConfiguration'] = weatherWeightConfig
+        weatherData = weatherData[weatherName[draw[0]]]
+    #else weatherData is already matching custom event
+
     # Choose weather
     templateEvent["ambientTemp"] = random.randint(weatherData['ambientTemp']["min"], weatherData['ambientTemp']["max"])
     templateEvent["cloudLevel"] = round(random.uniform(weatherData['cloudLevel']["min"], weatherData['cloudLevel']["max"]), 1)
@@ -86,7 +93,18 @@ def makeEventConfig(trackData, weatherData, championnshipConfiguration) :
     })
 
     # Choose daytime
-    daytime = random.randint(10,23)
+    if customEvent == {} : 
+        timeBegin = 10
+        timeEnd = 23
+    else : 
+        if customEvent['dayTime'] :
+            timeBegin = 9
+            timeEnd = 16
+        else :
+            timeBegin = 0
+            timeEnd = 3
+
+    daytime = random.randint(timeBegin,timeEnd)
     timeMultipler = random.randint(5,24)
     templateEvent["sessions"][0]["hourOfDay"] = templateEvent["sessions"][1]["hourOfDay"] = daytime
     templateEvent["sessions"][0]["timeMultiplier"] = templateEvent["sessions"][1]["timeMultiplier"] = timeMultipler
@@ -123,12 +141,22 @@ def makeNewRace(carsData, raceNumber) :
     adminId = championnshipData['serverAdmin']
     # choose car class
     carList = []
+    #check if custom event and car list is list
+    if isinstance(carsData, list) :
+        tempCarData = {}
+        for car in carsData:
+            print(car)
+            tempCarData.update({car['index']: car})
+        print(tempCarData)
+        carsData = tempCarData
+
     for car in carsData :
         if carsData[car]["available"]:
             carList.append(car)
+
     carClass = random.choice(carList)
     carClass = carsData[carClass]["class"]
-    carClassList = dict(filter(lambda elem: elem[1]["class"] == carClass and elem[1]["available"],carsData.items()))
+    carClassList = dict(filter(lambda elem: elem[1]["class"] == carClass and elem[1]["available"], carsData.items()))
     #First race
     if raceNumber == 1:
         random.shuffle(entryList)
@@ -216,8 +244,14 @@ def makeNewRace(carsData, raceNumber) :
         'finalEntryList' : finalEntryList
     }
 
-def nextRound(isFirstRound = False, isNewDraw=False):
+def nextRound(isFirstRound = False, isNewDraw=False, customEvent = {}):
     carsData, trackData, weatherData = init()
+    if customEvent != {}:
+        carsData = customEvent['cars']
+        trackData = customEvent['track']
+        weatherData = weatherData[customEvent['weather']]
+
+
     roundNumber = 1 if isFirstRound else 2
     info =  "A new Championnship has begun !" if isFirstRound else  "A new round has begun !"
     #Be sure to have the right json
@@ -245,7 +279,7 @@ def nextRound(isFirstRound = False, isNewDraw=False):
             json.dump(olderResult, outfile)
             outfile.close()
     usersInfo = makeNewRace(carsData, roundNumber)
-    eventConfig = makeEventConfig(trackData, weatherData, championnshipConfiguration)
+    eventConfig = makeEventConfig(trackData, weatherData, championnshipConfiguration, customEvent)
     nextRoundInfo = {
         "eventInfo": eventConfig,
         "usersInfo": usersInfo,
@@ -608,8 +642,16 @@ def fetchCustomEvent():
         customEvent = json.load(json_file)
         json_file.close()
     return customEvent
-def setNextRoundFromSpin(eventIndex):
-    print(eventIndex)
+
+def setNextRoundFromSpin(eventInfo):
+    with open(dataPath + 'customEvent.json') as json_file:
+        customEventList = json.load(json_file)
+        json_file.close()
+    # index = list(dict(customEventList).keys())[eventIndex]
+    print(eventInfo)
+    return nextRound(False, True, eventInfo)
+
+
 def createCustomEvent(eventInfo):
     carsAvailable = []
     with open(dataPath + 'customEvent.json') as json_file:
@@ -652,6 +694,3 @@ def shutDownServer():
         "serverStatus": False
     }, "updateServerStatus") 
     return {"serverStatus" : False}
-# nextRound()
-# test = {"cars" : [{'index': '60', 'available': False, 'model': 'Mercedes AMG GT4', 'class': 'gt4'},{'index': '61', 'available': True, 'model': 'Porsche 718 Cayman GT4 Clubsport', 'class': 'gt4'}], 'track': 'kyalami', 'weather': 'damp', 'dayTime': False, "steam id ": "76561198445003541"}
-# createCustomEvent(test)

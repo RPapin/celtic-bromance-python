@@ -51,7 +51,8 @@ def display_result():
 @app.route('/new_draw', methods=['GET'])
 def new_draw():
     fullResult = accR.nextRound(False, True)
-    return fullResult        
+    return fullResult  
+
 @app.route('/launch_server', methods=['GET'])
 def launch_server():
     serverStatus = accR.launchServer()
@@ -114,8 +115,8 @@ def create_custom_event():
 
 @app.route('/set_next_round_from_spin', methods=['POST'])
 def set_next_round_from_spin():
-    isCreated = accR.setNextRoundFromSpin(request.json)
-    return jsonify(isCreated)
+    nextRoundInfo = accR.setNextRoundFromSpin(request.json)
+    return jsonify(nextRoundInfo)
     
 @app.route('/fetch_custom_event', methods=['GET'])
 def fetch_custom_event():

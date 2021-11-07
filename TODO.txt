@@ -1,9 +1,8 @@
-FIX CHOOSE DRIVE AVAILABLE ON WEBSITE
+Syncho wheel spin wth same result
 
-Add make an extra event (car, map, weather)
+Add edit an extra event (car, map, weather)
 Spin and wheel and choose someone event
 
-Show current parameters (Point systemm, weather probabilities, etc)
 Test protection for swaping with someone who's not racing
 Show swap point on standings (colors)
 
@@ -13,4 +12,4 @@ Add best remontada and best race lap
 
 Fix Car number
 
-finalsave wrong day (current day)
+//finalsave wrong day (current day)
