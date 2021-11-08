@@ -145,9 +145,7 @@ def makeNewRace(carsData, raceNumber) :
     if isinstance(carsData, list) :
         tempCarData = {}
         for car in carsData:
-            print(car)
             tempCarData.update({car['index']: car})
-        print(tempCarData)
         carsData = tempCarData
 
     for car in carsData :
@@ -246,14 +244,15 @@ def makeNewRace(carsData, raceNumber) :
 
 def nextRound(isFirstRound = False, isNewDraw=False, customEvent = {}):
     carsData, trackData, weatherData = init()
+    roundNumber = 1 if isFirstRound else 2
+    info =  "A new Championnship has begun !" if isFirstRound else  "A new round has begun !"
+
     if customEvent != {}:
         carsData = customEvent['cars']
         trackData = customEvent['track']
         weatherData = weatherData[customEvent['weather']]
+        info = "Welcome to " + customEvent['userName'] + " event !"
 
-
-    roundNumber = 1 if isFirstRound else 2
-    info =  "A new Championnship has begun !" if isFirstRound else  "A new round has begun !"
     #Be sure to have the right json
     with open(dataPath + 'championnshipConfiguration.json') as json_file:
         championnshipConfiguration = json.load(json_file)
@@ -644,11 +643,6 @@ def fetchCustomEvent():
     return customEvent
 
 def setNextRoundFromSpin(eventInfo):
-    with open(dataPath + 'customEvent.json') as json_file:
-        customEventList = json.load(json_file)
-        json_file.close()
-    # index = list(dict(customEventList).keys())[eventIndex]
-    print(eventInfo)
     return nextRound(False, True, eventInfo)
 
 
@@ -669,7 +663,6 @@ def createCustomEvent(eventInfo):
     with open(dataPath + "customEvent.json", 'w') as json_file:
         json.dump(entryList, json_file)
         json_file.close()
-    
 
 
 def launchServer():

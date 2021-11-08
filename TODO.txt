@@ -1,15 +1,9 @@
-Syncho wheel spin wth same result
-
-Add edit an extra event (car, map, weather)
-Spin and wheel and choose someone event
 
 Test protection for swaping with someone who's not racing
 Show swap point on standings (colors)
-
 
 btn restore parameters 
 Add best remontada and best race lap
 
 Fix Car number
-
 //finalsave wrong day (current day)

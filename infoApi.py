@@ -122,6 +122,11 @@ def set_next_round_from_spin():
 def fetch_custom_event():
     customEvents = accR.fetchCustomEvent()
     return jsonify(customEvents)
+    
+@app.route('/sync_wheel_spin', methods=['POST'])
+def sync_wheel_spin():
+    server_side_event(request.json, 'syncWheel') 
+    return jsonify(True)
 
 
 @app.route('/api/v1/resources/books', methods=['GET'])
