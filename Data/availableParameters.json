@@ -24,6 +24,11 @@
             "name" : "swapPoint",
             "label": "Number of swap point joker allowed",
             "type" : "number"
+        },
+        {
+            "name" : "swapCountDown",
+            "label": "CountDown before the server lunch (in sec)",
+            "type" : "number"
         }
     ],
     "Template/event.json" : [

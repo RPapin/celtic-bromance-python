@@ -449,6 +449,11 @@ def resetChampionnship():
         json.dump(olderResult, outfile)
         outfile.close()
     return True
+def getCountdown():
+    with open(dataPath + 'championnshipConfiguration.json') as json_file:
+        config = json.load(json_file)
+        json_file.close()
+    return config['swapCountDown']
 
 def getParams():
     paramList = {}

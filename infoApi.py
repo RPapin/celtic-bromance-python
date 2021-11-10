@@ -1,4 +1,5 @@
 from flask import Flask, request
+import flask
 from flask_sse import sse
 import json
 import accRandomizer as accR
@@ -69,6 +70,11 @@ def reset_championnship():
 def get_param_list():
     listParameters = accR.getParams()
     return jsonify(listParameters)
+@app.route('/get_countdown_value', methods=['GET'])
+def get_countdown_value():
+    countdown = accR.getCountdown()
+    return jsonify(countdown)
+
 @app.route('/update_parameter', methods=['POST'])
 def update_parameter():
     serverStatus = accR.updateParameters(request.json)
@@ -128,6 +134,17 @@ def sync_wheel_spin():
     server_side_event(request.json, 'syncWheel') 
     return jsonify(True)
 
+@app.route('/start_countdown', methods=['POST'])
+def start_countdown():
+    server_side_event(request.json, 'startCountdown') 
+    return jsonify(True)
+
+@app.route('/stop_countdown', methods=['GET'])
+def stop_countdown():
+    print(request.json)
+    # pp = flask.json.JSONEncoder({'ok'})
+    server_side_event(request.json, 'stopCountdown') 
+    return jsonify(True)
 
 @app.route('/api/v1/resources/books', methods=['GET'])
 def schedule_check():
