@@ -698,4 +698,3 @@ def shutDownServer():
         "serverStatus": False
     }, "updateServerStatus") 
     return {"serverStatus" : False}
-fetchCustomEvent()
