@@ -4,7 +4,7 @@ onConnect watch if timer ongoing + get his value
 Sync timer after wheel spin
 ==> Call the sync in the checkResult methode
 
-Get Info parameters updated
+Choose event from only active driver
 
 Test protection for swaping with someone who's not racing
 Show swap point on standings (colors)
