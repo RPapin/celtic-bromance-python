@@ -246,7 +246,7 @@ def nextRound(isFirstRound = False, isNewDraw=False, customEvent = {}):
     carsData, trackData, weatherData = init()
     roundNumber = 1 if isFirstRound else 2
     info =  "A new Championnship has begun !" if isFirstRound else  "A new round has begun !"
-
+    print(customEvent)
     if customEvent != {}:
         carsData = customEvent['cars']
         trackData = customEvent['track']
