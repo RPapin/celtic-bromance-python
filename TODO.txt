@@ -1,16 +1,13 @@
-MULTI ROLL => FALSE MODAL + event config
-
 onConnect watch if timer ongoing + get his value
 Sync timer after wheel spin
 ==> Call the sync in the checkResult methode
-
-Choose event from only active driver
 
 Test protection for swaping with someone who's not racing
 Show swap point on standings (colors)
 
 btn restore parameters 
 Add best remontada and best race lap
+Add guest mode
 
 Fix Car number
 //finalsave wrong day (current day)

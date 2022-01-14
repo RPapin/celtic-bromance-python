@@ -246,7 +246,6 @@ def nextRound(isFirstRound = False, isNewDraw=False, customEvent = {}):
     carsData, trackData, weatherData = init()
     roundNumber = 1 if isFirstRound else 2
     info =  "A new Championnship has begun !" if isFirstRound else  "A new round has begun !"
-    print(customEvent)
     if customEvent != {}:
         carsData = customEvent['cars']
         trackData = customEvent['track']
@@ -642,10 +641,17 @@ def fetchDrivers():
     return entryList
 
 def fetchCustomEvent():
+    with open(dataPath + 'defaultEntryList.json') as json_file:
+        entryList = json.load(json_file)
     with open(dataPath + 'customEvent.json') as json_file:
         customEvent = json.load(json_file)
+        customEventFinal = customEvent
+        for custom in list(customEvent):
+            driverInfo = next(item for item in entryList if item['Steam id '] == custom)
+            if driverInfo['available'] == False:
+                del customEvent[custom]
         json_file.close()
-    return customEvent
+    return customEventFinal
 
 def setNextRoundFromSpin(eventInfo):
     return nextRound(False, True, eventInfo)
@@ -692,3 +698,4 @@ def shutDownServer():
         "serverStatus": False
     }, "updateServerStatus") 
     return {"serverStatus" : False}
+fetchCustomEvent()
