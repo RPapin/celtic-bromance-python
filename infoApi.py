@@ -16,7 +16,7 @@ import datetime
 import subprocess
 
 
-
+currentCountdown = 0
 config = dotenv_values(".env")
 
 ngrok.set_auth_token(config['NGROK_AUTH_TOKEN'])
@@ -70,6 +70,7 @@ def reset_championnship():
 def get_param_list():
     listParameters = accR.getParams()
     return jsonify(listParameters)
+
 @app.route('/get_countdown_value', methods=['GET'])
 def get_countdown_value():
     countdown = accR.getCountdown()
@@ -96,6 +97,7 @@ def update_user_parameter():
 def swapCar():
     serverStatus = accR.swapCar(request.json)
     return jsonify(serverStatus)
+
 @app.route('/swapPoint', methods=['POST'])
 def swapPoint():
     serverStatus = accR.swapPoint(request.json)
@@ -128,6 +130,11 @@ def set_next_round_from_spin():
 def fetch_custom_event():
     customEvents = accR.fetchCustomEvent()
     return jsonify(customEvents)
+
+@app.route('/check_countdown', methods=['GET'])
+def check_countdown():
+    
+    return jsonify(False)
     
 @app.route('/sync_wheel_spin', methods=['POST'])
 def sync_wheel_spin():
@@ -136,6 +143,7 @@ def sync_wheel_spin():
 
 @app.route('/start_countdown', methods=['POST'])
 def start_countdown():
+    print(request.json)
     server_side_event(request.json, 'startCountdown') 
     return jsonify(True)
 
@@ -145,6 +153,8 @@ def stop_countdown():
     # pp = flask.json.JSONEncoder({'ok'})
     server_side_event(request.json, 'stopCountdown') 
     return jsonify(True)
+
+
 
 @app.route('/api/v1/resources/books', methods=['GET'])
 def schedule_check():
