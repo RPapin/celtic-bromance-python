@@ -1,3 +1,4 @@
+from unittest import result
 from flask import Flask, request
 import flask
 from flask_sse import sse
@@ -14,6 +15,8 @@ from pyngrok import ngrok
 from dotenv import dotenv_values
 import datetime
 import subprocess
+
+
 
 
 currentCountdown = 0
@@ -131,26 +134,38 @@ def fetch_custom_event():
     customEvents = accR.fetchCustomEvent()
     return jsonify(customEvents)
 
-@app.route('/check_countdown', methods=['GET'])
-def check_countdown():
-    
-    return jsonify(False)
-    
 @app.route('/sync_wheel_spin', methods=['POST'])
 def sync_wheel_spin():
     server_side_event(request.json, 'syncWheel') 
     return jsonify(True)
 
+@app.route('/check_countdown', methods=['GET'])
+def check_countdown():
+    file1 = open('countdown.txt', 'r')
+    currentCountdown = int(file1.read())
+    file1.close()
+    delta = currentCountdown - int(time.time())
+    result = False
+    print('delta ' + str(delta))
+    if(delta > 0 ):
+        result = delta
+    return jsonify(result)
+
 @app.route('/start_countdown', methods=['POST'])
 def start_countdown():
-    print(request.json)
-    server_side_event(request.json, 'startCountdown') 
+    currentCountdown = int(time.time()) + int(request.json)
+    file1 = open('countdown.txt', 'w')
+    file1.write(str(currentCountdown))
+    file1.close()
+    server_side_event(int(request.json), 'startCountdown') 
     return jsonify(True)
 
 @app.route('/stop_countdown', methods=['GET'])
 def stop_countdown():
-    print(request.json)
     # pp = flask.json.JSONEncoder({'ok'})
+    file1 = open('countdown.txt', 'w')
+    file1.write('0')
+    file1.close()
     server_side_event(request.json, 'stopCountdown') 
     return jsonify(True)
 

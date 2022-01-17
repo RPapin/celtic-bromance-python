@@ -1,6 +1,3 @@
-onConnect watch if timer ongoing + get his value
-Sync timer after wheel spin
-==> Call the sync in the checkResult methode
 
 Add nationality
 Test protection for swaping with someone who's not racing
