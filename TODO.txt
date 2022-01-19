@@ -1,6 +1,6 @@
+Bug sync countdown after wheel spin ??
 
-Add nationality
-Test protection for swaping with someone who's not racing
+
 Show swap point on standings (colors)
 
 btn restore parameters 
@@ -11,3 +11,5 @@ Fix Car number
 //finalsave wrong day (current day)
 
 regarder csp
+
+First race random grid => Click on new championnship != new draw
