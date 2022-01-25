@@ -1,6 +1,6 @@
+Bug sync countdown after wheel spin ??
 
-Add nationality
-Test protection for swaping with someone who's not racing
+
 Show swap point on standings (colors)
 
 btn restore parameters 
@@ -15,3 +15,4 @@ regarder csp
 
  Maybe make it so if I chose Fubarr, and Fubarr get 20 points, I get 5 points, 
  we instead share those points and get 12.5 each. Means that you don't just do share points and sandbag at the back!
+First race random grid => Click on new championnship != new draw

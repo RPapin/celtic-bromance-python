@@ -211,7 +211,6 @@ def makeNewRace(carsData, raceNumber) :
             "overrideDriverInfo": 1,
             "ballastKg" : userData['ballast'],
             "restrictor" : userData['restrictor'],
-            
             "defaultGridPosition": startingPlace
         }
         userInfo = {
@@ -221,14 +220,15 @@ def makeNewRace(carsData, raceNumber) :
             "car" : carClassList[userCar]["model"],
             "ballast" : userData['ballast'],
             "restrictor" : userData['restrictor'],
-            "playerID": userData["Steam id "]
+            "playerID": userData["Steam id "],
+            "nationality": userData["Nationality"] if "Nationality" in userData else "Unknown"
         }
         # I put myself as admin
         if userData["Steam id "] == adminId :
             userEntry["isServerAdmin"] = 1
         #Forced race number
         if "Race number" in userData:
-            userEntry["raceNumber"] = userData['Race number']
+            userEntry["raceNumber"] = int(userData['Race number'])
         finalEntryList["entries"].append(userEntry)
         finalUserInfo.append(userInfo)
         startingPlace += 1
@@ -238,6 +238,7 @@ def makeNewRace(carsData, raceNumber) :
     with open(accServerPathCfg + 'entrylist.json', 'w') as outfile:
         json.dump(finalEntryList, outfile)
         outfile.close()
+        print(finalUserInfo)
     return {
         'usersInfo' : finalUserInfo,
         'finalEntryList' : finalEntryList
@@ -449,6 +450,7 @@ def resetChampionnship():
         json.dump(olderResult, outfile)
         outfile.close()
     return True
+    
 def getCountdown():
     with open(dataPath + 'championnshipConfiguration.json') as json_file:
         config = json.load(json_file)
@@ -699,3 +701,5 @@ def shutDownServer():
         "serverStatus": False
     }, "updateServerStatus") 
     return {"serverStatus" : False}
+
+# nextRound()
