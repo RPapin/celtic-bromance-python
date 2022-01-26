@@ -1,1 +1,312 @@
-{"championnshipStanding": [{"firstName": "Remi", "lastName": "Papin", "shortName": "", "playerId": "S76561198445003541", "position": 7, "point": 56, "carName": "Mercedes-AMG GT3 2015", "starting_place": 1}, {"firstName": "Jake", "lastName": "Mills", "shortName": "", "playerId": "S76561198073895836", "position": 10, "point": 53, "carName": "Audi R8 LMS 2015", "starting_place": 7}, {"firstName": "Alastair", "lastName": "Baldwin", "shortName": "", "playerId": "S76561198098376975", "position": 3, "point": 45, "carName": "BMW M4 GT3", "starting_place": 2}, {"firstName": "Jack", "lastName": "Game", "shortName": "", "playerId": "S76561197998783064", "position": 1, "point": 41, "carName": "Ferrari 488 GT3 2018", "starting_place": 17}, {"firstName": "Kristers", "lastName": "Jogurc", "shortName": "", "playerId": "S76561198162687504", "position": 2, "point": 40, "carName": "Mercedes-AMG GT3 2015", "starting_place": 8}, {"firstName": "Xavier", "lastName": "Huberlant", "shortName": "", "playerId": "S76561199132940769", "position": 6, "point": 40, "carName": "Mercedes-AMG GT3 2015", "starting_place": 14}, {"firstName": "Kiki", "lastName": "Mac", "shortName": "", "playerId": "S76561198007462534", "position": 11, "point": 33, "carName": "Ferrari 488 GT3 2018", "starting_place": 4}, {"firstName": "Nat", "lastName": "Shirley", "shortName": "", "playerId": "S76561198011893101", "position": 3, "point": 28, "carName": "Lamborghini Huracan GT3 2015", "starting_place": 19}, {"firstName": "Renaud", "lastName": "Coenen", "shortName": "", "playerId": "S76561199119710337", "position": 8, "point": 28, "carName": "Emil Frey Jaguar G3 2012", "starting_place": 13}, {"firstName": "Richard ", "lastName": "Aconley", "shortName": "", "playerId": "S76561197961422699", "position": 5, "point": 24, "carName": "Lexus RC F GT3 2016", "starting_place": 12}, {"firstName": "Uros", "lastName": "Huzjak", "shortName": "", "playerId": "S76561198020619879", "position": 4, "point": 21, "carName": "Audi R8 LMS 2015", "starting_place": 11}, {"firstName": "Matt", "lastName": "Cooley", "shortName": "", "playerId": "S76561198068476241", "position": 9, "point": 21, "carName": "Mercedes-AMG GT3", "starting_place": 5}, {"firstName": "Matthew", "lastName": "Thomas", "shortName": "", "playerId": "S76561198071788535", "position": 9, "point": 19, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 16}, {"firstName": "Calum", "lastName": "Mazoo", "shortName": "", "playerId": "S76561198199425186", "position": 5, "point": 18, "carName": "Audi R8 LMS 2015", "starting_place": 6}], "raceResult": [{"1": [{"firstName": "Remi", "lastName": "Papin", "shortName": "", "playerId": "S76561198445003541", "position": 7, "point": 7, "carName": "Mercedes-AMG GT3 2015", "starting_place": 1}, {"firstName": "Kristers", "lastName": "Jogurc", "shortName": "", "playerId": "S76561198162687504", "position": 2, "point": 13, "carName": "Mercedes-AMG GT3 2015", "starting_place": 8}, {"firstName": "Alastair", "lastName": "Baldwin", "shortName": "", "playerId": "S76561198098376975", "position": 3, "point": 11, "carName": "BMW M4 GT3", "starting_place": 2}, {"firstName": "Uros", "lastName": "Huzjak", "shortName": "", "playerId": "S76561198020619879", "position": 4, "point": 10, "carName": "Audi R8 LMS 2015", "starting_place": 11}, {"firstName": "Calum", "lastName": "Mazoo", "shortName": "", "playerId": "S76561198199425186", "position": 5, "point": 9, "carName": "Audi R8 LMS 2015", "starting_place": 6}, {"firstName": "Xavier", "lastName": "Huberlant", "shortName": "", "playerId": "S76561199132940769", "position": 6, "point": 8, "carName": "Mercedes-AMG GT3 2015", "starting_place": 14}, {"firstName": "Jack", "lastName": "Game", "shortName": "", "playerId": "S76561197998783064", "position": 1, "point": 15, "carName": "Ferrari 488 GT3 2018", "starting_place": 17}, {"firstName": "Renaud", "lastName": "Coenen", "shortName": "", "playerId": "S76561199119710337", "position": 8, "point": 6, "carName": "Emil Frey Jaguar G3 2012", "starting_place": 13}, {"firstName": "Matt", "lastName": "Cooley", "shortName": "", "playerId": "S76561198068476241", "position": 9, "point": 5, "carName": "Mercedes-AMG GT3", "starting_place": 5}, {"firstName": "Jake", "lastName": "Mills", "shortName": "", "playerId": "S76561198073895836", "position": 10, "point": 4, "carName": "Audi R8 LMS 2015", "starting_place": 7}, {"firstName": "Kiki", "lastName": "Mac", "shortName": "", "playerId": "S76561198007462534", "position": 11, "point": 3, "carName": "Ferrari 488 GT3 2018", "starting_place": 4}]}, {"2": [{"firstName": "Jake", "lastName": "Mills", "shortName": "", "playerId": "S76561198073895836", "position": 1, "point": 15, "carName": "Porsche 911 II GT3 R 2019", "starting_place": 2}, {"firstName": "Remi", "lastName": "Papin", "shortName": "", "playerId": "S76561198445003541", "position": 2, "point": 13, "carName": "Audi R8 LMS 2015", "starting_place": 5}, {"firstName": "Nat", "lastName": "Shirley", "shortName": "", "playerId": "S76561198011893101", "position": 3, "point": 11, "carName": "Lamborghini Huracan GT3 2015", "starting_place": 19}, {"firstName": "Xavier", "lastName": "Huberlant", "shortName": "", "playerId": "S76561199132940769", "position": 4, "point": 10, "carName": "Audi R8 LMS Evo 2019", "starting_place": 6}, {"firstName": "Richard ", "lastName": "Aconley", "shortName": "", "playerId": "S76561197961422699", "position": 5, "point": 9, "carName": "Lexus RC F GT3 2016", "starting_place": 12}, {"firstName": "Calum", "lastName": "Mazoo", "shortName": "", "playerId": "S76561198199425186", "position": 6, "point": 8, "carName": "Mercedes-AMG GT3", "starting_place": 7}, {"firstName": "Kiki", "lastName": "Mac", "shortName": "", "playerId": "S76561198007462534", "position": 7, "point": 7, "carName": "Porsche 911 II GT3 R 2019", "starting_place": 1}, {"firstName": "Jack", "lastName": "Game", "shortName": "", "playerId": "S76561197998783064", "position": 8, "point": 6, "carName": "Lamborghini Huracan GT3 2015", "starting_place": 11}, {"firstName": "Alastair", "lastName": "Baldwin", "shortName": "", "playerId": "S76561198098376975", "position": 9, "point": 5, "carName": "Honda NSX GT3 Evo 2019", "starting_place": 9}, {"firstName": "Renaud", "lastName": "Coenen", "shortName": "", "playerId": "S76561199119710337", "position": 10, "point": 4, "carName": "McLaren 650S GT3 2015", "starting_place": 4}, {"firstName": "Kristers", "lastName": "Jogurc", "shortName": "", "playerId": "S76561198162687504", "position": 11, "point": 3, "carName": "Nissan GT-R Nismo GT3 2015", "starting_place": 10}, {"firstName": "Matt", "lastName": "Cooley", "shortName": "", "playerId": "S76561198068476241", "position": 12, "point": 2, "carName": "Mercedes-AMG GT3 2015", "starting_place": 3}, {"firstName": "Uros", "lastName": "Huzjak", "shortName": "", "playerId": "S76561198020619879", "position": 13, "point": 1, "carName": "Porsche 991 GT3 R 2018", "starting_place": 8}]}, {"3": [{"firstName": "Nat", "lastName": "Shirley", "shortName": "", "playerId": "S76561198011893101", "position": 1, "point": 15, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 5}, {"firstName": "Remi", "lastName": "Papin", "shortName": "", "playerId": "S76561198445003541", "position": 2, "point": 13, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 12}, {"firstName": "Jake", "lastName": "Mills", "shortName": "", "playerId": "S76561198073895836", "position": 8, "point": 6, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 11}, {"firstName": "Kristers", "lastName": "Jogurc", "shortName": "", "playerId": "S76561198162687504", "position": 4, "point": 10, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 8}, {"firstName": "Jack", "lastName": "Game", "shortName": "", "playerId": "S76561197998783064", "position": 5, "point": 9, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 13}, {"firstName": "Richard ", "lastName": "Aconley", "shortName": "", "playerId": "S76561197961422699", "position": 6, "point": 8, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 2}, {"firstName": "Matt", "lastName": "Cooley", "shortName": "", "playerId": "S76561198068476241", "position": 7, "point": 7, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 1}, {"firstName": "Alastair", "lastName": "Baldwin", "shortName": "", "playerId": "S76561198098376975", "position": 3, "point": 11, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 7}, {"firstName": "Matthew", "lastName": "Thomas", "shortName": "", "playerId": "S76561198071788535", "position": 9, "point": 5, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 16}, {"firstName": "Renaud", "lastName": "Coenen", "shortName": "", "playerId": "S76561199119710337", "position": 10, "point": 4, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 4}, {"firstName": "Xavier", "lastName": "Huberlant", "shortName": "", "playerId": "S76561199132940769", "position": 11, "point": 3, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 10}, {"firstName": "Uros", "lastName": "Huzjak", "shortName": "", "playerId": "S76561198020619879", "position": 12, "point": 2, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 6}, {"firstName": "Kiki", "lastName": "Mac", "shortName": "", "playerId": "S76561198007462534", "position": 13, "point": 1, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 3}, {"firstName": "Calum", "lastName": "Mazoo", "shortName": "", "playerId": "S76561198199425186", "position": 14, "point": 0, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 9}]}, {"4": [{"firstName": "Kiki", "lastName": "Mac", "shortName": "", "playerId": "S76561198007462534", "position": 1, "point": 15, "carName": "BMW M4 GT3", "starting_place": 2}, {"firstName": "Jake", "lastName": "Mills", "shortName": "", "playerId": "S76561198073895836", "position": 2, "point": 13, "carName": "BMW M4 GT3", "starting_place": 9}, {"firstName": "Kristers", "lastName": "Jogurc", "shortName": "", "playerId": "S76561198162687504", "position": 3, "point": 11, "carName": "BMW M4 GT3", "starting_place": 11}, {"firstName": "Remi", "lastName": "Papin", "shortName": "", "playerId": "S76561198445003541", "position": 4, "point": 10, "carName": "BMW M4 GT3", "starting_place": 14}, {"firstName": "Alastair", "lastName": "Baldwin", "shortName": "", "playerId": "S76561198098376975", "position": 5, "point": 9, "carName": "BMW M4 GT3", "starting_place": 12}, {"firstName": "Xavier", "lastName": "Huberlant", "shortName": "", "playerId": "S76561199132940769", "position": 6, "point": 8, "carName": "BMW M4 GT3", "starting_place": 8}, {"firstName": "Richard ", "lastName": "Aconley", "shortName": "", "playerId": "S76561197961422699", "position": 7, "point": 7, "carName": "BMW M4 GT3", "starting_place": 6}, {"firstName": "Renaud", "lastName": "Coenen", "shortName": "", "playerId": "S76561199119710337", "position": 8, "point": 6, "carName": "BMW M4 GT3", "starting_place": 5}, {"firstName": "Jack", "lastName": "Game", "shortName": "", "playerId": "S76561197998783064", "position": 9, "point": 5, "carName": "BMW M4 GT3", "starting_place": 13}, {"firstName": "Matthew", "lastName": "Thomas", "shortName": "", "playerId": "S76561198071788535", "position": 10, "point": 4, "carName": "BMW M4 GT3", "starting_place": 1}, {"firstName": "Uros", "lastName": "Huzjak", "shortName": "", "playerId": "S76561198020619879", "position": 11, "point": 3, "carName": "BMW M4 GT3", "starting_place": 3}, {"firstName": "Nat", "lastName": "Shirley", "shortName": "", "playerId": "S76561198011893101", "position": 12, "point": 2, "carName": "BMW M4 GT3", "starting_place": 10}, {"firstName": "Calum", "lastName": "Mazoo", "shortName": "", "playerId": "S76561198199425186", "position": 13, "point": 1, "carName": "BMW M4 GT3", "starting_place": 7}, {"firstName": "Matt", "lastName": "Cooley", "shortName": "", "playerId": "S76561198068476241", "position": 14, "point": 0, "carName": "BMW M4 GT3", "starting_place": 4}]}, {"5": [{"firstName": "Jake", "lastName": "Mills", "shortName": "", "playerId": "S76561198073895836", "position": 1, "point": 15, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 13}, {"firstName": "Remi", "lastName": "Papin", "shortName": "", "playerId": "S76561198445003541", "position": 2, "point": 13, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 14}, {"firstName": "Jack", "lastName": "Game", "shortName": "", "playerId": "S76561197998783064", "position": 8, "point": 6, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 10}, {"firstName": "Matthew", "lastName": "Thomas", "shortName": "", "playerId": "S76561198071788535", "position": 4, "point": 10, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 1}, {"firstName": "Alastair", "lastName": "Baldwin", "shortName": "", "playerId": "S76561198098376975", "position": 5, "point": 9, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 11}, {"firstName": "Renaud", "lastName": "Coenen", "shortName": "", "playerId": "S76561199119710337", "position": 6, "point": 8, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 5}, {"firstName": "Matt", "lastName": "Cooley", "shortName": "", "playerId": "S76561198068476241", "position": 7, "point": 7, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 2}, {"firstName": "Xavier", "lastName": "Huberlant", "shortName": "", "playerId": "S76561199132940769", "position": 3, "point": 11, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 9}, {"firstName": "Uros", "lastName": "Huzjak", "shortName": "", "playerId": "S76561198020619879", "position": 9, "point": 5, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 3}, {"firstName": "Kiki", "lastName": "Mac", "shortName": "", "playerId": "S76561198007462534", "position": 7, "point": 7, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 7}, {"firstName": "Kristers", "lastName": "Jogurc", "shortName": "", "playerId": "S76561198162687504", "position": 11, "point": 3, "carName": "Porsche 991 II GT3 Cup 2017", "starting_place": 12}]}], "trackList": ["donington_2019", "paul_ricard", "imola_2020", "mount_panorama_2019", "monza"]}
+{
+  "championnshipStanding": [
+    {
+      "firstName": "Alastair",
+      "lastName": "Baldwin",
+      "shortName": "",
+      "playerId": "S76561198098376975",
+      "position": 2,
+      "point": 78,
+      "carName": "Nissan GT-R Nismo GT3 2015",
+      "starting_place": 10,
+      "swapped_with": 7
+    },
+    {
+      "firstName": "Remi",
+      "lastName": "Papin",
+      "shortName": "",
+      "playerId": "S76561198445003541",
+      "position": 1,
+      "point": 66,
+      "carName": "BMW M4 GT3",
+      "starting_place": 9,
+      "swapped_with": null
+    },
+    {
+      "firstName": "Craig",
+      "lastName": "Parsons",
+      "shortName": "",
+      "playerId": "S76561197963868923",
+      "position": 5,
+      "point": 64,
+      "carName": "Lamborghini Huracan GT3 Evo 2019",
+      "starting_place": 1,
+      "swapped_with": null
+    },
+    {
+      "firstName": "Uros",
+      "lastName": "Huzjak",
+      "shortName": "",
+      "playerId": "S76561198020619879",
+      "position": 3,
+      "point": 62,
+      "carName": "Ferrari 488 GT3 2018",
+      "starting_place": 3,
+      "swapped_with": null
+    },
+    {
+      "firstName": "JP",
+      "lastName": "Mc Kinley",
+      "shortName": "",
+      "playerId": "S76561198151633111",
+      "position": 4,
+      "point": 56,
+      "carName": "Nissan GT-R Nismo GT3 2015",
+      "starting_place": 5,
+      "swapped_with": null
+    },
+    {
+      "firstName": "Daan",
+      "lastName": "Van Geloven",
+      "shortName": "",
+      "playerId": "S76561198278916703",
+      "position": 8,
+      "point": 54,
+      "carName": "Porsche 911 II GT3 R 2019",
+      "starting_place": 6,
+      "swapped_with": null
+    },
+    {
+      "firstName": "Ryan",
+      "lastName": "Rees",
+      "shortName": "",
+      "playerId": "S76561198185331603",
+      "position": 6,
+      "point": 48,
+      "carName": "Mercedes-AMG GT3 2015",
+      "starting_place": 4,
+      "swapped_with": null
+    },
+    {
+      "firstName": "Kristers",
+      "lastName": "Jogurc",
+      "shortName": "",
+      "playerId": "S76561198162687504",
+      "position": 7,
+      "point": 42,
+      "carName": "Porsche 991 GT3 R 2018",
+      "starting_place": 7,
+      "swapped_with": 2
+    },
+    {
+      "firstName": "Radomir",
+      "lastName": "Kazerski",
+      "shortName": "",
+      "playerId": "S76561197987728663",
+      "position": 9,
+      "point": 30,
+      "carName": "Honda NSX GT3 2017",
+      "starting_place": 8,
+      "swapped_with": null
+    }
+  ],
+  "raceResult": [
+    {
+      "1": [
+        {
+          "firstName": "Remi",
+          "lastName": "Papin",
+          "shortName": "",
+          "playerId": "S76561198445003541",
+          "position": 8,
+          "point": 6,
+          "carName": "BMW M4 GT3",
+          "starting_place": 9,
+          "swapped_with": 1
+        },
+        {
+          "firstName": "Kristers",
+          "lastName": "Jogurc",
+          "shortName": "",
+          "playerId": "S76561198162687504",
+          "position": 7,
+          "point": 7,
+          "carName": "Porsche 991 GT3 R 2018",
+          "starting_place": 7,
+          "swapped_with": 2
+        },
+        {
+          "firstName": "Uros",
+          "lastName": "Huzjak",
+          "shortName": "",
+          "playerId": "S76561198020619879",
+          "position": 5,
+          "point": 9,
+          "carName": "Ferrari 488 GT3 2018",
+          "starting_place": 3,
+          "swapped_with": 3
+        },
+        {
+          "firstName": "JP",
+          "lastName": "Mc Kinley",
+          "shortName": "",
+          "playerId": "S76561198151633111",
+          "position": 4,
+          "point": 10,
+          "carName": "Nissan GT-R Nismo GT3 2015",
+          "starting_place": 5,
+          "swapped_with": null
+        },
+        {
+          "firstName": "Craig",
+          "lastName": "Parsons",
+          "shortName": "",
+          "playerId": "S76561197963868923",
+          "position": 3,
+          "point": 11,
+          "carName": "Lamborghini Huracan GT3 Evo 2019",
+          "starting_place": 1,
+          "swapped_with": 5
+        },
+        {
+          "firstName": "Ryan",
+          "lastName": "Rees",
+          "shortName": "",
+          "playerId": "S76561198185331603",
+          "position": 6,
+          "point": 8,
+          "carName": "Mercedes-AMG GT3 2015",
+          "starting_place": 4,
+          "swapped_with": null
+        },
+        {
+          "firstName": "Alastair",
+          "lastName": "Baldwin",
+          "shortName": "",
+          "playerId": "S76561198098376975",
+          "position": 2,
+          "point": 13,
+          "carName": "Nissan GT-R Nismo GT3 2015",
+          "starting_place": 10,
+          "swapped_with": 7
+        },
+        {
+          "firstName": "Daan",
+          "lastName": "Van Geloven",
+          "shortName": "",
+          "playerId": "S76561198278916703",
+          "position": 1,
+          "point": 15,
+          "carName": "Porsche 911 II GT3 R 2019",
+          "starting_place": 6,
+          "swapped_with": 8
+        },
+        {
+          "firstName": "Radomir",
+          "lastName": "Kazerski",
+          "shortName": "",
+          "playerId": "S76561197987728663",
+          "position": 9,
+          "point": 5,
+          "carName": "Honda NSX GT3 2017",
+          "starting_place": 8,
+          "swapped_with": null
+        }
+      ]
+    },
+    {
+      "2": [
+        {
+          "firstName": "Remi",
+          "lastName": "Papin",
+          "shortName": "",
+          "playerId": "S76561198445003541",
+          "position": 8,
+          "point": 6,
+          "carName": "BMW M4 GT3",
+          "starting_place": 9,
+          "swapped_with": 1
+        },
+        {
+          "firstName": "Kristers",
+          "lastName": "Jogurc",
+          "shortName": "",
+          "playerId": "S76561198162687504",
+          "position": 7,
+          "point": 7,
+          "carName": "Porsche 991 GT3 R 2018",
+          "starting_place": 7,
+          "swapped_with": 2
+        },
+        {
+          "firstName": "Uros",
+          "lastName": "Huzjak",
+          "shortName": "",
+          "playerId": "S76561198020619879",
+          "position": 5,
+          "point": 9,
+          "carName": "Ferrari 488 GT3 2018",
+          "starting_place": 3,
+          "swapped_with": 3
+        },
+        {
+          "firstName": "JP",
+          "lastName": "Mc Kinley",
+          "shortName": "",
+          "playerId": "S76561198151633111",
+          "position": 4,
+          "point": 10,
+          "carName": "Nissan GT-R Nismo GT3 2015",
+          "starting_place": 5,
+          "swapped_with": null
+        },
+        {
+          "firstName": "Craig",
+          "lastName": "Parsons",
+          "shortName": "",
+          "playerId": "S76561197963868923",
+          "position": 3,
+          "point": 11,
+          "carName": "Lamborghini Huracan GT3 Evo 2019",
+          "starting_place": 1,
+          "swapped_with": 5
+        },
+        {
+          "firstName": "Ryan",
+          "lastName": "Rees",
+          "shortName": "",
+          "playerId": "S76561198185331603",
+          "position": 6,
+          "point": 8,
+          "carName": "Mercedes-AMG GT3 2015",
+          "starting_place": 4,
+          "swapped_with": null
+        },
+        {
+          "firstName": "Alastair",
+          "lastName": "Baldwin",
+          "shortName": "",
+          "playerId": "S76561198098376975",
+          "position": 2,
+          "point": 13,
+          "carName": "Nissan GT-R Nismo GT3 2015",
+          "starting_place": 10,
+          "swapped_with": 7
+        },
+        {
+          "firstName": "Daan",
+          "lastName": "Van Geloven",
+          "shortName": "",
+          "playerId": "S76561198278916703",
+          "position": 1,
+          "point": 15,
+          "carName": "Porsche 911 II GT3 R 2019",
+          "starting_place": 6,
+          "swapped_with": 8
+        },
+        {
+          "firstName": "Radomir",
+          "lastName": "Kazerski",
+          "shortName": "",
+          "playerId": "S76561197987728663",
+          "position": 9,
+          "point": 5,
+          "carName": "Honda NSX GT3 2017",
+          "starting_place": 8,
+          "swapped_with": null
+        }
+      ]
+    }
+  ],
+  "trackList": ["spa", "spa", "spa", "spa", "spa", "spa"]
+}

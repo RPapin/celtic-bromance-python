@@ -238,7 +238,6 @@ def makeNewRace(carsData, raceNumber) :
     with open(accServerPathCfg + 'entrylist.json', 'w') as outfile:
         json.dump(finalEntryList, outfile)
         outfile.close()
-        print(finalUserInfo)
     return {
         'usersInfo' : finalUserInfo,
         'finalEntryList' : finalEntryList
@@ -299,6 +298,7 @@ def checkResult():
     serverStatus = False
     if "accServer.exe" in (p.name() for p in psutil.process_iter()) : 
         serverStatus = True
+        
     #Check new race file in the server folder
     onlyfiles = [f for f in listdir(accServerPathResult) if isfile(join(accServerPathResult, f))]
     raceFile = ""
@@ -336,6 +336,7 @@ def checkResult():
             index += 1
 
         for driverResult in resultFile["sessionResult"]["leaderBoardLines"]:
+            swappedWith = None
             pos = globalPos
             #Search his car and starting pos
             entryDriver = next(item for item in entryRaceData['usersInfo']['usersInfo'] if 'S' + item["playerID"] == driverResult["currentDriver"]["playerId"])
@@ -357,12 +358,18 @@ def checkResult():
                     posSwappedDriver = 999
                 #check if not last
                 if pos != len(resultFile["sessionResult"]["leaderBoardLines"]) and posSwappedDriver != len(resultFile["sessionResult"]["leaderBoardLines"]):
+                    swappedWith = -1
                     if isTheDriverSwapped :
                         if posSwappedDriver > pos:
+                            swappedWith = pos
                             pos = posSwappedDriver
                     else :
                         if posSwappedDriver < pos:
+                            swappedWith = pos
                             pos = posSwappedDriver
+                else :
+                    print("is last so no swap")
+                            
             #Set race point
             if pos <= len(championnshipData["pointConfiguration"]):
                 racePoint = championnshipData["pointConfiguration"][pos - 1]
@@ -375,6 +382,11 @@ def checkResult():
             driverResult["currentDriver"]["carName"] = entryDriver['car']
             driverResult["currentDriver"]["starting_place"] = entryDriver['starting_place']
             
+            #Swapped info
+            driverResult["currentDriver"]["swapped_with"] = swappedWith
+            print(entryDriver['lastName'] + " swapped with : " + str(swappedWith))
+
+
             currentResult.append(driverResult["currentDriver"])
             #championnship Standing
             driverId = driverResult["currentDriver"]["playerId"]
@@ -397,7 +409,8 @@ def checkResult():
             outfile.close()
         #Cut and paste race result file in saves folder
         os.renames(accServerPathResult + raceFile, savesPath + raceFile)
-        #Prepare next race
+
+        #Prepare next race<
         nextRoundInfo = nextRound()
         raceNumber = str(raceNumber + 1)
         response = {
@@ -678,6 +691,9 @@ def createCustomEvent(eventInfo):
         json.dump(entryList, json_file)
         json_file.close()
 
+def log_subprocess_output(pipe):
+    for line in iter(pipe.readline, b''): # b'\n'-separated lines
+        print('got line from subprocess: %r', line)
 
 def launchServer():
     """ Call a powershell script to launch the server """
@@ -685,7 +701,8 @@ def launchServer():
     for fileName in configFiles:
         os.remove(accServerPathCfg + fileName)
         copyfile(templatePath + fileName, accServerPathCfg + fileName)
-    subprocess.call('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/launch_server.sh"', shell=True)
+    
+    subprocess.Popen('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/accServer.exe"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     Info.server_side_event({
         "serverStatus": True
@@ -702,4 +719,3 @@ def shutDownServer():
     }, "updateServerStatus") 
     return {"serverStatus" : False}
 
-# nextRound()
