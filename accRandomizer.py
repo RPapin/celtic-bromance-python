@@ -702,7 +702,7 @@ def launchServer():
         os.remove(accServerPathCfg + fileName)
         copyfile(templatePath + fileName, accServerPathCfg + fileName)
     
-    subprocess.Popen('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/accServer.exe"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    subprocess.Popen('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/launch_server.sh"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
     Info.server_side_event({
         "serverStatus": True
