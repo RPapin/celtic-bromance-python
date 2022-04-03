@@ -12,7 +12,7 @@
       "dayOfWeekend": 2,
       "timeMultiplier": 1,
       "sessionType": "P",
-      "sessionDurationMinutes": 7
+      "sessionDurationMinutes": 5
     },
     {
       "hourOfDay": 18,

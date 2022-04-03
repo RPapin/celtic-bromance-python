@@ -98,7 +98,8 @@ def makeEventConfig(trackData, weatherData, championnshipConfiguration, customEv
         timeBegin = 10
         timeEnd = 23
     else : 
-        if customEvent['dayTime'] :
+        #INVERTED MAYBE NEED FIX
+        if not customEvent['dayTime'] :
             timeBegin = 9
             timeEnd = 16
         else :
@@ -173,7 +174,9 @@ def makeNewRace(carsData, raceNumber) :
                 j+= 1
             else :
                 driverData['position'] = currentNbDriver - driver_position 
-                driverData['ballast'] = int(resultData['championnshipStanding'][driver_position]['point'])
+                ballast = int(round(int(resultData['championnshipStanding'][driver_position]['point'] / 2) + (10 - driver_position * 1.5), 0))
+                print(ballast)
+                driverData['ballast'] = ballast if ballast > 0 else 0
         entryList = sorted(entryList, key=lambda k: k['position']) 
 
     finalEntryList = {
@@ -185,6 +188,11 @@ def makeNewRace(carsData, raceNumber) :
     nbDriver = len(entryList)
     for userData in entryList :
         userCar = random.choice(list(carClassList.keys()))
+        userCarData = carClassList[userCar]
+        if not userData['hasDLC'] and userCarData['DLC']:
+            #Put the Porsche Cup by default
+            userCar = "9"
+        
         userData['restrictor'] = 0
         if "ballast" not in userData:
             userData['ballast'] = 0
@@ -200,6 +208,7 @@ def makeNewRace(carsData, raceNumber) :
             driverCategorie = 1
         else:
             driverCategorie = 2
+        print(userData['ballast'])
         userEntry = {
             "drivers" : [{
                 "firstName": userData["First name"],
@@ -412,6 +421,7 @@ def checkResult():
 
         #Prepare next race<
         nextRoundInfo = nextRound()
+        nextRoundInfo = {}
         raceNumber = str(raceNumber + 1)
         response = {
             "standings" : olderResult,
@@ -718,4 +728,4 @@ def shutDownServer():
         "serverStatus": False
     }, "updateServerStatus") 
     return {"serverStatus" : False}
-
+# nextRound()

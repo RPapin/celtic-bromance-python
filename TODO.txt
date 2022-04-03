@@ -1,4 +1,7 @@
-
+Message d'erreur quand serveur introuvable
+Page de parametrage avec le formulaire
+Ajout de la fonction de par équipe
+If not in active user = Warning message and no swap available
 
 Sync countdown when go on another page ... 
 btn restore parameters 
