@@ -189,9 +189,9 @@ def makeNewRace(carsData, raceNumber) :
     for userData in entryList :
         userCar = random.choice(list(carClassList.keys()))
         userCarData = carClassList[userCar]
-        if not userData['hasDLC'] and userCarData['DLC']:
-            #Put the Porsche Cup by default
-            userCar = "9"
+        # if not userData['hasDLC'] and userCarData['DLC']:
+        #     #Put the Porsche Cup by default
+        #     userCar = "9"
         
         userData['restrictor'] = 0
         if "ballast" not in userData:
