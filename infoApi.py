@@ -1,6 +1,5 @@
 from unittest import result
 from flask import Flask, request
-import flask
 from flask_sse import sse
 import json
 import accRandomizer as accR

@@ -17,7 +17,7 @@
         "car": "Lamborghini Huracan GT3 Evo 2019",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561197963868923",
+        "playerId": "76561197963868923",
         "nationality": "Great Britain"
       },
       {
@@ -27,7 +27,7 @@
         "car": "Mercedes-AMG GT3",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561197961422699",
+        "playerId": "76561197961422699",
         "nationality": "Great Britain"
       },
       {
@@ -37,7 +37,7 @@
         "car": "Ferrari 488 GT3 2018",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561198020619879",
+        "playerId": "76561198020619879",
         "nationality": "Slovakia"
       },
       {
@@ -47,7 +47,7 @@
         "car": "Mercedes-AMG GT3 2015",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561198185331603",
+        "playerId": "76561198185331603",
         "nationality": "Great Britain"
       },
       {
@@ -57,7 +57,7 @@
         "car": "Nissan GT-R Nismo GT3 2015",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561198151633111",
+        "playerId": "76561198151633111",
         "nationality": "Ireland"
       },
       {
@@ -67,7 +67,7 @@
         "car": "Porsche 911 II GT3 R 2019",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561198278916703",
+        "playerId": "76561198278916703",
         "nationality": "Netherlands"
       },
       {
@@ -77,7 +77,7 @@
         "car": "Porsche 991 GT3 R 2018",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561198162687504",
+        "playerId": "76561198162687504",
         "nationality": "Latvia"
       },
       {
@@ -87,7 +87,7 @@
         "car": "Honda NSX GT3 2017",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561197987728663",
+        "playerId": "76561197987728663",
         "nationality": "Unknown"
       },
       {
@@ -97,7 +97,7 @@
         "car": "BMW M4 GT3",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561198445003541",
+        "playerId": "76561198445003541",
         "nationality": "France"
       },
       {
@@ -107,7 +107,7 @@
         "car": "Nissan GT-R Nismo GT3 2015",
         "ballast": 0,
         "restrictor": 0,
-        "playerID": "76561198098376975",
+        "playerId": "76561198098376975",
         "nationality": "Great Britain"
       }
     ],
@@ -118,7 +118,7 @@
             {
               "firstName": "Craig",
               "lastName": "Parsons",
-              "playerID": "S76561197963868923",
+              "playerId": "S76561197963868923",
               "driverCategory": 0
             }
           ],
@@ -134,7 +134,7 @@
             {
               "firstName": "Richard ",
               "lastName": "Aconley",
-              "playerID": "S76561197961422699",
+              "playerId": "S76561197961422699",
               "driverCategory": 0
             }
           ],
@@ -150,7 +150,7 @@
             {
               "firstName": "Uros",
               "lastName": "Huzjak",
-              "playerID": "S76561198020619879",
+              "playerId": "S76561198020619879",
               "driverCategory": 0
             }
           ],
@@ -166,7 +166,7 @@
             {
               "firstName": "Ryan",
               "lastName": "Rees",
-              "playerID": "S76561198185331603",
+              "playerId": "S76561198185331603",
               "driverCategory": 1
             }
           ],
@@ -182,7 +182,7 @@
             {
               "firstName": "JP",
               "lastName": "Mc Kinley",
-              "playerID": "S76561198151633111",
+              "playerId": "S76561198151633111",
               "driverCategory": 1
             }
           ],
@@ -198,7 +198,7 @@
             {
               "firstName": "Daan",
               "lastName": "Van Geloven",
-              "playerID": "S76561198278916703",
+              "playerId": "S76561198278916703",
               "driverCategory": 1
             }
           ],
@@ -214,7 +214,7 @@
             {
               "firstName": "Kristers",
               "lastName": "Jogurc",
-              "playerID": "S76561198162687504",
+              "playerId": "S76561198162687504",
               "driverCategory": 2
             }
           ],
@@ -229,7 +229,7 @@
             {
               "firstName": "Radomir",
               "lastName": "Kazerski",
-              "playerID": "S76561197987728663",
+              "playerId": "S76561197987728663",
               "driverCategory": 2
             }
           ],
@@ -245,7 +245,7 @@
             {
               "firstName": "Remi",
               "lastName": "Papin",
-              "playerID": "S76561198445003541",
+              "playerId": "S76561198445003541",
               "driverCategory": 2
             }
           ],
@@ -262,7 +262,7 @@
             {
               "firstName": "Alastair",
               "lastName": "Baldwin",
-              "playerID": "S76561198098376975",
+              "playerId": "S76561198098376975",
               "driverCategory": 2
             }
           ],

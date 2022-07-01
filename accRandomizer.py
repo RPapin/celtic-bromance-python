@@ -1,18 +1,16 @@
 import json
 import random
+import shutil
 from os import listdir
 from os.path import isfile, join
 import subprocess
 import os
 from shutil import copyfile
 from datetime import date
-from typing import Dict, final
 import psutil 
 import infoApi as Info
 from datetime import datetime
 from numpy.random import choice
-from math import *
-import time
 
 today = date.today()
 accServerPath = "D:/Steam/steamapps/common/Assetto Corsa Competizione Dedicated Server/server/"
@@ -175,7 +173,6 @@ def makeNewRace(carsData, raceNumber) :
             else :
                 driverData['position'] = currentNbDriver - driver_position 
                 ballast = int(round(int(resultData['championnshipStanding'][driver_position]['point'] / 2) + (10 - driver_position * 1.5), 0))
-                print(ballast)
                 driverData['ballast'] = ballast if ballast > 0 else 0
         entryList = sorted(entryList, key=lambda k: k['position']) 
 
@@ -208,7 +205,6 @@ def makeNewRace(carsData, raceNumber) :
             driverCategorie = 1
         else:
             driverCategorie = 2
-        print(userData['ballast'])
         userEntry = {
             "drivers" : [{
                 "firstName": userData["First name"],
@@ -216,24 +212,18 @@ def makeNewRace(carsData, raceNumber) :
                 "playerID": "S" + userData["Steam id "],
                 "driverCategory": driverCategorie
             }],
-            "forcedCarModel": int(userCar),
             "overrideDriverInfo": 1,
-            "ballastKg" : userData['ballast'],
-            "restrictor" : userData['restrictor'],
             "defaultGridPosition": startingPlace
         }
         userInfo = {
             "firstName": userData["First name"],
             "lastName": userData["Surname"],
             "starting_place": startingPlace,
-            "car" : carClassList[userCar]["model"],
-            "ballast" : userData['ballast'],
-            "restrictor" : userData['restrictor'],
-            "playerID": userData["Steam id "],
+            "playerId": userData["Steam id "],
             "nationality": userData["Nationality"] if "Nationality" in userData else "Unknown"
         }
         # I put myself as admin
-        if userData["Steam id "] == adminId :
+        if userData["Steam id "] == adminId:
             userEntry["isServerAdmin"] = 1
         #Forced race number
         if "Race number" in userData:
@@ -348,13 +338,22 @@ def checkResult():
             swappedWith = None
             pos = globalPos
             #Search his car and starting pos
-            entryDriver = next(item for item in entryRaceData['usersInfo']['usersInfo'] if 'S' + item["playerID"] == driverResult["currentDriver"]["playerId"])
+            entryDriver = next((item for item in entryRaceData['usersInfo']['usersInfo'] if 'S' + item["playerId"] == driverResult["currentDriver"]["playerId"]), None)
+            #Driver not found !
+            if entryDriver is None:
+                entryDriver = {
+                    'playerId' : '',
+                    'starting_place': 0,
+                    'lastName' : 'not found'
+                }
+                print('entryDriver was not found !')
+
             #check if swap point
             indexSwap = -1
             isTheDriverSwapped = False
             for indexSwapList, idList in enumerate(entryRaceData['swapPoint']):
                 for index,id in enumerate(idList):
-                    if id == entryDriver['playerID'] :
+                    if id == entryDriver['playerId'] :
                         indexSwap = indexSwapList
                         isTheDriverSwapped = index == 1
             if indexSwap != -1:
@@ -387,8 +386,6 @@ def checkResult():
             #race result
             driverResult["currentDriver"]["position"] = pos
             driverResult["currentDriver"]["point"] = racePoint
-            
-            driverResult["currentDriver"]["carName"] = entryDriver['car']
             driverResult["currentDriver"]["starting_place"] = entryDriver['starting_place']
             
             #Swapped info
@@ -578,9 +575,9 @@ def swapCar(parameters):
         json_file.close()
     #MAKE A NEW ENTRYLIST
     entryList = roundInfo['usersInfo']['finalEntryList']['entries']
-    driverOne = next((i for i, item in enumerate(entryList) if item['drivers'][0]['playerID'] == "S" + parameters[0]), None)
+    driverOne = next((i for i, item in enumerate(entryList) if item['drivers'][0]['playerId'] == "S" + parameters[0]), None)
     carOne = entryList[driverOne]['forcedCarModel']
-    driverTwo = next((i for i, item in enumerate(entryList) if item['drivers'][0]['playerID'] == "S" + parameters[1]), None)
+    driverTwo = next((i for i, item in enumerate(entryList) if item['drivers'][0]['playerId'] == "S" + parameters[1]), None)
     carTwo = entryList[driverTwo]['forcedCarModel']
     entryList[driverOne]['forcedCarModel'] = carTwo
     entryList[driverTwo]['forcedCarModel'] = carOne
@@ -589,9 +586,9 @@ def swapCar(parameters):
     
     #MAKE A NEW USERINFO
     userInfo = roundInfo['usersInfo']['usersInfo']
-    driverOne = next((i for i, item in enumerate(userInfo) if item['playerID'] == parameters[0]), None)
+    driverOne = next((i for i, item in enumerate(userInfo) if item['playerId'] == parameters[0]), None)
     carOne = userInfo[driverOne]['car']
-    driverTwo = next((i for i, item in enumerate(userInfo) if item['playerID'] == parameters[1]), None)
+    driverTwo = next((i for i, item in enumerate(userInfo) if item['playerId'] == parameters[1]), None)
     carTwo = userInfo[driverTwo]['car']
     userInfo[driverOne]['car'] = carTwo
     userInfo[driverTwo]['car'] = carOne
@@ -709,7 +706,9 @@ def launchServer():
     """ Call a powershell script to launch the server """
         #Save every config files in the server folder
     for fileName in configFiles:
-        os.remove(accServerPathCfg + fileName)
+        fullPath = os.path.join(accServerPathCfg, fileName)
+        os.chmod(fullPath, 0o777)
+        os.unlink(fullPath)
         copyfile(templatePath + fileName, accServerPathCfg + fileName)
     
     subprocess.Popen('start "" "D:\Steam\steamapps\common\Assetto Corsa Competizione Dedicated Server\server/launch_server.sh"', shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -728,4 +727,3 @@ def shutDownServer():
         "serverStatus": False
     }, "updateServerStatus") 
     return {"serverStatus" : False}
-# nextRound()
