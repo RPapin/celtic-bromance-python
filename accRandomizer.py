@@ -92,20 +92,20 @@ def makeEventConfig(trackData, weatherData, championnshipConfiguration, customEv
     })
 
     # Choose daytime
-    if customEvent == {} : 
-        timeBegin = 10
-        timeEnd = 23
+    if customEvent == {}:
+        timeBegin = 17
+        timeEnd = 17
     else : 
         #INVERTED MAYBE NEED FIX
-        if not customEvent['dayTime'] :
+        if not customEvent['dayTime']:
             timeBegin = 9
             timeEnd = 16
         else :
             timeBegin = 0
             timeEnd = 3
 
-    daytime = random.randint(timeBegin,timeEnd)
-    timeMultipler = random.randint(5,24)
+    daytime = random.randint(timeBegin, timeEnd)
+    timeMultipler = 1
     templateEvent["sessions"][0]["hourOfDay"] = templateEvent["sessions"][1]["hourOfDay"] = daytime
     templateEvent["sessions"][0]["timeMultiplier"] = templateEvent["sessions"][1]["timeMultiplier"] = timeMultipler
     eventInfo.update({

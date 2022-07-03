@@ -18,9 +18,9 @@
         "weatherRandomness": {"min": 3, "max": 7}
     },
     "dry" :{
-        "ambientTemp": {"min": 15, "max": 35},
-        "cloudLevel" : {"min": 0, "max": 0.4},
+        "ambientTemp": {"min": 25, "max": 25},
+        "cloudLevel" : {"min": 0.3, "max": 0.3},
         "rain" : {"min": 0.0, "max": 0.0},
-        "weatherRandomness": {"min": 3, "max": 7}
+        "weatherRandomness": {"min": 1, "max": 1}
     }
 }
