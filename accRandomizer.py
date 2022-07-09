@@ -25,6 +25,7 @@ savesPath = "saves/"
 configFiles = ["assistRules.json", "configuration.json"]  # , "settings.json"
 ballastInGameLimit = 30
 server = None
+ballastList = [30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2]
 
 
 def init():
@@ -110,7 +111,7 @@ def makeEventConfig(trackData, weatherData, championnshipConfiguration, customEv
             timeEnd = 3
 
     daytime = random.randint(timeBegin, timeEnd)
-    timeMultipler = random.randint(5, 24)
+    timeMultipler = random.randint(5, 18)
     templateEvent["sessions"][0]["hourOfDay"] = templateEvent["sessions"][1]["hourOfDay"] = daytime
     templateEvent["sessions"][0]["timeMultiplier"] = templateEvent["sessions"][1]["timeMultiplier"] = timeMultipler
     eventInfo.update({
@@ -179,8 +180,13 @@ def makeNewRace(carsData, raceNumber):
                 j += 1
             else:
                 driverData['position'] = currentNbDriver - driver_position
-                ballast = int(round(int(resultData['championnshipStanding'][driver_position]['point'] / 2) + (10 - driver_position * 1.5), 0))
-                print(ballast)
+                if driver_position >= len(ballastList):
+                    ballast = 0
+                else:
+                    ballast = ballastList[driver_position]
+                # ballast = int(round(int(resultData['championnshipStanding'][driver_position]['point'] / 2) + (
+                #             10 - driver_position * 1.5), 0))
+
                 driverData['ballast'] = ballast if ballast > 0 else 0
         entryList = sorted(entryList, key=lambda k: k['position'])
 
@@ -209,7 +215,6 @@ def makeNewRace(carsData, raceNumber):
             driverCategorie = 1
         else:
             driverCategorie = 2
-        print(userData['ballast'])
         userEntry = {
             "drivers": [{
                 "firstName": userData["First name"],
@@ -577,7 +582,7 @@ def updateEntryParameters(newParameters, singleUpdate=False):
         entryList = json.load(json_file)
         json_file.close()
     i = 0
-    #Find and update availability of someone after hitting the button "not in grid"
+    # Find and update availability of someone after hitting the button "not in grid"
     if singleUpdate:
         driverToUpdateIndex = next((i for i, item in enumerate(entryList) if item['Steam id '] == newParameters), None)
         if driverToUpdateIndex is not None:
@@ -734,7 +739,7 @@ def createCustomEvent(eventInfo):
 
 def findSpotInGrid(userId):
     entryList = updateEntryParameters(userId, True)
-    #get all car in the grid and choose one randomly
+    # get all car in the grid and choose one randomly
     userData = next((item for item in entryList if item['Steam id '] == userId))
     with open(dataPath + 'cars.json') as json_file:
         carsData = json.load(json_file)
@@ -743,7 +748,7 @@ def findSpotInGrid(userId):
         nextRoundInfo = json.load(json_file)
         json_file.close()
     startingPlace = len(nextRoundInfo["usersInfo"]["usersInfo"]) + 1
-    #gather all cars
+    # gather all cars
     carList = []
     for userInfo in nextRoundInfo["usersInfo"]["finalEntryList"]["entries"]:
         carList.append(userInfo["forcedCarModel"])
@@ -772,7 +777,7 @@ def findSpotInGrid(userId):
         "restrictor": 0,
         "defaultGridPosition": startingPlace
     }
-    #save in conf
+    # save in conf
     nextRoundInfo["usersInfo"]["usersInfo"].append(userInfo)
     nextRoundInfo["usersInfo"]["finalEntryList"]["entries"].append(userEntry)
     with open(accServerPathCfg + 'entrylist.json', 'w') as outfile:
@@ -784,6 +789,7 @@ def findSpotInGrid(userId):
     nextRoundInfo["foundNewResults"] = False
     Info.server_side_event(nextRoundInfo, 'newDraw')
     return nextRoundInfo
+
 
 def log_subprocess_output(pipe):
     for line in iter(pipe.readline, b''):  # b'\n'-separated lines
@@ -816,6 +822,5 @@ def shutDownServer():
         "serverStatus": False
     }, "updateServerStatus")
     return {"serverStatus": False}
-
 
 # findSpotInGrid('76561197961422699')

@@ -1,26 +1,30 @@
 {
     "flooded" :{
         "ambientTemp": {"min": 10, "max": 35},
-        "cloudLevel" : {"min": 0, "max": 1},
+        "cloudLevel" : {"min": 0.1, "max": 1},
         "rain" : {"min": 0.4, "max": 0.6},
-        "weatherRandomness": {"min": 2, "max": 6}
+        "weatherRandomness": {"min": 2, "max": 6},
+        "name" : "Torrent / Flooded"
     },
     "wet" :{
         "ambientTemp": {"min": 15, "max": 30},
         "cloudLevel" : {"min": 0.2, "max": 1},
         "rain" : {"min": 0.2, "max": 0.4},
-        "weatherRandomness": {"min": 2, "max": 6}
+        "weatherRandomness": {"min": 2, "max": 6},
+        "name" : "Pluie / Wet"
     },
     "cloudy" :{
         "ambientTemp": {"min": 20, "max": 30},
-        "cloudLevel" : {"min": 0.2, "max": 0.7},
-        "rain" : {"min": 0.1, "max": 0.3},
-        "weatherRandomness": {"min": 2, "max": 6}
+        "cloudLevel" : {"min": 0.2, "max": 0.6},
+        "rain" : {"min": 0.0, "max": 0.2},
+        "weatherRandomness": {"min": 2, "max": 6},
+        "name" : "Nuageux / Cloudy"
     },
     "dry" :{
         "ambientTemp": {"min": 15, "max": 35},
         "cloudLevel" : {"min": 0, "max": 0.4},
         "rain" : {"min": 0.0, "max": 0.0},
-        "weatherRandomness": {"min": 2, "max": 6}
+        "weatherRandomness": {"min": 2, "max": 6},
+        "name" : "Sec / Dry"
     }
 }

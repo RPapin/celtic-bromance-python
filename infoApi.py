@@ -32,6 +32,7 @@ ngrok_address = ''
 
 def server_side_event(data, topicName):
     """ Function to publish server side event """
+    print("server_side_event")
     with app.app_context():
         sse.publish(data, type=topicName)
 
@@ -118,6 +119,7 @@ def update_user_parameter():
 @app.route('/swapCar', methods=['POST'])
 def swapCar():
     serverStatus = accR.swapCar(request.json)
+    print(serverStatus)
     return jsonify(serverStatus)
 
 
@@ -197,17 +199,14 @@ def start_countdown():
     return jsonify(True)
 
 
-@app.route('/stop_countdown', methods=['GET'])
+@app.route('/stop_countdown_v2', methods=['GET'])
 def stop_countdown():
-    # pp = flask.json.JSONEncoder({'ok'})
     file1 = open('countdown.txt', 'w')
     file1.write('0')
     file1.close()
-    server_side_event(request.json, 'stopCountdown')
+    server_side_event({}, 'stopCountdown')
     return jsonify(True)
 
-
-@app.route('/api/v1/resources/books', methods=['GET'])
 def schedule_check():
     # ADD CHECK RESULT EVERY 20 SEC
     sched = BackgroundScheduler(daemon=True)
