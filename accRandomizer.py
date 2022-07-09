@@ -427,7 +427,7 @@ def checkResult():
         os.renames(accServerPathResult + raceFile, savesPath + raceFile)
 
         # Prepare next race<
-        nextRoundInfo = nextRound()
+        # nextRoundInfo = nextRound()
         nextRoundInfo = {}
         raceNumber = str(raceNumber + 1)
         response = {
