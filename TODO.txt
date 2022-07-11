@@ -1,15 +1,11 @@
-Check swap cars !!
-Tableau ballast dans la config
+Security for late swap, check if the server is launch => if yes do not the swap and do not refresh the grid
++ msg like "too late"
+Button for swap and stoling aside the name of someone in the grid
 
 
-Message d'erreur quand serveur introuvable
 Ajout de la fonction de par équipe
-If not in active user = Warning message and no swap available
 
-Sync countdown when go on another page ... 
-btn restore parameters 
 Add best remontada and best race lap
-Add guest mode
 
 Fix Car number
 //finalsave wrong day (current day)
