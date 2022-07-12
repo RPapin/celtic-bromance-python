@@ -5,6 +5,9 @@ Check swap cars !!
 
 
 TEst Tableau ballast dans la config
+Security for late swap, check if the server is launch => if yes do not the swap and do not refresh the grid
++ msg like "too late"
+Button for swap and stoling aside the name of someone in the grid
 
 
 Message d'erreur quand serveur introuvable
