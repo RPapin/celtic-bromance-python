@@ -1,5 +1,10 @@
+Run différent de l'appli front en background => Decalage countdown apres connection
+==> Voir si fct de MAJ ou alors simuler un frontground permanent
 Check swap cars !!
-Tableau ballast dans la config
+
+
+
+TEst Tableau ballast dans la config
 
 
 Message d'erreur quand serveur introuvable
