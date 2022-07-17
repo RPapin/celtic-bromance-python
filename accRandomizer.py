@@ -20,7 +20,7 @@ dataPath = "Data/"
 templatePath = "Template/"
 savesPath = "saves/"
 # Static cfg files, just need to put in the server folder
-configFiles=["assistRules.json", "configuration.json"] #, "settings.json"
+configFiles=["assistRules.json", "configuration.json", "settings.json"] #, "settings.json"
 ballastInGameLimit = 30
 server = None
 
