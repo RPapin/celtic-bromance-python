@@ -13,9 +13,16 @@ from datetime import datetime
 from numpy.random import choice
 from math import *
 import time
+from dotenv import dotenv_values
 
+
+config = dotenv_values(".env")
 today = date.today()
-accServerPath = "D:/Steam/steamapps/common/Assetto Corsa Competizione Dedicated Server/server/"
+try:
+    accServerPath = config['ACC_SERVER_PATH']
+except:
+    raise ValueError("You must enter your acc server path in the .env file")
+
 accServerPathCfg = accServerPath + "cfg/"
 accServerPathResult = accServerPath + "results/"
 dataPath = "Data/"
