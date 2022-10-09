@@ -128,6 +128,10 @@ def swapPoint():
     serverStatus = accR.swapPoint(request.json)
     return jsonify(serverStatus)
 
+@app.route('/getSwapPointVictim', methods=['POST'])
+def getSwapPointVictim():
+    victim = accR.getSwapPointVictim(request.json)
+    return jsonify(victim)
 
 # @app.route('/get_entrylist', methods=['GET'])
 # def get_entrylist():
@@ -172,7 +176,7 @@ def sync_wheel_spin():
 
 @app.route('/find_spot_in_grid', methods=['POST'])
 def find_spot_in_grid():
-    nextRoundInfo = accR.findSpotInGrid(request.json['userId'])
+    nextRoundInfo = accR.findSpotInGrid(request.json)
     return jsonify(nextRoundInfo)
 
 
