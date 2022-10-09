@@ -1,1 +1,252 @@
-{"eventInfo": {"track": "mount_panorama_2019", "Ambient temperature": 26, "Cloud level": 0.1, "Rain": 0.0, "Weather randomness": 3, "Time Multipler": 18, "Hour of Day": 11}, "usersInfo": {"usersInfo": [{"firstName": "Marcis", "lastName": "Birznieks", "starting_place": 1, "car": "AMR V12 Vantage GT3 2013", "ballast": 0, "restrictor": 0, "playerID": "76561198038404154", "nationality": "Latvia"}, {"firstName": "Benjamin", "lastName": "Arnaudier", "starting_place": 2, "car": "Lamborghini Huracan GT3 Evo 2019", "ballast": 0, "restrictor": 0, "playerID": "76561198204654599", "nationality": "France"}, {"firstName": "Uros", "lastName": "Huzjak", "starting_place": 3, "car": "BMW M4 GT3", "ballast": 0, "restrictor": 0, "playerID": "76561198020619879", "nationality": "Slovenia"}, {"firstName": "Darren", "lastName": "Reynolds", "starting_place": 4, "car": "Audi R8 LMS GT3 evo II", "ballast": 0, "restrictor": 0, "playerID": "76561198168697402", "nationality": "United Kingdom"}, {"firstName": "Arnaud", "lastName": "Brun", "starting_place": 5, "car": "Lexus RC F GT3 2016", "ballast": 0, "restrictor": 0, "playerID": "76561199110595976", "nationality": "France"}, {"firstName": "Kevin", "lastName": "Harikkonen", "starting_place": 6, "car": "Ferrari 488 GT3 Evo 2020", "ballast": 0, "restrictor": 0, "playerID": "76561198191006309", "nationality": "France"}, {"firstName": "Arthur", "lastName": "Rontard | 2RC", "starting_place": 7, "car": "Lamborghini Huracan GT3 Evo 2019", "ballast": 0, "restrictor": 0, "playerID": "76561199002599445", "nationality": "France"}, {"firstName": "Nat", "lastName": "Shirley", "starting_place": 8, "car": "AMR V12 Vantage GT3 2013", "ballast": 2, "restrictor": 0, "playerID": "76561198011893101", "nationality": "Great Britain"}, {"firstName": "Rytis", "lastName": "Kazlauskas", "starting_place": 9, "car": "BMW M4 GT3", "ballast": 4, "restrictor": 0, "playerID": "76561198053609178", "nationality": "Lithuania"}, {"firstName": "Daniel", "lastName": "Blakeman", "starting_place": 10, "car": "Ferrari 488 GT3 Evo 2020", "ballast": 6, "restrictor": 0, "playerID": "76561198161411796", "nationality": "Great Britain"}, {"firstName": "Yannick", "lastName": "Kavern", "starting_place": 11, "car": "Audi R8 LMS GT3 evo II", "ballast": 8, "restrictor": 0, "playerID": "76561197978609283", "nationality": "France"}, {"firstName": "Adrien", "lastName": "Poirier", "starting_place": 12, "car": "AMR V12 Vantage GT3 2013", "ballast": 10, "restrictor": 0, "playerID": "76561198161530833", "nationality": "France"}, {"firstName": "Krab", "lastName": "Athor", "starting_place": 13, "car": "Ferrari 488 GT3 Evo 2020", "ballast": 12, "restrictor": 0, "playerID": "76561198087448063", "nationality": "Latvia"}, {"firstName": "Ricky", "lastName": "Mac", "starting_place": 14, "car": "Audi R8 LMS GT3 evo II", "ballast": 14, "restrictor": 0, "playerID": "76561199061953610", "nationality": "Great Britain"}, {"firstName": "Calum", "lastName": "Mazoo", "starting_place": 15, "car": "Lamborghini Huracan GT3 Evo 2019", "ballast": 16, "restrictor": 0, "playerID": "76561198199425186", "nationality": "Great Britain"}, {"firstName": "Nojus", "lastName": "Sabas", "starting_place": 16, "car": "Ferrari 488 GT3 Evo 2020", "ballast": 18, "restrictor": 0, "playerID": "76561198392903577", "nationality": "Lithuania"}, {"firstName": "Sylvain", "lastName": "Breil | 2RC", "starting_place": 17, "car": "Lamborghini Huracan GT3 Evo 2019", "ballast": 20, "restrictor": 0, "playerID": "76561198425043499", "nationality": "France"}, {"firstName": "Kristers", "lastName": "Jogurc", "starting_place": 18, "car": "BMW M4 GT3", "ballast": 22, "restrictor": 0, "playerID": "76561198162687504", "nationality": "Latvia"}, {"firstName": "Laporte", "lastName": "Pierre", "starting_place": 19, "car": "BMW M4 GT3", "ballast": 24, "restrictor": 0, "playerID": "76561198328942842", "nationality": "France"}, {"firstName": "Alastair", "lastName": "Baldwin", "starting_place": 20, "car": "Audi R8 LMS GT3 evo II", "ballast": 26, "restrictor": 0, "playerID": "76561198098376975", "nationality": "Great Britain"}, {"firstName": "Kiki", "lastName": "Mac", "starting_place": 21, "car": "AMR V8 Vantage 2019", "ballast": 28, "restrictor": 0, "playerID": "76561198007462534", "nationality": "Great Britain"}, {"firstName": "Remi", "lastName": "Papin", "starting_place": 22, "car": "AMR V12 Vantage GT3 2013", "ballast": 30, "restrictor": 0, "playerID": "76561198445003541", "nationality": "France"}], "finalEntryList": {"entries": [{"drivers": [{"firstName": "Marcis", "lastName": "Birznieks", "playerID": "S76561198038404154", "driverCategory": 0}], "forcedCarModel": 12, "overrideDriverInfo": 1, "ballastKg": 0, "restrictor": 0, "defaultGridPosition": 1, "raceNumber": 99}, {"drivers": [{"firstName": "Benjamin", "lastName": "Arnaudier", "playerID": "S76561198204654599", "driverCategory": 0}], "forcedCarModel": 16, "overrideDriverInfo": 1, "ballastKg": 0, "restrictor": 0, "defaultGridPosition": 2}, {"drivers": [{"firstName": "Uros", "lastName": "Huzjak", "playerID": "S76561198020619879", "driverCategory": 0}], "forcedCarModel": 30, "overrideDriverInfo": 1, "ballastKg": 0, "restrictor": 0, "defaultGridPosition": 3, "raceNumber": 76}, {"drivers": [{"firstName": "Darren", "lastName": "Reynolds", "playerID": "S76561198168697402", "driverCategory": 0}], "forcedCarModel": 31, "overrideDriverInfo": 1, "ballastKg": 0, "restrictor": 0, "defaultGridPosition": 4, "raceNumber": 71}, {"drivers": [{"firstName": "Arnaud", "lastName": "Brun", "playerID": "S76561199110595976", "driverCategory": 0}], "forcedCarModel": 15, "overrideDriverInfo": 1, "ballastKg": 0, "restrictor": 0, "defaultGridPosition": 5, "raceNumber": 910}, {"drivers": [{"firstName": "Kevin", "lastName": "Harikkonen", "playerID": "S76561198191006309", "driverCategory": 0}], "forcedCarModel": 24, "overrideDriverInfo": 1, "ballastKg": 0, "restrictor": 0, "defaultGridPosition": 6, "raceNumber": 723}, {"drivers": [{"firstName": "Arthur", "lastName": "Rontard | 2RC", "playerID": "S76561199002599445", "driverCategory": 0}], "forcedCarModel": 16, "overrideDriverInfo": 1, "ballastKg": 0, "restrictor": 0, "defaultGridPosition": 7, "raceNumber": 70}, {"drivers": [{"firstName": "Nat", "lastName": "Shirley", "playerID": "S76561198011893101", "driverCategory": 1}], "forcedCarModel": 12, "overrideDriverInfo": 1, "ballastKg": 2, "restrictor": 0, "defaultGridPosition": 8, "raceNumber": 25}, {"drivers": [{"firstName": "Rytis", "lastName": "Kazlauskas", "playerID": "S76561198053609178", "driverCategory": 1}], "forcedCarModel": 30, "overrideDriverInfo": 1, "ballastKg": 4, "restrictor": 0, "defaultGridPosition": 9, "raceNumber": 66}, {"drivers": [{"firstName": "Daniel", "lastName": "Blakeman", "playerID": "S76561198161411796", "driverCategory": 1}], "forcedCarModel": 24, "overrideDriverInfo": 1, "ballastKg": 6, "restrictor": 0, "defaultGridPosition": 10, "raceNumber": 13}, {"drivers": [{"firstName": "Yannick", "lastName": "Kavern", "playerID": "S76561197978609283", "driverCategory": 1}], "forcedCarModel": 31, "overrideDriverInfo": 1, "ballastKg": 8, "restrictor": 0, "defaultGridPosition": 11, "raceNumber": 13}, {"drivers": [{"firstName": "Adrien", "lastName": "Poirier", "playerID": "S76561198161530833", "driverCategory": 1}], "forcedCarModel": 12, "overrideDriverInfo": 1, "ballastKg": 10, "restrictor": 0, "defaultGridPosition": 12, "raceNumber": 83}, {"drivers": [{"firstName": "Krab", "lastName": "Athor", "playerID": "S76561198087448063", "driverCategory": 1}], "forcedCarModel": 24, "overrideDriverInfo": 1, "ballastKg": 12, "restrictor": 0, "defaultGridPosition": 13, "raceNumber": 12}, {"drivers": [{"firstName": "Ricky", "lastName": "Mac", "playerID": "S76561199061953610", "driverCategory": 1}], "forcedCarModel": 31, "overrideDriverInfo": 1, "ballastKg": 14, "restrictor": 0, "defaultGridPosition": 14}, {"drivers": [{"firstName": "Calum", "lastName": "Mazoo", "playerID": "S76561198199425186", "driverCategory": 2}], "forcedCarModel": 16, "overrideDriverInfo": 1, "ballastKg": 16, "restrictor": 0, "defaultGridPosition": 15}, {"drivers": [{"firstName": "Nojus", "lastName": "Sabas", "playerID": "S76561198392903577", "driverCategory": 2}], "forcedCarModel": 24, "overrideDriverInfo": 1, "ballastKg": 18, "restrictor": 0, "defaultGridPosition": 16, "raceNumber": 27}, {"drivers": [{"firstName": "Sylvain", "lastName": "Breil | 2RC", "playerID": "S76561198425043499", "driverCategory": 2}], "forcedCarModel": 16, "overrideDriverInfo": 1, "ballastKg": 20, "restrictor": 0, "defaultGridPosition": 17, "raceNumber": 178}, {"drivers": [{"firstName": "Kristers", "lastName": "Jogurc", "playerID": "S76561198162687504", "driverCategory": 2}], "forcedCarModel": 30, "overrideDriverInfo": 1, "ballastKg": 22, "restrictor": 0, "defaultGridPosition": 18}, {"drivers": [{"firstName": "Laporte", "lastName": "Pierre", "playerID": "S76561198328942842", "driverCategory": 2}], "forcedCarModel": 30, "overrideDriverInfo": 1, "ballastKg": 24, "restrictor": 0, "defaultGridPosition": 19, "raceNumber": 13}, {"drivers": [{"firstName": "Alastair", "lastName": "Baldwin", "playerID": "S76561198098376975", "driverCategory": 2}], "forcedCarModel": 31, "overrideDriverInfo": 1, "ballastKg": 26, "restrictor": 0, "defaultGridPosition": 20}, {"drivers": [{"firstName": "Kiki", "lastName": "Mac", "playerID": "S76561198007462534", "driverCategory": 2}], "forcedCarModel": 20, "overrideDriverInfo": 1, "ballastKg": 28, "restrictor": 0, "defaultGridPosition": 21}, {"drivers": [{"firstName": "Remi", "lastName": "Papin", "playerID": "S76561198445003541", "driverCategory": 2}], "forcedCarModel": 12, "overrideDriverInfo": 1, "ballastKg": 30, "restrictor": 0, "defaultGridPosition": 22, "isServerAdmin": 1, "raceNumber": 6}], "forceEntryList": 1}}, "foundNewResults": "Welcome to Alastair Baldwin event !", "swapPoint": []}
+{
+  "eventInfo": {
+    "track": "oulton_park_2019",
+    "Ambient temperature": 24,
+    "Cloud level": 0.2,
+    "Rain": 0.0,
+    "Weather randomness": 2,
+    "Time Multipler": 17,
+    "Hour of Day": 17
+  },
+  "usersInfo": {
+    "usersInfo": [
+      {
+        "firstName": "Calum",
+        "lastName": "Mazoo",
+        "starting_place": 1,
+        "car": "Ginetta G55 GT4",
+        "ballast": 2,
+        "restrictor": 0,
+        "playerID": "76561198199425186",
+        "nationality": "Great Britain"
+      },
+      {
+        "firstName": "Ricky",
+        "lastName": "Mac",
+        "starting_place": 2,
+        "car": "Ginetta G55 GT4",
+        "ballast": 4,
+        "restrictor": 0,
+        "playerID": "76561199061953610",
+        "nationality": "Great Britain"
+      },
+      {
+        "firstName": "Kiki",
+        "lastName": "Mac",
+        "starting_place": 3,
+        "car": "Ginetta G55 GT4",
+        "ballast": 8,
+        "restrictor": 0,
+        "playerID": "76561198007462534",
+        "nationality": "Great Britain"
+      },
+      {
+        "firstName": "Daniel",
+        "lastName": "Blakeman",
+        "starting_place": 4,
+        "car": "Ginetta G55 GT4",
+        "ballast": 10,
+        "restrictor": 0,
+        "playerID": "76561198161411796",
+        "nationality": "Great Britain"
+      },
+      {
+        "firstName": "Rytis",
+        "lastName": "Kazlauskas",
+        "starting_place": 5,
+        "car": "Ginetta G55 GT4",
+        "ballast": 12,
+        "restrictor": 0,
+        "playerID": "76561198053609178",
+        "nationality": "Lithuania"
+      },
+      {
+        "firstName": "JP",
+        "lastName": "Mc Kinley",
+        "starting_place": 6,
+        "car": "Ginetta G55 GT4",
+        "ballast": 14,
+        "restrictor": 0,
+        "playerID": "76561198151633111",
+        "nationality": "Ireland"
+      },
+      {
+        "firstName": "Alastair",
+        "lastName": "Baldwin",
+        "starting_place": 7,
+        "car": "Ginetta G55 GT4",
+        "ballast": 16,
+        "restrictor": 0,
+        "playerID": "76561198098376975",
+        "nationality": "Great Britain"
+      },
+      {
+        "firstName": "Kristers",
+        "lastName": "Jogurc",
+        "starting_place": 8,
+        "car": "Ginetta G55 GT4",
+        "ballast": 18,
+        "restrictor": 0,
+        "playerID": "76561198162687504",
+        "nationality": "Latvia"
+      },
+      {
+        "firstName": "Remi",
+        "lastName": "Papin",
+        "starting_place": 9,
+        "car": "Ginetta G55 GT4",
+        "ballast": 20,
+        "restrictor": 0,
+        "playerID": "76561198445003541",
+        "nationality": "France"
+      }
+    ],
+    "finalEntryList": {
+      "entries": [
+        {
+          "drivers": [
+            {
+              "firstName": "Calum",
+              "lastName": "Mazoo",
+              "playerID": "S76561198199425186",
+              "driverCategory": 0
+            }
+          ],
+          "forcedCarModel": 56,
+          "overrideDriverInfo": 1,
+          "ballastKg": 2,
+          "restrictor": 0,
+          "defaultGridPosition": 1
+        },
+        {
+          "drivers": [
+            {
+              "firstName": "Ricky",
+              "lastName": "Mac",
+              "playerID": "S76561199061953610",
+              "driverCategory": 0
+            }
+          ],
+          "forcedCarModel": 56,
+          "overrideDriverInfo": 1,
+          "ballastKg": 4,
+          "restrictor": 0,
+          "defaultGridPosition": 2
+        },
+        {
+          "drivers": [
+            {
+              "firstName": "Kiki",
+              "lastName": "Mac",
+              "playerID": "S76561198007462534",
+              "driverCategory": 1
+            }
+          ],
+          "forcedCarModel": 56,
+          "overrideDriverInfo": 1,
+          "ballastKg": 8,
+          "restrictor": 0,
+          "defaultGridPosition": 3
+        },
+        {
+          "drivers": [
+            {
+              "firstName": "Daniel",
+              "lastName": "Blakeman",
+              "playerID": "S76561198161411796",
+              "driverCategory": 1
+            }
+          ],
+          "forcedCarModel": 56,
+          "overrideDriverInfo": 1,
+          "ballastKg": 10,
+          "restrictor": 0,
+          "defaultGridPosition": 4,
+          "raceNumber": 13
+        },
+        {
+          "drivers": [
+            {
+              "firstName": "Rytis",
+              "lastName": "Kazlauskas",
+              "playerID": "S76561198053609178",
+              "driverCategory": 1
+            }
+          ],
+          "forcedCarModel": 56,
+          "overrideDriverInfo": 1,
+          "ballastKg": 12,
+          "restrictor": 0,
+          "defaultGridPosition": 5,
+          "raceNumber": 66
+        },
+        {
+          "drivers": [
+            {
+              "firstName": "JP",
+              "lastName": "Mc Kinley",
+              "playerID": "S76561198151633111",
+              "driverCategory": 2
+            }
+          ],
+          "forcedCarModel": 56,
+          "overrideDriverInfo": 1,
+          "ballastKg": 14,
+          "restrictor": 0,
+          "defaultGridPosition": 6,
+          "raceNumber": 7
+        },
+        {
+          "drivers": [
+            {
+              "firstName": "Alastair",
+              "lastName": "Baldwin",
+              "playerID": "S76561198098376975",
+              "driverCategory": 2
+            }
+          ],
+          "forcedCarModel": 56,
+          "overrideDriverInfo": 1,
+          "ballastKg": 16,
+          "restrictor": 0,
+          "defaultGridPosition": 7
+        },
+        {
+          "drivers": [
+            {
+              "firstName": "Kristers",
+              "lastName": "Jogurc",
+              "playerID": "S76561198162687504",
+              "driverCategory": 2
+            }
+          ],
+          "forcedCarModel": 56,
+          "overrideDriverInfo": 1,
+          "ballastKg": 18,
+          "restrictor": 0,
+          "defaultGridPosition": 8
+        },
+        {
+          "drivers": [
+            {
+              "firstName": "Remi",
+              "lastName": "Papin",
+              "playerID": "S76561198445003541",
+              "driverCategory": 2
+            }
+          ],
+          "forcedCarModel": 56,
+          "overrideDriverInfo": 1,
+          "ballastKg": 20,
+          "restrictor": 0,
+          "defaultGridPosition": 9,
+          "isServerAdmin": 1,
+          "raceNumber": 6
+        }
+      ],
+      "forceEntryList": 1
+    }
+  },
+  "foundNewResults": "A new round has begun !",
+  "swapPoint": []
+}
