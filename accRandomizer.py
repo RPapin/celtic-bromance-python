@@ -15,7 +15,7 @@ from math import *
 import time
 
 today = date.today()
-accServerPath = "D:/Steam/steamapps/common/Assetto Corsa Competizione Dedicated Server/server/"
+accServerPath = "C:/Program Files (x86)/Steam/steamapps/common/Assetto Corsa Competizione Dedicated Server/server/"
 accServerPathCfg = accServerPath + "cfg/"
 accServerPathResult = accServerPath + "results/"
 dataPath = "Data/"
@@ -72,7 +72,8 @@ def makeEventConfig(trackData, weatherData, championnshipConfiguration, customEv
                 for weight in weatherWeightConfig:
                     weatherWeightPct.append(round(weight / total, 3))
                 totalWeightMissing = round(1 - sum(weatherWeightPct), 3)
-                weatherWeightPct[len(weatherWeightConfig) - 1] += totalWeightMissing
+                weatherWeightPct[len(weatherWeightConfig) -
+                                 1] += totalWeightMissing
                 draw = choice(len(weatherWeightConfig), 1, p=weatherWeightPct)
 
         weatherWeightConfig[draw[0]] -= 1
@@ -81,11 +82,13 @@ def makeEventConfig(trackData, weatherData, championnshipConfiguration, customEv
     # else weatherData is already matching custom event
 
     # Choose weather
-    templateEvent["ambientTemp"] = random.randint(weatherData['ambientTemp']["min"], weatherData['ambientTemp']["max"])
+    templateEvent["ambientTemp"] = random.randint(
+        weatherData['ambientTemp']["min"], weatherData['ambientTemp']["max"])
     templateEvent["cloudLevel"] = round(
         random.uniform(weatherData['cloudLevel']["min"], weatherData['cloudLevel']["max"]), 1)
     # Choose rain level
-    rain = round(random.uniform(weatherData['rain']["min"], weatherData['rain']["max"]), 1)
+    rain = round(random.uniform(
+        weatherData['rain']["min"], weatherData['rain']["max"]), 1)
     templateEvent["rain"] = rain
     templateEvent["weatherRandomness"] = random.randint(weatherData['weatherRandomness']["min"],
                                                         weatherData['weatherRandomness']["max"])
@@ -160,7 +163,8 @@ def makeNewRace(carsData, raceNumber):
 
     carClass = random.choice(carList)
     carClass = carsData[carClass]["class"]
-    carClassList = dict(filter(lambda elem: elem[1]["class"] == carClass and elem[1]["available"], carsData.items()))
+    carClassList = dict(filter(
+        lambda elem: elem[1]["class"] == carClass and elem[1]["available"], carsData.items()))
     # First race
     if raceNumber == 1:
         random.shuffle(entryList)
@@ -203,7 +207,8 @@ def makeNewRace(carsData, raceNumber):
         if "ballast" not in userData:
             userData['ballast'] = 0
         elif userData['ballast'] > ballastInGameLimit:
-            userData['restrictor'] = int((userData['ballast'] - ballastInGameLimit) / 3)
+            userData['restrictor'] = int(
+                (userData['ballast'] - ballastInGameLimit) / 3)
             if userData['restrictor'] > 20:
                 userData['restrictor'] = 20
             userData['ballast'] = ballastInGameLimit
@@ -290,7 +295,8 @@ def nextRound(isFirstRound=False, isNewDraw=False, customEvent={}):
             json.dump(olderResult, outfile)
             outfile.close()
     usersInfo = makeNewRace(carsData, roundNumber)
-    eventConfig = makeEventConfig(trackData, weatherData, championnshipConfiguration, customEvent)
+    eventConfig = makeEventConfig(
+        trackData, weatherData, championnshipConfiguration, customEvent)
     nextRoundInfo = {
         "eventInfo": eventConfig,
         "usersInfo": usersInfo,
@@ -316,7 +322,8 @@ def checkResult():
         serverStatus = True
 
     # Check new race file in the server folder
-    onlyfiles = [f for f in listdir(accServerPathResult) if isfile(join(accServerPathResult, f))]
+    onlyfiles = [f for f in listdir(accServerPathResult) if isfile(
+        join(accServerPathResult, f))]
     raceFile = ""
     for fileName in onlyfiles:
         splitList = fileName.split("_")
@@ -404,16 +411,19 @@ def checkResult():
 
             # Swapped info
             driverResult["currentDriver"]["swapped_with"] = swappedWith
-            print(entryDriver['lastName'] + " swapped with : " + str(swappedWith))
+            print(entryDriver['lastName'] +
+                  " swapped with : " + str(swappedWith))
 
             currentResult.append(driverResult["currentDriver"])
             # championnship Standing
             driverId = driverResult["currentDriver"]["playerId"]
             if driverId in driverStandings:
-                olderResult['championnshipStanding'][driverStandings[driverId]]['point'] += racePoint
+                olderResult['championnshipStanding'][driverStandings[driverId]
+                                                     ]['point'] += racePoint
             else:
                 driverResult["currentDriver"]["point"] = racePoint
-                olderResult['championnshipStanding'].append(driverResult["currentDriver"])
+                olderResult['championnshipStanding'].append(
+                    driverResult["currentDriver"])
             globalPos += 1
 
         olderResult["raceResult"].append({
@@ -583,7 +593,8 @@ def updateEntryParameters(newParameters, singleUpdate=False):
     i = 0
     # Find and update availability of someone after hitting the button "not in grid"
     if singleUpdate:
-        driverToUpdateIndex = next((i for i, item in enumerate(entryList) if item['Steam id '] == newParameters), None)
+        driverToUpdateIndex = next((i for i, item in enumerate(
+            entryList) if item['Steam id '] == newParameters), None)
         if driverToUpdateIndex is not None:
             entryList[driverToUpdateIndex]["available"] = True
     else:
@@ -618,16 +629,19 @@ def swapCar(parameters):
 
     # MAKE A NEW USERINFO
     userInfo = roundInfo['usersInfo']['usersInfo']
-    driverOne = next((i for i, item in enumerate(userInfo) if item['playerID'] == parameters[0]), None)
+    driverOne = next((i for i, item in enumerate(userInfo)
+                     if item['playerID'] == parameters[0]), None)
     carOne = userInfo[driverOne]['car']
-    driverTwo = next((i for i, item in enumerate(userInfo) if item['playerID'] == parameters[1]), None)
+    driverTwo = next((i for i, item in enumerate(userInfo)
+                     if item['playerID'] == parameters[1]), None)
     carTwo = userInfo[driverTwo]['car']
     userInfo[driverOne]['car'] = carTwo
     userInfo[driverTwo]['car'] = carOne
     roundInfo['usersInfo']['usersInfo'] = userInfo
 
     # Decrease joker counter
-    driverOne = next((i for i, item in enumerate(userList) if item['Steam id '] == parameters[0]), None)
+    driverOne = next((i for i, item in enumerate(userList)
+                     if item['Steam id '] == parameters[0]), None)
     userList[driverOne]['swapCar'] -= 1
 
     with open(savesPath + "nextRound.json", 'w') as json_file:
@@ -659,8 +673,10 @@ def swapPoint(parameters):
     roundInfo['swapPoint'].append(parameters)
 
     # Decrease joker counter
-    driverOne = next((i for i, item in enumerate(userList) if item['Steam id '] == parameters[0]), None)
-    driverVictim = next((i for i, item in enumerate(userList) if item['Steam id '] == parameters[1]), None)
+    driverOne = next((i for i, item in enumerate(userList)
+                     if item['Steam id '] == parameters[0]), None)
+    driverVictim = next((i for i, item in enumerate(
+        userList) if item['Steam id '] == parameters[1]), None)
     userList[driverOne]['swapPoint'] -= 1
     userList[driverVictim]['swapPointVictim'] += 1
 
@@ -671,6 +687,20 @@ def swapPoint(parameters):
     with open(dataPath + "defaultEntryList.json", 'w') as outfile:
         json.dump(userList, outfile)
         outfile.close()
+
+
+def getSwapPointVictim(parameters):
+    with open(savesPath + "nextRound.json", 'r') as json_file:
+        roundInfo = json.load(json_file)
+        json_file.close()
+
+    print("\n"+parameters+"\n")
+    for item in roundInfo["swapPoint"]:
+        if item[0] == parameters:
+            victim = item[1]
+            print(str(item))
+    print("\n Victim: "+str(victim)+"\n")
+    return victim
 
 
 def getOlderResult():
@@ -684,11 +714,13 @@ def getOlderResult():
             with open(savesPath + fileName, 'r') as json_file:
                 olderResult = json.load(json_file)
                 json_file.close()
-            olderResult['date'] = splitList[1] + '/' + splitList[2] + '/' + splitList[3].replace('.json', '')
+            olderResult['date'] = splitList[1] + '/' + \
+                splitList[2] + '/' + splitList[3].replace('.json', '')
             allResults.append(olderResult)
             # raceFile.append(fileName)
     # Sorte result by datetime
-    allResults = sorted(allResults, key=lambda k: datetime.strptime(k['date'], "%d/%m/%Y"))
+    allResults = sorted(
+        allResults, key=lambda k: datetime.strptime(k['date'], "%d/%m/%Y"))
     return allResults
 
 
@@ -706,7 +738,8 @@ def fetchCustomEvent():
         customEvent = json.load(json_file)
         customEventFinal = customEvent
         for custom in list(customEvent):
-            driverInfo = next(item for item in entryList if item['Steam id '] == custom)
+            driverInfo = next(
+                item for item in entryList if item['Steam id '] == custom)
             if driverInfo['available'] == False:
                 del customEvent[custom]
         json_file.close()
@@ -739,7 +772,8 @@ def createCustomEvent(eventInfo):
 def findSpotInGrid(userId):
     entryList = updateEntryParameters(userId, True)
     # get all car in the grid and choose one randomly
-    userData = next((item for item in entryList if item['Steam id '] == userId))
+    userData = next(
+        (item for item in entryList if item['Steam id '] == userId))
     with open(dataPath + 'cars.json') as json_file:
         carsData = json.load(json_file)
         json_file.close()
