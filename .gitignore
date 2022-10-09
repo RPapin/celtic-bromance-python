@@ -133,3 +133,5 @@ dump.rdb
 #temp
 .history/
 saves/
+Data/defaultEntryList.json
+saves/nextRound.json
