@@ -11,7 +11,7 @@ cache = {}
 urlFile = "tunnelUrl.txt"
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1>ACC randomize app URL Api</h1>"
+    return "<h1>ACC randomize app URL Api v2</h1>"
 # A route to return all data.
 @app.route('/get_url', methods=['GET'])
 def start_championnship():
@@ -27,12 +27,14 @@ def start_championnship():
             })
 @app.route('/post_url', methods=['POST'])
 def display_result():
-    data = request.form
+    data = request.get_json()
+    print("post_url")
+    print(data)
     if "tunnel_url" in data:
         # cache.pop('tunnel_url', None)
         # cache['tunnel_url'] = data['tunnel_url']
         f = open(urlFile, "w")
-        f.write(data['tunnel_url'])
+        f.write(data["tunnel_url"])
         f.close()
         return "success"
     else :
@@ -40,4 +42,4 @@ def display_result():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
