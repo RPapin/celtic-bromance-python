@@ -307,7 +307,8 @@ def nextRound(isFirstRound=False, isNewDraw=False, customEvent={}):
         "eventInfo": eventConfig,
         "usersInfo": usersInfo,
         "foundNewResults": info,
-        "teamWith": []
+        "teamWith": [],
+        "gridStatus" : "READY"
     }
     # Save next round config
     with open(accServerPathCfg + 'entrylist.json', 'w') as outfile:
@@ -359,6 +360,7 @@ def checkResult():
         entryTrack = entryRaceData['eventInfo']['track']
         globalPos = 1
         index = 0
+        listTeamWith = entryRaceData['teamWith']
         # List driver and pos before current race
         for driver in olderResult['championnshipStanding']:
             driverId = driver["playerId"]
@@ -366,59 +368,49 @@ def checkResult():
             index += 1
 
         for driverResult in resultFile["sessionResult"]["leaderBoardLines"]:
-            swappedWith = None
-            pos = globalPos
+
             # Search his car and starting pos
             entryDriver = next(item for item in entryRaceData['usersInfo']['usersInfo'] if
                                'S' + item["playerID"] == driverResult["currentDriver"]["playerId"])
-            # check if swap point
-            indexSwap = -1
-            isTheDriverSwapped = False
-            for indexSwapList, idList in enumerate(entryRaceData['teamWith']):
-                for index, id in enumerate(idList):
-                    if id == entryDriver['playerID']:
-                        indexSwap = indexSwapList
-                        isTheDriverSwapped = index == 1
-            if indexSwap != -1:
-                swapedDriverIndex = 0 if isTheDriverSwapped else 1
-                swapedDriverId = entryRaceData['teamWith'][indexSwap][swapedDriverIndex]
-                posSwappedDriver = next((i for i, item in enumerate(resultFile["sessionResult"]["leaderBoardLines"]) if
-                                         item["currentDriver"]["playerId"] == 'S' + swapedDriverId), None)
-                if type(posSwappedDriver) == int:
-                    posSwappedDriver += 1
-                else:
-                    posSwappedDriver = 999
-                # check if not last
-                if pos != len(resultFile["sessionResult"]["leaderBoardLines"]) and posSwappedDriver != len(
-                        resultFile["sessionResult"]["leaderBoardLines"]):
-                    swappedWith = -1
-                    if isTheDriverSwapped:
-                        if posSwappedDriver > pos:
-                            swappedWith = pos
-                            pos = posSwappedDriver
-                    else:
-                        if posSwappedDriver < pos:
-                            swappedWith = pos
-                            pos = posSwappedDriver
-                else:
-                    print("is last so no swap")
+            driverId = entryDriver['playerID']
+            pos = globalPos
+            #Compute team with
+            teamWithTupleInfo = None
+            for tupleTeamWith in listTeamWith:
+                if driverId in tupleTeamWith:
+                    teamWithTupleInfo = tupleTeamWith
+            #Check if in team with
+            if teamWithTupleInfo is not None:
+                teammateId = teamWithTupleInfo[1] if driverId == teamWithTupleInfo[0] else teamWithTupleInfo[0]
+                teammateInfo = next((item for item in resultFile["sessionResult"]["leaderBoardLines"] if
+                               item["currentDriver"]["playerId"] == "S" + teammateId), None)
 
-            # Set race point
-            if pos <= len(championnshipData["pointConfiguration"]):
-                racePoint = championnshipData["pointConfiguration"][pos - 1]
+                if teammateInfo is not None:
+                    teammatePos = next((index for (index, d) in enumerate(resultFile["sessionResult"]["leaderBoardLines"]) if d == teammateInfo), None)
+                    leaderPoint = championnshipData["pointConfiguration"][pos - 1] if pos <= len(championnshipData["pointConfiguration"]) else 0
+                    teammatePoint = championnshipData["pointConfiguration"][teammatePos - 1] if teammatePos <= len(championnshipData["pointConfiguration"]) else 0
+                    racePoint = round((teammatePoint + leaderPoint)/2, 0)
+
+                else:
+                    # Set race point casually because teammate wasn't in the race
+                    if pos <= len(championnshipData["pointConfiguration"]):
+                        racePoint = championnshipData["pointConfiguration"][pos - 1]
+                    else:
+                        racePoint = 0
             else:
-                racePoint = 0
+                # Set race point
+                if pos <= len(championnshipData["pointConfiguration"]):
+                    racePoint = championnshipData["pointConfiguration"][pos - 1]
+                else:
+                    racePoint = 0
+
+            globalPos += 1
             # race result
             driverResult["currentDriver"]["position"] = pos
             driverResult["currentDriver"]["point"] = racePoint
 
             driverResult["currentDriver"]["carName"] = entryDriver['car']
             driverResult["currentDriver"]["starting_place"] = entryDriver['starting_place']
-
-            # Swapped info
-            driverResult["currentDriver"]["swapped_with"] = swappedWith
-            print(entryDriver['lastName'] +
-                  " swapped with : " + str(swappedWith))
 
             currentResult.append(driverResult["currentDriver"])
             # championnship Standing
@@ -430,7 +422,7 @@ def checkResult():
                 driverResult["currentDriver"]["point"] = racePoint
                 olderResult['championnshipStanding'].append(
                     driverResult["currentDriver"])
-            globalPos += 1
+
 
         olderResult["raceResult"].append({
             raceNumber: currentResult
@@ -440,6 +432,12 @@ def checkResult():
         # Sort standings
         olderResult['championnshipStanding'] = sorted(olderResult['championnshipStanding'], key=lambda k: k['point'],
                                                       reverse=True)
+        entryRaceData["gridStatus"] = "WAITING_NEW_DRAW"
+        #Store status in the nextRound.json
+        with open(savesPath + 'nextRound.json', 'w') as outfile:
+            json.dump(entryRaceData, outfile)
+            json_file.close()
+
         with open(dataPath + 'result.json', 'w') as outfile:
             json.dump(olderResult, outfile)
             outfile.close()
@@ -453,8 +451,9 @@ def checkResult():
         response = {
             "standings": olderResult,
             "nextRoundInfo": nextRoundInfo,
-            "foundNewResults": "New results has been found. Race " + raceNumber + " informations are available",
-            "serverStatus": serverStatus
+            "foundNewResults": "New results has been found.",
+            "serverStatus": serverStatus,
+            "gridStatus" : "WAITING_NEW_DRAW"
         }
         Info.server_side_event(response, 'dataUpdate')
         return response
@@ -469,7 +468,8 @@ def checkResult():
             "standings": olderResult,
             "nextRoundInfo": nextRoundInfo,
             "foundNewResults": False,
-            "serverStatus": serverStatus
+            "serverStatus": serverStatus,
+            "gridStatus" : nextRoundInfo["gridStatus"]
         }
     # No current championnship
     else:
@@ -477,7 +477,8 @@ def checkResult():
             "standings": None,
             "nextRoundInfo": None,
             "foundNewResults": False,
-            "serverStatus": serverStatus
+            "serverStatus": serverStatus,
+            "gridStatus": "WAITING_NEW_DRAW"
         }
 
 
@@ -615,7 +616,6 @@ def updateEntryParameters(newParameters, singleUpdate=False):
 
 
 def swapCar(parameters):
-    print(parameters)
     with open(dataPath + "defaultEntryList.json", 'r') as json_file:
         userList = json.load(json_file)
         json_file.close()
@@ -899,5 +899,6 @@ def shutDownServer():
     }, "updateServerStatus")
     return {"serverStatus": False}
 
+# checkResult()
 # findSpotInGrid('76561197961422699')
 # swapCar(['76561198445003541', '76561198278916703'])

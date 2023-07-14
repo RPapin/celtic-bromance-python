@@ -28,8 +28,7 @@ def start_championnship():
 @app.route('/post_url', methods=['POST'])
 def display_result():
     data = request.get_json()
-    print("post_url")
-    print(data)
+
     if "tunnel_url" in data:
         # cache.pop('tunnel_url', None)
         # cache['tunnel_url'] = data['tunnel_url']

@@ -47,5 +47,6 @@
   "18": { "tracks": ["snetterton_2019"], "available": false },
   "19": { "tracks": ["cota"], "available": false },
   "20": { "tracks": ["indianapolis"], "available": false },
-  "21": { "tracks": ["watkins_glen"], "available": false }
+  "21": { "tracks": ["watkins_glen"], "available": false },
+  "22": { "tracks": ["valencia"], "available": false }
 }

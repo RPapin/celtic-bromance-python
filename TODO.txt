@@ -1,5 +1,5 @@
 Optimization call tunnelUrl Dans register SSE
-
+WHEEL : Got winner name when outside of the window then we enter it and the wheel launch
 
 Security for late swap, check if the server is launch => if yes do not the swap and do not refresh the grid
 + msg like "too late"
