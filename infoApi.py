@@ -16,6 +16,7 @@ from dotenv import dotenv_values
 import datetime
 import subprocess
 
+API_ENDPOINT = "https://api.jsonbin.io/v3/b/64aede3d9d312622a37e69ee" #"https://cb-url-vercel.vercel.app/post_url"  #"http://localhost:5000/post_url"
 currentCountdown = 0
 config = dotenv_values(".env")
 
@@ -32,7 +33,7 @@ ngrok_address = ''
 
 def server_side_event(data, topicName):
     """ Function to publish server side event """
-    print("server_side_event")
+    print("server_side_event : " + topicName)
     with app.app_context():
         sse.publish(data, type=topicName)
 
@@ -123,14 +124,14 @@ def swapCar():
     return jsonify(serverStatus)
 
 
-@app.route('/swapPoint', methods=['POST'])
-def swapPoint():
-    serverStatus = accR.swapPoint(request.json)
+@app.route('/teamWith', methods=['POST'])
+def teamWith():
+    serverStatus = accR.teamWith(request.json)
     return jsonify(serverStatus)
 
-@app.route('/getSwapPointVictim', methods=['POST'])
-def getSwapPointVictim():
-    victim = accR.getSwapPointVictim(request.json)
+@app.route('/getTeamInfo', methods=['POST'])
+def getTeamWithVictim():
+    victim = accR.getTeamInfo()
     return jsonify(victim)
 
 # @app.route('/get_entrylist', methods=['GET'])
@@ -187,7 +188,6 @@ def check_countdown():
     file1.close()
     delta = currentCountdown - int(time.time())
     result = False
-    print('delta ' + str(delta))
     if (delta > 0):
         result = delta
     return jsonify(result)
@@ -240,14 +240,20 @@ def ngrok_url():
 
     tunnel_url = j['tunnels'][0]['public_url'] + "/"  # Do the parsing of the get
     tunnel_url = tunnel_url.replace('http://', 'https://')
-    API_ENDPOINT = "https://celtic-bromance-url.herokuapp.com/post_url"
+
 
     # data to be sent to api
-    data = {'tunnel_url': tunnel_url}
+    data = {"tunnel_url": tunnel_url}
 
+    headers = {
+        'Content-Type': 'application/json',
+        'X-Master-Key': config['BIN_API_KEY'],
+        'X-Bin-Versioning': 'false'
+    }
     # sending post request and saving response as response object
-    r = requests.post(url=API_ENDPOINT, data=data)
-    pastebin_url = r.text
+    r = requests.put(url=API_ENDPOINT, json=data, headers=headers)
+    print("url posted with rep : " + r.text)
+    print("WATCH OUT FOR VERSION !!!")
     schedule_check()
 
 

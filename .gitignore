@@ -135,3 +135,4 @@ dump.rdb
 saves/
 Data/defaultEntryList.json
 saves/nextRound.json
+.vercel

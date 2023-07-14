@@ -21,7 +21,7 @@
             "type" : "number"
         },
         {
-            "name" : "swapPoint",
+            "name" : "teamWith",
             "label": "Number of swap point joker allowed",
             "type" : "number"
         },

@@ -15,7 +15,6 @@ from math import *
 import time
 from dotenv import dotenv_values
 
-
 config = dotenv_values(".env")
 today = date.today()
 try:
@@ -289,8 +288,8 @@ def nextRound(isFirstRound=False, isNewDraw=False, customEvent={}):
 
         for i, driver in enumerate(entrylist):
             entrylist[i]['swapCar'] = championnshipConfiguration['swapCar']
-            entrylist[i]['swapPoint'] = championnshipConfiguration['swapPoint']
-            entrylist[i]['swapPointVictim'] = 0
+            entrylist[i]['teamWith'] = championnshipConfiguration['teamWith']
+            entrylist[i]['teamWithVictim'] = 0
 
         with open(dataPath + 'defaultEntryList.json', 'w') as outfile:
             json.dump(entrylist, outfile)
@@ -308,7 +307,7 @@ def nextRound(isFirstRound=False, isNewDraw=False, customEvent={}):
         "eventInfo": eventConfig,
         "usersInfo": usersInfo,
         "foundNewResults": info,
-        "swapPoint": []
+        "teamWith": []
     }
     # Save next round config
     with open(accServerPathCfg + 'entrylist.json', 'w') as outfile:
@@ -375,14 +374,14 @@ def checkResult():
             # check if swap point
             indexSwap = -1
             isTheDriverSwapped = False
-            for indexSwapList, idList in enumerate(entryRaceData['swapPoint']):
+            for indexSwapList, idList in enumerate(entryRaceData['teamWith']):
                 for index, id in enumerate(idList):
                     if id == entryDriver['playerID']:
                         indexSwap = indexSwapList
                         isTheDriverSwapped = index == 1
             if indexSwap != -1:
                 swapedDriverIndex = 0 if isTheDriverSwapped else 1
-                swapedDriverId = entryRaceData['swapPoint'][indexSwap][swapedDriverIndex]
+                swapedDriverId = entryRaceData['teamWith'][indexSwap][swapedDriverIndex]
                 posSwappedDriver = next((i for i, item in enumerate(resultFile["sessionResult"]["leaderBoardLines"]) if
                                          item["currentDriver"]["playerId"] == 'S' + swapedDriverId), None)
                 if type(posSwappedDriver) == int:
@@ -426,7 +425,7 @@ def checkResult():
             driverId = driverResult["currentDriver"]["playerId"]
             if driverId in driverStandings:
                 olderResult['championnshipStanding'][driverStandings[driverId]
-                                                     ]['point'] += racePoint
+                ]['point'] += racePoint
             else:
                 driverResult["currentDriver"]["point"] = racePoint
                 olderResult['championnshipStanding'].append(
@@ -616,6 +615,7 @@ def updateEntryParameters(newParameters, singleUpdate=False):
 
 
 def swapCar(parameters):
+    print(parameters)
     with open(dataPath + "defaultEntryList.json", 'r') as json_file:
         userList = json.load(json_file)
         json_file.close()
@@ -637,10 +637,10 @@ def swapCar(parameters):
     # MAKE A NEW USERINFO
     userInfo = roundInfo['usersInfo']['usersInfo']
     driverOne = next((i for i, item in enumerate(userInfo)
-                     if item['playerID'] == parameters[0]), None)
+                      if item['playerID'] == parameters[0]), None)
     carOne = userInfo[driverOne]['car']
     driverTwo = next((i for i, item in enumerate(userInfo)
-                     if item['playerID'] == parameters[1]), None)
+                      if item['playerID'] == parameters[1]), None)
     carTwo = userInfo[driverTwo]['car']
     userInfo[driverOne]['car'] = carTwo
     userInfo[driverTwo]['car'] = carOne
@@ -648,7 +648,7 @@ def swapCar(parameters):
 
     # Decrease joker counter
     driverOne = next((i for i, item in enumerate(userList)
-                     if item['Steam id '] == parameters[0]), None)
+                      if item['Steam id '] == parameters[0]), None)
     userList[driverOne]['swapCar'] -= 1
 
     with open(savesPath + "nextRound.json", 'w') as json_file:
@@ -665,11 +665,23 @@ def swapCar(parameters):
 
     # Update everyone screen
     nextRoundInfo = checkResult()
-    Info.server_side_event(nextRoundInfo, 'carSwap')
+    infoJustSwapped = {
+        "nri" : nextRoundInfo,
+        "leader" : {
+            "id" : parameters[0],
+            "name" : str(userList[driverOne]["First name"] + " " + userList[driverOne]["Surname"])
+        },
+        "victim": {
+            "id": parameters[1],
+            "name": str(userInfo[driverTwo]["firstName"] + " " + userInfo[driverTwo]["lastName"])
+        },
+        "action" : "swapCar"
+    }
+    Info.server_side_event(infoJustSwapped, 'justSwapped')
     return True
 
 
-def swapPoint(parameters):
+def teamWith(parameters):
     with open(dataPath + "defaultEntryList.json", 'r') as json_file:
         userList = json.load(json_file)
         json_file.close()
@@ -677,15 +689,22 @@ def swapPoint(parameters):
     with open(savesPath + "nextRound.json", 'r') as json_file:
         roundInfo = json.load(json_file)
         json_file.close()
-    roundInfo['swapPoint'].append(parameters)
+
+    #Check if already in a team
+    for tupleDrivers in roundInfo['teamWith']:
+        if parameters[0] in tupleDrivers or parameters[1] in tupleDrivers:
+            print(parameters + " ALREADY IN A TEAM")
+            return False
+
+    roundInfo['teamWith'].append(parameters)
 
     # Decrease joker counter
     driverOne = next((i for i, item in enumerate(userList)
-                     if item['Steam id '] == parameters[0]), None)
+                      if item['Steam id '] == parameters[0]), None)
     driverVictim = next((i for i, item in enumerate(
         userList) if item['Steam id '] == parameters[1]), None)
-    userList[driverOne]['swapPoint'] -= 1
-    userList[driverVictim]['swapPointVictim'] += 1
+    userList[driverOne]['teamWith'] -= 1
+    userList[driverVictim]['teamWithVictim'] += 1
 
     with open(savesPath + "nextRound.json", 'w') as json_file:
         json.dump(roundInfo, json_file)
@@ -695,19 +714,36 @@ def swapPoint(parameters):
         json.dump(userList, outfile)
         outfile.close()
 
+    nextRoundInfo = checkResult()
+    infoJustSwapped = {
+        "nri" : nextRoundInfo,
+        "leader" : {
+            "id" : parameters[0],
+            "name" : str(userList[driverOne]["First name"] + " " + userList[driverOne]["Surname"])
+        },
+        "victim": {
+            "id": parameters[1],
+            "name": str(userList[driverVictim]["First name"] + " " + userList[driverVictim]["Surname"])
+        },
+        "action" : "teamWith"
+    }
+    Info.server_side_event(infoJustSwapped, 'justSwapped')
 
-def getSwapPointVictim(parameters):
+
+def getTeamInfo():
     with open(savesPath + "nextRound.json", 'r') as json_file:
         roundInfo = json.load(json_file)
         json_file.close()
-
-    print("\n"+parameters+"\n")
-    for item in roundInfo["swapPoint"]:
-        if item[0] == parameters:
-            victim = item[1]
-            print(str(item))
-    print("\n Victim: "+str(victim)+"\n")
-    return victim
+    # init variable to avoid error in case of not founding it
+    teamInfos = []
+    for item in roundInfo["teamWith"]:
+        teamInfo = {
+            "leader": item[0],
+            "victim": item[1]
+        }
+        teamInfos.append(teamInfo)
+    print("\n Team infos: " + str(teamInfos) + "\n")
+    return teamInfos
 
 
 def getOlderResult():
@@ -722,7 +758,7 @@ def getOlderResult():
                 olderResult = json.load(json_file)
                 json_file.close()
             olderResult['date'] = splitList[1] + '/' + \
-                splitList[2] + '/' + splitList[3].replace('.json', '')
+                                  splitList[2] + '/' + splitList[3].replace('.json', '')
             allResults.append(olderResult)
             # raceFile.append(fileName)
     # Sorte result by datetime
@@ -864,3 +900,4 @@ def shutDownServer():
     return {"serverStatus": False}
 
 # findSpotInGrid('76561197961422699')
+# swapCar(['76561198445003541', '76561198278916703'])

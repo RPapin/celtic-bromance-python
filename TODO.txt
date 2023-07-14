@@ -1,9 +1,9 @@
-Run différent de l'appli front en background => Decalage countdown apres connection
-==> Voir si fct de MAJ ou alors simuler un frontground permanent
+Optimization call tunnelUrl Dans register SSE
+
 
 Security for late swap, check if the server is launch => if yes do not the swap and do not refresh the grid
 + msg like "too late"
-Button for swap and stoling aside the name of someone in the grid
+Button for swap and stealing aside the name of someone in the grid
 
 Ajout de la fonction de par équipe
 If not in active user = Warning message and no swap available
