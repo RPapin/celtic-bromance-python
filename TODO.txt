@@ -1,25 +1,20 @@
-Optimization call tunnelUrl Dans register SSE
+
+
+tEAMING AFTER ROUND FINISHED
+TEAMING REFRESH
+Arrow to show we can trigger custom event
+Discord Bot to ping everyone during the event
+
 WHEEL : Got winner name when outside of the window then we enter it and the wheel launch
 
-Security for late swap, check if the server is launch => if yes do not the swap and do not refresh the grid
-+ msg like "too late"
-Button for swap and stealing aside the name of someone in the grid
+if server running msg like "too late"
 
 Ajout de la fonction de par équipe
-If not in active user = Warning message and no swap available
 
-Sync countdown when go on another page ... 
-btn restore parameters 
 Add best remontada and best race lap
-Add guest mode
 
-Fix Car number
+Fix Car number => OverWrite by the livery ?
 //finalsave wrong day (current day)
-
-regarder csp
-
- Maybe make it so if I chose Fubarr, and Fubarr get 20 points, I get 5 points, 
- we instead share those points and get 12.5 each. Means that you don't just do share points and sandbag at the back!
 
 !! Warning !!
 Folder results is removed when race file is the only one inside (after the cut-paste) 

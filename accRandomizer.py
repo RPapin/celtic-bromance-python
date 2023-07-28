@@ -29,9 +29,10 @@ templatePath = "Template/"
 savesPath = "saves/"
 # Static cfg files, just need to put in the server folder
 configFiles = ["assistRules.json", "configuration.json"]  # , "settings.json"
-ballastInGameLimit = 30
+ballastInGameLimit = 40
+ballastMinValue = -40
 server = None
-ballastList = [20, 18, 16, 14, 12, 10, 8, 6, 4, 2]
+ballastList = [20, 15, 10, 5, 0, -5, -10, -15, -20, -25, -30, -35]
 
 
 def init():
@@ -190,13 +191,13 @@ def makeNewRace(carsData, raceNumber):
             else:
                 driverData['position'] = currentNbDriver - driver_position
                 if driver_position >= len(ballastList):
-                    ballast = 0
+                    ballast = ballastMinValue
                 else:
                     ballast = ballastList[driver_position]
                 # ballast = int(round(int(resultData['championnshipStanding'][driver_position]['point'] / 2) + (
                 #             10 - driver_position * 1.5), 0))
 
-                driverData['ballast'] = ballast if ballast > 0 else 0
+                driverData['ballast'] = ballast if ballast > ballastMinValue else ballastMinValue
         entryList = sorted(entryList, key=lambda k: k['position'])
 
     finalEntryList = {
@@ -211,7 +212,7 @@ def makeNewRace(carsData, raceNumber):
 
         userData['restrictor'] = 0
         if "ballast" not in userData:
-            userData['ballast'] = 0
+            userData['ballast'] = ballastMinValue
         elif userData['ballast'] > ballastInGameLimit:
             userData['restrictor'] = int(
                 (userData['ballast'] - ballastInGameLimit) / 3)
@@ -266,7 +267,7 @@ def makeNewRace(carsData, raceNumber):
     }
 
 
-def nextRound(isFirstRound=False, isNewDraw=False, customEvent={}):
+def nextRound(isFirstRound=False, isNewDraw=False, customEvent={}, keepTeamWith = False):
     carsData, trackData, weatherData = init()
     roundNumber = 1 if isFirstRound else 2
     info = "A new Championnship has begun !" if isFirstRound else "A new round has begun !"
@@ -281,6 +282,7 @@ def nextRound(isFirstRound=False, isNewDraw=False, customEvent={}):
         championnshipConfiguration = json.load(json_file)
         json_file.close()
     if isFirstRound:
+        #Reset team with
         # reset joker number
         with open(dataPath + 'defaultEntryList.json') as json_file:
             entrylist = json.load(json_file)
@@ -303,11 +305,18 @@ def nextRound(isFirstRound=False, isNewDraw=False, customEvent={}):
     usersInfo = makeNewRace(carsData, roundNumber)
     eventConfig = makeEventConfig(
         trackData, weatherData, championnshipConfiguration, customEvent)
+    teamWithArray = []
+    if keepTeamWith:
+        with open(savesPath + 'nextround.json') as json_file:
+            nextroundInfo = json.load(json_file)
+            json_file.close()
+        teamWithArray = nextroundInfo["teamWith"]
+
     nextRoundInfo = {
         "eventInfo": eventConfig,
         "usersInfo": usersInfo,
         "foundNewResults": info,
-        "teamWith": [],
+        "teamWith": teamWithArray,
         "gridStatus" : "READY"
     }
     # Save next round config
@@ -323,11 +332,7 @@ def nextRound(isFirstRound=False, isNewDraw=False, customEvent={}):
 
 
 def checkResult():
-    # Check the server status
-    serverStatus = False
-    if "accServer.exe" in (p.name() for p in psutil.process_iter()):
-        serverStatus = True
-
+    serverStatus = getServerStatus()
     # Check new race file in the server folder
     onlyfiles = [f for f in listdir(accServerPathResult) if isfile(
         join(accServerPathResult, f))]
@@ -366,12 +371,15 @@ def checkResult():
             driverId = driver["playerId"]
             driverStandings[driverId] = index
             index += 1
-
+        #List all drivers registered for previous race
+        driverRegistered = entryRaceData['usersInfo']['usersInfo']
         for driverResult in resultFile["sessionResult"]["leaderBoardLines"]:
 
             # Search his car and starting pos
             entryDriver = next(item for item in entryRaceData['usersInfo']['usersInfo'] if
                                'S' + item["playerID"] == driverResult["currentDriver"]["playerId"])
+            #Delet driver from registered list
+            driverRegistered = [i for i in driverRegistered if not (i["playerID"] == entryDriver["playerID"])]
             driverId = entryDriver['playerID']
             pos = globalPos
             #Compute team with
@@ -384,13 +392,13 @@ def checkResult():
                 teammateId = teamWithTupleInfo[1] if driverId == teamWithTupleInfo[0] else teamWithTupleInfo[0]
                 teammateInfo = next((item for item in resultFile["sessionResult"]["leaderBoardLines"] if
                                item["currentDriver"]["playerId"] == "S" + teammateId), None)
-
                 if teammateInfo is not None:
                     teammatePos = next((index for (index, d) in enumerate(resultFile["sessionResult"]["leaderBoardLines"]) if d == teammateInfo), None)
+                    #Index to real pos
+                    teammatePos += 1
                     leaderPoint = championnshipData["pointConfiguration"][pos - 1] if pos <= len(championnshipData["pointConfiguration"]) else 0
                     teammatePoint = championnshipData["pointConfiguration"][teammatePos - 1] if teammatePos <= len(championnshipData["pointConfiguration"]) else 0
                     racePoint = round((teammatePoint + leaderPoint)/2, 0)
-
                 else:
                     # Set race point casually because teammate wasn't in the race
                     if pos <= len(championnshipData["pointConfiguration"]):
@@ -403,7 +411,6 @@ def checkResult():
                     racePoint = championnshipData["pointConfiguration"][pos - 1]
                 else:
                     racePoint = 0
-
             globalPos += 1
             # race result
             driverResult["currentDriver"]["position"] = pos
@@ -423,7 +430,20 @@ def checkResult():
                 olderResult['championnshipStanding'].append(
                     driverResult["currentDriver"])
 
-
+        with open(dataPath + 'defaultEntryList.json') as json_file:
+            defaultEntry = json.load(json_file)
+            json_file.close()
+        # Driver who not participated
+        print("driverRegistered")
+        print(driverRegistered)
+        for driverInfo in driverRegistered:
+            driverToUpdateIndex = next((i for i, item in enumerate(
+                defaultEntry) if item['Steam id '] == driverInfo["playerID"]), None)
+            if driverToUpdateIndex is not None:
+                defaultEntry[driverToUpdateIndex]["available"] = False
+        with open(dataPath + "defaultEntryList.json", 'w') as json_file:
+            json.dump(defaultEntry, json_file)
+            json_file.close()
         olderResult["raceResult"].append({
             raceNumber: currentResult
         })
@@ -433,6 +453,8 @@ def checkResult():
         olderResult['championnshipStanding'] = sorted(olderResult['championnshipStanding'], key=lambda k: k['point'],
                                                       reverse=True)
         entryRaceData["gridStatus"] = "WAITING_NEW_DRAW"
+        # removed teammate jokers list
+        entryRaceData["teamWith"] = []
         #Store status in the nextRound.json
         with open(savesPath + 'nextRound.json', 'w') as outfile:
             json.dump(entryRaceData, outfile)
@@ -448,6 +470,8 @@ def checkResult():
         # nextRoundInfo = nextRound()
         nextRoundInfo = {}
         raceNumber = str(raceNumber + 1)
+
+
         response = {
             "standings": olderResult,
             "nextRoundInfo": nextRoundInfo,
@@ -616,118 +640,121 @@ def updateEntryParameters(newParameters, singleUpdate=False):
 
 
 def swapCar(parameters):
-    with open(dataPath + "defaultEntryList.json", 'r') as json_file:
-        userList = json.load(json_file)
-        json_file.close()
-    with open(savesPath + "nextRound.json", 'r') as json_file:
-        roundInfo = json.load(json_file)
-        json_file.close()
-    # MAKE A NEW ENTRYLIST
-    entryList = roundInfo['usersInfo']['finalEntryList']['entries']
-    driverOne = next((i for i, item in enumerate(entryList) if item['drivers'][0]['playerID'] == "S" + parameters[0]),
-                     None)
-    carOne = entryList[driverOne]['forcedCarModel']
-    driverTwo = next((i for i, item in enumerate(entryList) if item['drivers'][0]['playerID'] == "S" + parameters[1]),
-                     None)
-    carTwo = entryList[driverTwo]['forcedCarModel']
-    entryList[driverOne]['forcedCarModel'] = carTwo
-    entryList[driverTwo]['forcedCarModel'] = carOne
-    roundInfo['usersInfo']['finalEntryList']['entries'] = entryList
+    #If the server is up, no swap available
+    if not getServerStatus():
+        with open(dataPath + "defaultEntryList.json", 'r') as json_file:
+            userList = json.load(json_file)
+            json_file.close()
+        with open(savesPath + "nextRound.json", 'r') as json_file:
+            roundInfo = json.load(json_file)
+            json_file.close()
+        # MAKE A NEW ENTRYLIST
+        entryList = roundInfo['usersInfo']['finalEntryList']['entries']
+        driverOne = next((i for i, item in enumerate(entryList) if item['drivers'][0]['playerID'] == "S" + parameters[0]),
+                         None)
+        carOne = entryList[driverOne]['forcedCarModel']
+        driverTwo = next((i for i, item in enumerate(entryList) if item['drivers'][0]['playerID'] == "S" + parameters[1]),
+                         None)
+        carTwo = entryList[driverTwo]['forcedCarModel']
+        entryList[driverOne]['forcedCarModel'] = carTwo
+        entryList[driverTwo]['forcedCarModel'] = carOne
+        roundInfo['usersInfo']['finalEntryList']['entries'] = entryList
 
-    # MAKE A NEW USERINFO
-    userInfo = roundInfo['usersInfo']['usersInfo']
-    driverOne = next((i for i, item in enumerate(userInfo)
-                      if item['playerID'] == parameters[0]), None)
-    carOne = userInfo[driverOne]['car']
-    driverTwo = next((i for i, item in enumerate(userInfo)
-                      if item['playerID'] == parameters[1]), None)
-    carTwo = userInfo[driverTwo]['car']
-    userInfo[driverOne]['car'] = carTwo
-    userInfo[driverTwo]['car'] = carOne
-    roundInfo['usersInfo']['usersInfo'] = userInfo
+        # MAKE A NEW USERINFO
+        userInfo = roundInfo['usersInfo']['usersInfo']
+        driverOne = next((i for i, item in enumerate(userInfo)
+                          if item['playerID'] == parameters[0]), None)
+        carOne = userInfo[driverOne]['car']
+        driverTwo = next((i for i, item in enumerate(userInfo)
+                          if item['playerID'] == parameters[1]), None)
+        carTwo = userInfo[driverTwo]['car']
+        userInfo[driverOne]['car'] = carTwo
+        userInfo[driverTwo]['car'] = carOne
+        roundInfo['usersInfo']['usersInfo'] = userInfo
 
-    # Decrease joker counter
-    driverOne = next((i for i, item in enumerate(userList)
-                      if item['Steam id '] == parameters[0]), None)
-    userList[driverOne]['swapCar'] -= 1
+        # Decrease joker counter
+        driverOne = next((i for i, item in enumerate(userList)
+                          if item['Steam id '] == parameters[0]), None)
+        userList[driverOne]['swapCar'] -= 1
 
-    with open(savesPath + "nextRound.json", 'w') as json_file:
-        json.dump(roundInfo, json_file)
-        json_file.close()
+        with open(savesPath + "nextRound.json", 'w') as json_file:
+            json.dump(roundInfo, json_file)
+            json_file.close()
 
-    with open(accServerPathCfg + 'entrylist.json', 'w') as outfile:
-        json.dump(roundInfo['usersInfo']['finalEntryList'], outfile)
-        outfile.close()
+        with open(accServerPathCfg + 'entrylist.json', 'w') as outfile:
+            json.dump(roundInfo['usersInfo']['finalEntryList'], outfile)
+            outfile.close()
 
-    with open(dataPath + "defaultEntryList.json", 'w') as outfile:
-        json.dump(userList, outfile)
-        outfile.close()
+        with open(dataPath + "defaultEntryList.json", 'w') as outfile:
+            json.dump(userList, outfile)
+            outfile.close()
 
-    # Update everyone screen
-    nextRoundInfo = checkResult()
-    infoJustSwapped = {
-        "nri" : nextRoundInfo,
-        "leader" : {
-            "id" : parameters[0],
-            "name" : str(userList[driverOne]["First name"] + " " + userList[driverOne]["Surname"])
-        },
-        "victim": {
-            "id": parameters[1],
-            "name": str(userInfo[driverTwo]["firstName"] + " " + userInfo[driverTwo]["lastName"])
-        },
-        "action" : "swapCar"
-    }
-    Info.server_side_event(infoJustSwapped, 'justSwapped')
+        # Update everyone screen
+        nextRoundInfo = checkResult()
+        infoJustSwapped = {
+            "nri" : nextRoundInfo,
+            "leader" : {
+                "id" : parameters[0],
+                "name" : str(userList[driverOne]["First name"] + " " + userList[driverOne]["Surname"])
+            },
+            "victim": {
+                "id": parameters[1],
+                "name": str(userInfo[driverTwo]["firstName"] + " " + userInfo[driverTwo]["lastName"])
+            },
+            "action" : "swapCar"
+        }
+        Info.server_side_event(infoJustSwapped, 'justSwapped')
     return True
 
 
 def teamWith(parameters):
-    with open(dataPath + "defaultEntryList.json", 'r') as json_file:
-        userList = json.load(json_file)
-        json_file.close()
+    if not getServerStatus():
+        with open(dataPath + "defaultEntryList.json", 'r') as json_file:
+            userList = json.load(json_file)
+            json_file.close()
 
-    with open(savesPath + "nextRound.json", 'r') as json_file:
-        roundInfo = json.load(json_file)
-        json_file.close()
+        with open(savesPath + "nextRound.json", 'r') as json_file:
+            roundInfo = json.load(json_file)
+            json_file.close()
 
-    #Check if already in a team
-    for tupleDrivers in roundInfo['teamWith']:
-        if parameters[0] in tupleDrivers or parameters[1] in tupleDrivers:
-            print(parameters + " ALREADY IN A TEAM")
-            return False
+        #Check if already in a team
+        for tupleDrivers in roundInfo['teamWith']:
+            if parameters[0] in tupleDrivers or parameters[1] in tupleDrivers:
+                print(parameters + " ALREADY IN A TEAM")
+                return False
 
-    roundInfo['teamWith'].append(parameters)
+        roundInfo['teamWith'].append(parameters)
 
-    # Decrease joker counter
-    driverOne = next((i for i, item in enumerate(userList)
-                      if item['Steam id '] == parameters[0]), None)
-    driverVictim = next((i for i, item in enumerate(
-        userList) if item['Steam id '] == parameters[1]), None)
-    userList[driverOne]['teamWith'] -= 1
-    userList[driverVictim]['teamWithVictim'] += 1
+        # Decrease joker counter
+        driverOne = next((i for i, item in enumerate(userList)
+                          if item['Steam id '] == parameters[0]), None)
+        driverVictim = next((i for i, item in enumerate(
+            userList) if item['Steam id '] == parameters[1]), None)
+        userList[driverOne]['teamWith'] -= 1
+        userList[driverVictim]['teamWithVictim'] += 1
 
-    with open(savesPath + "nextRound.json", 'w') as json_file:
-        json.dump(roundInfo, json_file)
-        json_file.close()
+        with open(savesPath + "nextRound.json", 'w') as json_file:
+            json.dump(roundInfo, json_file)
+            json_file.close()
 
-    with open(dataPath + "defaultEntryList.json", 'w') as outfile:
-        json.dump(userList, outfile)
-        outfile.close()
+        with open(dataPath + "defaultEntryList.json", 'w') as outfile:
+            json.dump(userList, outfile)
+            outfile.close()
 
-    nextRoundInfo = checkResult()
-    infoJustSwapped = {
-        "nri" : nextRoundInfo,
-        "leader" : {
-            "id" : parameters[0],
-            "name" : str(userList[driverOne]["First name"] + " " + userList[driverOne]["Surname"])
-        },
-        "victim": {
-            "id": parameters[1],
-            "name": str(userList[driverVictim]["First name"] + " " + userList[driverVictim]["Surname"])
-        },
-        "action" : "teamWith"
-    }
-    Info.server_side_event(infoJustSwapped, 'justSwapped')
+        nextRoundInfo = checkResult()
+        infoJustSwapped = {
+            "nri" : nextRoundInfo,
+            "leader" : {
+                "id" : parameters[0],
+                "name" : str(userList[driverOne]["First name"] + " " + userList[driverOne]["Surname"])
+            },
+            "victim": {
+                "id": parameters[1],
+                "name": str(userList[driverVictim]["First name"] + " " + userList[driverVictim]["Surname"])
+            },
+            "action" : "teamWith"
+        }
+        Info.server_side_event(infoJustSwapped, 'justSwapped')
 
 
 def getTeamInfo():
@@ -790,7 +817,7 @@ def fetchCustomEvent():
 
 
 def setNextRoundFromSpin(eventInfo):
-    return nextRound(False, True, eventInfo)
+    return nextRound(False, True, eventInfo, True)
 
 
 def createCustomEvent(eventInfo):
@@ -835,7 +862,7 @@ def findSpotInGrid(userId):
         "lastName": userData["Surname"],
         "starting_place": startingPlace,
         "car": carsData[str(carId)]["model"],
-        "ballast": 0,
+        "ballast": ballastMinValue,
         "restrictor": 0,
         "playerID": userData["Steam id "],
         "nationality": userData["Nationality"] if "Nationality" in userData else "Unknown"
@@ -849,7 +876,7 @@ def findSpotInGrid(userId):
         }],
         "forcedCarModel": int(carId),
         "overrideDriverInfo": 1,
-        "ballastKg": 0,
+        "ballastKg": ballastMinValue,
         "restrictor": 0,
         "defaultGridPosition": startingPlace
     }
@@ -874,6 +901,8 @@ def log_subprocess_output(pipe):
 
 def launchServer():
     """ Call a powershell script to launch the server """
+    # Wait one sec in case last second joker usage
+    time.sleep(2)
     # Save every config files in the server folder
     for fileName in configFiles:
         os.remove(accServerPathCfg + fileName)
@@ -888,11 +917,16 @@ def launchServer():
     }, 'updateServerStatus')
     return {"serverStatus": True}
 
-
+def getServerStatus():
+    # Check the server status
+    serverStatus = False
+    if "accServer.exe" in (p.name() for p in psutil.process_iter()):
+        serverStatus = True
+    return serverStatus
 def shutDownServer():
     """ shut Down the server """
     # Save every config files in the server folder
-    if "accServer.exe" in (p.name() for p in psutil.process_iter()):
+    if getServerStatus():
         os.system("TASKKILL /F /IM accServer.exe")
     Info.server_side_event({
         "serverStatus": False

@@ -59,7 +59,7 @@ def display_result():
 
 @app.route('/new_draw', methods=['GET'])
 def new_draw():
-    fullResult = accR.nextRound(False, True)
+    fullResult = accR.nextRound(False, True, {}, True)
     return fullResult
 
 
