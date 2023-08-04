@@ -24,7 +24,7 @@
         "ambientTemp": {"min": 15, "max": 35},
         "cloudLevel" : {"min": 0, "max": 0.4},
         "rain" : {"min": 0.0, "max": 0.0},
-        "weatherRandomness": {"min": 2, "max": 6},
+        "weatherRandomness": {"min": 2, "max": 5},
         "name" : "Sec / Dry"
     }
 }

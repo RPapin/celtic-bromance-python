@@ -1,15 +1,15 @@
-
-
-tEAMING AFTER ROUND FINISHED
+NO CUSTOM EVENT FOR NEW JOINER
+NO REFRESH STANDINGS
+Dark color not good
+Log out is broken
 TEAMING REFRESH
 Arrow to show we can trigger custom event
 Discord Bot to ping everyone during the event
 
+Warning : MAX_TEAM_VICTIM defined also in the front
 WHEEL : Got winner name when outside of the window then we enter it and the wheel launch
 
 if server running msg like "too late"
-
-Ajout de la fonction de par équipe
 
 Add best remontada and best race lap
 
