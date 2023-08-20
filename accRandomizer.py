@@ -35,7 +35,7 @@ ballastInGameLimit = 40
 ballastMinValue = -40
 server = None
 ballastList = [20, 15, 10, 5, 0, -5, -10, -15, -20, -25, -30, -35]
-dataApi = dataApiService.DataApiService()
+# dataApi = dataApiService.DataApiService()
 
 def init():
     with open(dataPath + 'cars.json') as json_file:
@@ -797,11 +797,11 @@ def getOlderResult():
 
 
 def fetchDrivers():
-    # with open(dataPath + 'defaultEntryList.json') as json_file:
-    #     entryList = json.load(json_file)
-    #     json_file.close()
-    # return entryList
-    return dataApi.get_entry_list()
+    with open(dataPath + 'defaultEntryList.json') as json_file:
+        entryList = json.load(json_file)
+        json_file.close()
+    return entryList
+    # return dataApi.get_entry_list()
 
 
 def fetchCustomEvent():

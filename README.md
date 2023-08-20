@@ -4,7 +4,7 @@ ACC random event
 # Getting started
 Forward port
 
-Install python package with 'python pip -r install flask'
+Install python package with 'python pip install -r full_requirements.txt'
 
 Create a .env file with NGROK_AUTH_TOKEN=xxxxxx
 
