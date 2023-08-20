@@ -797,11 +797,11 @@ def getOlderResult():
 
 
 def fetchDrivers():
-    # with open(dataPath + 'defaultEntryList.json') as json_file:
-    #     entryList = json.load(json_file)
-    #     json_file.close()
-    # return entryList
-    return dataApi.get_entry_list()
+    with open(dataPath + 'defaultEntryList.json') as json_file:
+        entryList = json.load(json_file)
+        json_file.close()
+    return entryList
+    # return dataApi.get_entry_list()
 
 
 def fetchCustomEvent():
