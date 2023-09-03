@@ -122,7 +122,7 @@ def makeEventConfig(trackData, weatherData, championnshipConfiguration, customEv
             timeEnd = 3
 
     daytime = random.randint(timeBegin, timeEnd)
-    timeMultipler = random.randint(5, 18)
+    timeMultipler = random.randint(3, 15)
     templateEvent["sessions"][0]["hourOfDay"] = templateEvent["sessions"][1]["hourOfDay"] = daytime
     templateEvent["sessions"][0]["timeMultiplier"] = templateEvent["sessions"][1]["timeMultiplier"] = timeMultipler
     eventInfo.update({
