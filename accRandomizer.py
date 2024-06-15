@@ -6,10 +6,8 @@ import subprocess
 import os
 from shutil import copyfile
 from datetime import date
-from typing import Dict, final
 import psutil
 
-import dataApiService
 import infoApi as Info
 from datetime import datetime
 from numpy.random import choice
@@ -35,7 +33,6 @@ ballastInGameLimit = 40
 ballastMinValue = -40
 server = None
 ballastList = [40, 35, 30, 25, 20, 15, 10, 5, 0, -5, -10, -15, -20, -25, -30, -35, -40]
-dataApi = dataApiService.DataApiService()
 
 def init():
     with open(dataPath + 'cars.json') as json_file:
@@ -437,8 +434,6 @@ def checkResult():
             defaultEntry = json.load(json_file)
             json_file.close()
         # Driver who not participated
-        print("driverRegistered")
-        print(driverRegistered)
         for driverInfo in driverRegistered:
             driverToUpdateIndex = next((i for i, item in enumerate(
                 defaultEntry) if item['Steam id '] == driverInfo["playerID"]), None)
@@ -802,7 +797,6 @@ def fetchDrivers():
         entryList = json.load(json_file)
         json_file.close()
     return entryList
-    # return dataApi.get_entry_list()
 
 
 def fetchCustomEvent():

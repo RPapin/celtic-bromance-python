@@ -136,3 +136,6 @@ saves/
 Data/defaultEntryList.json
 saves/nextRound.json
 .vercel
+Data/championnshipConfiguration.json
+Data/result.json
+countdown.txt
