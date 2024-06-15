@@ -17,18 +17,20 @@ import datetime
 import subprocess
 
 API_ENDPOINT = "https://api.jsonbin.io/v3/b/64aede3d9d312622a37e69ee" #"https://cb-url-vercel.vercel.app/post_url"  #"http://localhost:5000/post_url"
+IPV4_Adress = "88.183.176.222" #"https://cb-url-vercel.vercel.app/post_url"  #"http://localhost:5000/post_url"
 currentCountdown = 0
 config = dotenv_values(".env")
 
-ngrok.set_auth_token(config['NGROK_AUTH_TOKEN'])
+# try:
+#     ngrok.set_auth_token(config['NGROK_AUTH_TOKEN'])
+# except subprocess.CalledProcessError as e:
+#     raise RuntimeError("command '{}' return with error (code {}): {}".format(e.cmd, e.returncode, e.output))
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 app.config["REDIS_URL"] = "redis://localhost"
 app.register_blueprint(sse, url_prefix='/events')
-run_with_ngrok(app)
-
-ngrok_address = ''
+# run_with_ngrok(app)
 
 
 def server_side_event(data, topicName):
@@ -166,6 +168,7 @@ def set_next_round_from_spin():
 @app.route('/fetch_custom_event', methods=['GET'])
 def fetch_custom_event():
     customEvents = accR.fetchCustomEvent()
+    print(customEvents)
     return jsonify(customEvents)
 
 
@@ -226,13 +229,10 @@ def api_id():
         id = int(request.args['id'])
     else:
         return "Error: No id field provided. Please specify an id."
-
-
+def start_ngrok():
+    print("STARTING NGROK")
+    subprocess.call("ngrok http 5000", shell=False)
 def ngrok_url():
-    # ngrok_path = str(Path(tempfile.gettempdir(), "ngrok"))
-    # executable = str(Path(ngrok_path, "ngrok.exe"))
-    # ngrok = subprocess.Popen([executable, 'http', '5000'])
-    # atexit.register(ngrok.terminate)
     localhost_url = "http://localhost:4040/api/tunnels"  # Url with tunnel details
     time.sleep(1)
     tunnel_url = requests.get(localhost_url).text  # Get the tunnel information
@@ -241,10 +241,10 @@ def ngrok_url():
     tunnel_url = j['tunnels'][0]['public_url'] + "/"  # Do the parsing of the get
     tunnel_url = tunnel_url.replace('http://', 'https://')
 
-
     # data to be sent to api
     data = {"tunnel_url": tunnel_url}
-
+    print("tunnel_url")
+    print(data)
     headers = {
         'Content-Type': 'application/json',
         'X-Master-Key': config['BIN_API_KEY'],
@@ -263,10 +263,13 @@ def startRedis():
 
 
 if __name__ == "__main__":
-    thread = Timer(5, ngrok_url)
+    thread = Timer(3, start_ngrok)
     thread.setDaemon(True)
     thread.start()
     threadTwo = Timer(1, startRedis)
     threadTwo.setDaemon(True)
     threadTwo.start()
+    thread = Timer(7, ngrok_url)
+    thread.setDaemon(True)
+    thread.start()
     app.run()

@@ -30,11 +30,11 @@ dataPath = "Data/"
 templatePath = "Template/"
 savesPath = "saves/"
 # Static cfg files, just need to put in the server folder
-configFiles = ["assistRules.json", "configuration.json"]  # , "settings.json"
+configFiles = ["assistRules.json", "configuration.json", "settings.json"]  #
 ballastInGameLimit = 40
 ballastMinValue = -40
 server = None
-ballastList = [20, 15, 10, 5, 0, -5, -10, -15, -20, -25, -30, -35]
+ballastList = [40, 35, 30, 25, 20, 15, 10, 5, 0, -5, -10, -15, -20, -25, -30, -35, -40]
 dataApi = dataApiService.DataApiService()
 
 def init():
@@ -214,7 +214,8 @@ def makeNewRace(carsData, raceNumber):
 
         userData['restrictor'] = 0
         if "ballast" not in userData:
-            userData['ballast'] = ballastMinValue
+            # If the user is not in the champ
+            userData['ballast'] = 0
         elif userData['ballast'] > ballastInGameLimit:
             userData['restrictor'] = int(
                 (userData['ballast'] - ballastInGameLimit) / 3)

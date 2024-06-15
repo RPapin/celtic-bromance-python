@@ -12,3 +12,8 @@ copy launch_server.sh into server ACC folder
 
 Launch local server with 'py infoApi.py'
 
+# TROOBLESHOOT
+
+Librairy Ngrok not maintained anymore => Lunch Ngrok aside : 
+
+`ngrok http http://localhost:5000`
